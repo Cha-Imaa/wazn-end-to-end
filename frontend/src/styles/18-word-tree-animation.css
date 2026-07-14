@@ -1,0 +1,219 @@
+/*
+ =========================
+   Word tree entrance animation
+   Scoped only to WordTree
+   =========================
+*/
+
+.word-tree-svg {
+  overflow: visible;
+}
+
+.word-tree.word-tree--entering {
+  pointer-events: none;
+}
+
+.word-tree.word-tree--entering #Ground,
+.word-tree.word-tree--entering #TrunkAndMainBranches,
+.word-tree.word-tree--entering [id^="BigLeafBranch_"],
+.word-tree.word-tree--entering [id^="SmallLeaf_"],
+.word-tree.word-tree--entering [id^="BigLeaf_"],
+.word-tree.word-tree--entering .tree-root-generated-text {
+  animation-delay: var(--tree-animation-delay, 0ms);
+  animation-duration: var(--tree-animation-duration, 420ms);
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/*
+  Ground settles first.
+*/
+.word-tree.word-tree--entering #Ground {
+  animation-name: treeGroundEnter;
+}
+
+/*
+  The trunk is a filled Figma shape, so we avoid stroke-dash animation.
+*/
+.word-tree.word-tree--entering #TrunkAndMainBranches {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation-name: treeTrunkEnter;
+  animation-timing-function: cubic-bezier(0.2, 0.85, 0.25, 1.08);
+}
+
+/*
+  Root text belongs to the trunk.
+*/
+.word-tree.word-tree--entering .tree-root-generated-text {
+  animation-name: treeRootTextEnter;
+}
+
+/*
+  Connector branches extend after the trunk.
+*/
+.word-tree.word-tree--entering [id^="BigLeafBranch_"] {
+  transform-box: fill-box;
+  transform-origin: center center;
+  animation-name: treeBranchEnter;
+}
+
+/*
+  Small decorative leaves bloom before the big word leaves.
+*/
+.word-tree.word-tree--entering [id^="SmallLeaf_"] {
+  transform-box: fill-box;
+  transform-origin: center center;
+  animation-name: treeSmallLeafBloom;
+}
+
+/*
+  Big interactive word leaves appear last.
+  Exclude hit areas/anchors/content from receiving this directly;
+  the parent BigLeaf group handles the reveal.
+*/
+.word-tree.word-tree--entering [id^="BigLeaf_"] {
+  transform-box: fill-box;
+  transform-origin: center center;
+  animation-name: treeBigLeafEnter;
+}
+
+/*
+  Keep invisible helper elements invisible.
+*/
+.word-tree.word-tree--entering [id^="BigLeafHitArea_"],
+.word-tree.word-tree--entering [id^="BigLeafAnchor_"] {
+  animation-name: none;
+}
+
+/*
+ =========================
+   Keyframes
+   =========================
+*/
+
+@keyframes treeGroundEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* @keyframes treeTrunkEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scaleY(0.96);
+    filter: blur(2px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+    filter: blur(0);
+  }
+} */
+
+
+@keyframes treeTrunkEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(26px) scaleY(0.88) scaleX(0.96);
+    filter: blur(3px);
+  }
+
+  45% {
+    opacity: 1;
+    transform: translateY(8px) scaleY(1.035) scaleX(0.985);
+    filter: blur(1px);
+  }
+
+  72% {
+    opacity: 1;
+    transform: translateY(-2px) scaleY(0.992) scaleX(1.006);
+    filter: blur(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scaleY(1) scaleX(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes treeBranchEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes treeSmallLeafBloom {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.78) rotate(-4deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0);
+  }
+}
+
+@keyframes treeBigLeafEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes treeRootTextEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+ =========================
+   Reduced motion
+   =========================
+*/
+
+@media (prefers-reduced-motion: reduce) {
+  .word-tree.word-tree--entering,
+  .word-tree.word-tree--ready {
+    pointer-events: auto;
+  }
+
+  .word-tree.word-tree--entering #Ground,
+  .word-tree.word-tree--entering #TrunkAndMainBranches,
+  .word-tree.word-tree--entering [id^="BigLeafBranch_"],
+  .word-tree.word-tree--entering [id^="SmallLeaf_"],
+  .word-tree.word-tree--entering [id^="BigLeaf_"],
+  .word-tree.word-tree--entering .tree-root-generated-text {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}

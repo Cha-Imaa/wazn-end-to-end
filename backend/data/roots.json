@@ -1,0 +1,62 @@
+{
+  "3lm": {
+    "id": "3lm",
+    "arabic": "ع ل م",
+    "transliteration": "ʿ-l-m",
+    "meaning": "knowledge",
+    "description": "This root carries meanings related to knowing, knowledge, teaching, learning, teachers, scholars, and known things.",
+    "word_ids": ["3alima", "ya3lamu", "3allama", "3ilm", "3aalim", "ma3luum", "ta3liim", "mu3allim"],
+    "verified": false,
+    "demo_safe": true
+  },
+  "drs": {
+    "id": "drs",
+    "arabic": "د ر س",
+    "transliteration": "d-r-s",
+    "meaning": "study",
+    "description": "This root carries meanings related to studying, lessons, schools, teaching, teachers, and students.",
+    "word_ids": ["darasa", "yadrusu", "dars", "diraasa", "madrasa", "mudarris", "tadriis", "daaris"],
+    "verified": false,
+    "demo_safe": true
+  },
+  "qra": {
+    "id": "qra",
+    "arabic": "ق ر أ",
+    "transliteration": "q-r-ʾ",
+    "meaning": "reading",
+    "description": "This root carries meanings related to reading, reciting, readers, readable things, and reading aloud.",
+    "word_ids": ["qaraa", "yaqrau", "iqra", "qiraa", "qaari", "maqruu", "quraan", "qurraa"],
+    "verified": false,
+    "demo_safe": true
+  },
+  "sm3": {
+    "id": "sm3",
+    "arabic": "س م ع",
+    "transliteration": "s-m-ʿ",
+    "meaning": "hearing",
+    "description": "This root carries meanings related to hearing, listening, sounds, listeners, and things that are heard.",
+    "word_ids": ["sami3a", "yasma3u", "sam3", "saami3", "masmuu3", "sammaa3a", "istimaa3", "mustami3"],
+    "verified": false,
+    "demo_safe": true
+  },
+  "nzr": {
+    "id": "nzr",
+    "arabic": "ن ظ ر",
+    "transliteration": "n-ẓ-r",
+    "meaning": "looking",
+    "description": "This root carries meanings related to looking, seeing, views, glances, perspectives, glasses, and waiting.",
+    "word_ids": ["nazara", "yanzuru", "nazar", "nazra", "manzar", "manzuur", "nazzaara", "intizaar"],
+    "verified": false,
+    "demo_safe": true
+  },
+  "tjr": {
+  "id": "tjr",
+  "arabic": "ت ج ر",
+  "transliteration": "t-j-r",
+  "meaning": "trade",
+  "description": "This root carries meanings related to trade, commerce, merchants, stores, trading, and commercial things.",
+  "word_ids": ["taajir", "tijaara", "matjar", "tujjaar", "ittajara", "ittijaar", "yattajiru", "tijaarii"],
+  "verified": false,
+  "demo_safe": true
+  }
+}

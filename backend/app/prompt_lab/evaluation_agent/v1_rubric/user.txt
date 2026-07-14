@@ -1,0 +1,26 @@
+{
+  "evidence": {
+    "root": { "arabic": "<...>", "meaning": "<...>" },
+    "leaves": [
+      {
+        "arabic": "<...>",
+        "meaning": "<...>",
+        "pattern": { "arabic": "<...>", "meaning_effect": "<...>" }
+      }
+    ],
+    "selected_word": { "arabic": "<...>", "meaning": "<...>" },
+    "same_pattern_cards": [
+      { "arabic": "<...>", "meaning": "<...>" }
+    ]
+  },
+  "tutor_output": {
+    "explanation": "<...>",
+    "pattern_explanation": "<...>",
+    "same_pattern_explanation": "<...>"
+  },
+  "quiz_output": {
+    "quiz": [ /* the 5 question objects, or omit/null this whole key if not evaluating quiz this call */ ]
+  }
+}
+
+Score all applicable metrics per the rubric. Return the JSON scores only.

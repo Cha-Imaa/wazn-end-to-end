@@ -1,0 +1,92 @@
+/*
+ =========================
+   Floating Arabic keyboard
+   Landing page
+   =========================
+*/
+
+.search-area {
+  position: relative;
+  z-index: 30;
+}
+
+.search-area .keyboard-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: none;
+  margin-top: 0;
+  transform: none;
+  z-index: 60;
+  padding: 14px 18px 16px;
+  border-radius: 18px;
+  border: 1.5px solid rgba(151, 166, 151, 0.5);
+  background: rgba(250, 248, 239, 0.96);
+  box-shadow: 0 16px 34px rgba(37, 89, 74, 0.13),
+    0 5px 12px rgba(37, 89, 74, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.36) inset;
+}
+
+.search-area .keyboard-panel::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  right: 46px;
+  width: 14px;
+  height: 14px;
+  border-left: 1.5px solid rgba(151, 166, 151, 0.5);
+  border-top: 1.5px solid rgba(151, 166, 151, 0.5);
+  background: rgba(250, 248, 239, 0.96);
+  transform: rotate(45deg);
+}
+
+.search-area .keyboard-section {
+  margin-bottom: 8px;
+}
+
+.search-area .keyboard-section:last-of-type {
+  margin-bottom: 8px;
+}
+
+.search-area .keyboard-row {
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.search-area .keyboard-key {
+  min-width: 42px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 22px;
+  box-shadow: 0 3px 8px rgba(37, 89, 74, 0.05),
+    0 0 0 1px rgba(255, 255, 255, 0.28) inset;
+}
+
+.search-area .diacritic-key {
+  font-size: 26px;
+}
+
+.search-area .keyboard-actions {
+  margin-top: 2px;
+  gap: 8px;
+}
+
+.search-area .keyboard-key.space {
+  min-width: min(340px, 48%);
+  height: 38px;
+  font-size: 18px;
+  color: var(--color-text-black);
+}
+
+.search-area .icon-key {
+  width: 58px;
+  height: 38px;
+}
+
+.search-area .icon-key img {
+  width: 20px;
+  height: 20px;
+}
+

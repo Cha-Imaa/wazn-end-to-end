@@ -1,0 +1,325 @@
+/*
+ =========================
+   Word tree SVG styling
+   Scoped only to WordTree
+   =========================
+*/
+
+.word-tree {
+  --tree-related-hover-color: var(--color-green-secondary, #4e8174);
+  --tree-related-hover-rgb: 78, 129, 116;
+
+  --tree-origin-hover-color: #c07a54;
+  --tree-origin-hover-rgb: 192, 122, 84;
+
+  --tree-text-color: var(--color-text-black);
+  --tree-root-text-color: var(--color-panel-surface);
+
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: visible;
+}
+
+.word-tree-svg {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+/*
+ =========================
+   SVG layer behavior
+   =========================
+*/
+
+.word-tree #Ground {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.word-tree #TreeBase,
+.word-tree #TrunkAndMainBranches,
+.word-tree #SmallLeaves,
+.word-tree #DecorativeLeaves {
+  pointer-events: none;
+}
+
+.word-tree .big-leaf-node,
+.word-tree [id^="BigLeaf_"] {
+  cursor: pointer;
+  outline: none;
+}
+
+.word-tree .big-leaf-node--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Invisible Figma hit areas */
+.word-tree .big-leaf-hit-area,
+.word-tree [id^="BigLeafHitArea_"] {
+  fill: rgba(255, 255, 255, 0.001);
+  stroke: none;
+  opacity: 1;
+  pointer-events: all !important;
+  cursor: pointer;
+}
+
+/* Figma helper anchors should never show */
+.word-tree [id^="BigLeafAnchor_"] {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* These visual layers should not steal clicks from the hit area/group */
+.word-tree [id^="BigLeafBranch_"],
+.word-tree [id^="BigLeafContent_"],
+.word-tree [id^="BigLeafDivider_"],
+.word-tree .word-tree-generated-text,
+.word-tree .tree-root-generated-text {
+  pointer-events: none;
+}
+
+/*
+ =========================
+   Big leaf interaction
+   =========================
+*/
+
+.word-tree .big-leaf-node [id^="BigLeafShape_"] {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    transform 180ms ease,
+    filter 180ms ease,
+    stroke 180ms ease,
+    stroke-width 180ms ease;
+}
+
+.word-tree .big-leaf-node [id^="BigLeafBranch_"] {
+  transition:
+    filter 180ms ease,
+    opacity 180ms ease;
+}
+
+.word-tree .big-leaf-node [id^="BigLeafContent_"],
+.word-tree .big-leaf-node .word-tree-generated-text {
+  transition:
+    filter 180ms ease,
+    opacity 180ms ease;
+}
+
+/* Related leaves: hover / keyboard focus */
+.word-tree .big-leaf-node:hover [id^="BigLeafShape_"],
+.word-tree .big-leaf-node:focus-visible [id^="BigLeafShape_"] {
+  transform: translateY(-3px) scale(1.025);
+  stroke: var(--tree-related-hover-color);
+  stroke-width: 3;
+  filter:
+    drop-shadow(0 10px 14px rgba(var(--tree-related-hover-rgb), 0.22))
+    drop-shadow(0 2px 4px rgba(var(--tree-related-hover-rgb), 0.1));
+}
+
+.word-tree .big-leaf-node:hover [id^="BigLeafBranch_"],
+.word-tree .big-leaf-node:focus-visible [id^="BigLeafBranch_"] {
+  filter: drop-shadow(0 3px 4px rgba(var(--tree-related-hover-rgb), 0.18));
+}
+
+.word-tree .big-leaf-node:hover [id^="BigLeafContent_"],
+.word-tree .big-leaf-node:focus-visible [id^="BigLeafContent_"],
+.word-tree .big-leaf-node:hover .word-tree-generated-text,
+.word-tree .big-leaf-node:focus-visible .word-tree-generated-text {
+  filter: drop-shadow(0 2px 3px rgba(255, 255, 255, 0.72));
+}
+
+/* Related leaves: selected */
+.word-tree .big-leaf-node--selected [id^="BigLeafShape_"] {
+  stroke: var(--tree-related-hover-color);
+  stroke-width: 3;
+  filter:
+    drop-shadow(0 8px 14px rgba(var(--tree-related-hover-rgb), 0.18))
+    drop-shadow(0 0 5px rgba(var(--tree-related-hover-rgb), 0.14));
+}
+
+.word-tree .big-leaf-node--selected:hover [id^="BigLeafShape_"],
+.word-tree .big-leaf-node--selected:focus-visible [id^="BigLeafShape_"] {
+  transform: translateY(-4px) scale(1.035);
+  filter:
+    drop-shadow(0 12px 18px rgba(var(--tree-related-hover-rgb), 0.26))
+    drop-shadow(0 0 8px rgba(var(--tree-related-hover-rgb), 0.2));
+}
+
+/*
+ =========================
+   Origin leaf / searched word
+   BigLeaf_01 stays orange
+   =========================
+*/
+
+.word-tree #BigLeaf_01 [id^="BigLeafShape_"],
+.word-tree #BigLeaf_1 [id^="BigLeafShape_"] {
+  stroke: var(--tree-origin-hover-color);
+  stroke-width: 3;
+  filter:
+    drop-shadow(0 8px 14px rgba(var(--tree-origin-hover-rgb), 0.16))
+    drop-shadow(0 0 5px rgba(var(--tree-origin-hover-rgb), 0.12));
+}
+
+.word-tree #BigLeaf_01:hover [id^="BigLeafShape_"],
+.word-tree #BigLeaf_01:focus-visible [id^="BigLeafShape_"],
+.word-tree #BigLeaf_1:hover [id^="BigLeafShape_"],
+.word-tree #BigLeaf_1:focus-visible [id^="BigLeafShape_"] {
+  transform: translateY(-3px) scale(1.025);
+  stroke: var(--tree-origin-hover-color);
+  stroke-width: 3;
+  filter:
+    drop-shadow(0 12px 18px rgba(var(--tree-origin-hover-rgb), 0.24))
+    drop-shadow(0 0 8px rgba(var(--tree-origin-hover-rgb), 0.18));
+}
+
+.word-tree #BigLeaf_01 [id^="BigLeafBranch_"],
+.word-tree #BigLeaf_1 [id^="BigLeafBranch_"] {
+  filter: drop-shadow(0 3px 4px rgba(var(--tree-origin-hover-rgb), 0.14));
+}
+
+/*
+ =========================
+   Generated SVG text
+   Text sizing/position is controlled in WordTree.jsx
+   =========================
+*/
+
+.word-tree-generated-text {
+  opacity: 1;
+}
+
+.big-leaf-word {
+  font-family: "Amiri", "Noto Naskh Arabic", serif;
+  font-weight: 700;
+  fill: var(--tree-text-color);
+}
+
+.big-leaf-meaning {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  fill: var(--tree-text-color);
+}
+
+.tree-root-arabic {
+  font-family: "Amiri", "Noto Naskh Arabic", serif;
+  font-weight: 700;
+  letter-spacing: -0.08em;
+  fill: var(--tree-root-text-color);
+}
+
+.tree-root-transliteration {
+  font-family: "EB Garamond", "Inter", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  fill: var(--tree-root-text-color);
+}
+
+/*
+ =========================
+   Empty / fallback states
+   =========================
+*/
+
+.word-tree-empty,
+.word-tree-fallback {
+  width: 100%;
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: var(--color-green-secondary);
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+}
+
+.word-tree-empty-title {
+  margin: 0 0 8px;
+  font-size: 22px;
+  color: var(--color-green-primary);
+}
+
+.word-tree-empty-copy,
+.word-tree-empty-hint {
+  margin: 4px 0;
+}
+
+/*
+ =========================
+   Quiz mode tree state
+   Hide answers, dim tree, disable interaction
+   =========================
+*/
+
+.word-tree.word-tree--quiz-active {
+  pointer-events: none;
+}
+
+.word-tree.word-tree--quiz-active .word-tree-svg {
+  opacity: 0.26;
+  filter: blur(0.4px) saturate(0.78);
+  transition:
+    opacity 180ms ease,
+    filter 180ms ease;
+}
+
+/* Hide all answer labels inside big leaves */
+.word-tree.word-tree--quiz-active [id^="BigLeafContent_"],
+.word-tree.word-tree--quiz-active [id^="BigLeafDivider_"],
+.word-tree.word-tree--quiz-active .word-tree-generated-text {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Remove hover/selected emphasis during quiz */
+.word-tree.word-tree--quiz-active [id^="BigLeafShape_"] {
+  transform: none !important;
+  filter: none !important;
+  stroke: inherit !important;
+  stroke-width: inherit !important;
+}
+
+/* Disable leaf click targets during quiz */
+.word-tree.word-tree--quiz-active [id^="BigLeafHitArea_"] {
+  pointer-events: none !important;
+}
+
+.tree-root-label {
+  pointer-events: none;
+}
+
+.tree-root-arabic {
+  font-family: "Amiri", "Noto Naskh Arabic", serif;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  fill: rgba(255, 248, 225, 0.98);
+  paint-order: stroke fill;
+  stroke: rgba(80, 54, 39, 0.28);
+  stroke-width: 2px;
+  stroke-linejoin: round;
+}
+
+.tree-root-transliteration {
+  font-family: "EB Garamond", "Inter", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  fill: rgba(255, 248, 225, 0.86);
+  paint-order: stroke fill;
+  stroke: rgba(80, 54, 39, 0.24);
+  stroke-width: 1.4px;
+  stroke-linejoin: round;
+}

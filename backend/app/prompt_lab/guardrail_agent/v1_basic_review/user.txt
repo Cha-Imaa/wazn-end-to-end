@@ -1,0 +1,12 @@
+# app/prompt_lab/guardrail_agent/v1_basic/user.txt
+
+agent_type: {agent_type}
+
+evidence:
+{evidence_json}
+
+generated_output:
+{generated_output_json}
+
+Evaluate the generated_output against the checklist for this
+agent_type, using only the evidence given. Return the JSON result.

@@ -1,0 +1,48 @@
+Write the WAZN explanation fields for this selected Arabic word.
+
+Use only the input below.
+
+Return valid JSON only.
+
+The JSON must contain exactly these fields and no others:
+
+{
+"explanation": "string",
+"pattern_explanation": "string",
+"same_pattern_explanation": "string"
+}
+
+Style:
+
+* short
+* warm
+* clue-based
+* non-technical
+* grounded
+
+Field purpose:
+
+* explanation: explain how the root and pattern help reveal the selected word meaning.
+* pattern_explanation: explain what the pattern means or contributes.
+* same_pattern_explanation: explain how the same pattern applies across the same-pattern cards.
+
+Rules:
+
+* Do not add Arabic words that are not in the input.
+* Do not add same-pattern examples that are not in the input.
+* Do not change the selected word, root, pattern, or meaning.
+* Do not add cultural, historical, Quranic, poetic, or dictionary facts.
+* Do not repeat the same teaching idea across fields.
+* Do not use a fixed sentence template.
+* Make pattern_explanation direct and concrete, not vague.
+* Return JSON only.
+
+Length limits:
+
+* explanation: maximum 2 sentences and maximum 55 words
+* pattern_explanation: maximum 1 sentence and maximum 20 words
+* same_pattern_explanation: maximum 2 sentences and maximum 45 words
+
+Input:
+
+{llm_input}

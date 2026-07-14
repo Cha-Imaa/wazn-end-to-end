@@ -1,0 +1,1418 @@
+{
+  "3alima": {
+    "id": "3alima",
+    "arabic": "عَلِمَ",
+    "normalized": "علم",
+    "transliteration": "ʿalima",
+    "meaning": "knew",
+    "short_meaning": "knew",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "3lm",
+    "pattern_id": "fa3ila",
+    "breakdown": {
+      "display": "عَلِمَ",
+      "root_letters": ["ع", "ل", "م"],
+      "pattern_letters": ["َ", "ِ", "َ"],
+      "segments": [
+        { "text": "ع", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "ya3lamu": {
+    "id": "ya3lamu",
+    "arabic": "يَعْلَمُ",
+    "normalized": "يعلم",
+    "transliteration": "yaʿlamu",
+    "meaning": "knows",
+    "short_meaning": "knows",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "3lm",
+    "pattern_id": "yaf3alu",
+    "breakdown": {
+      "display": "يَعْلَمُ",
+      "root_letters": ["ع", "ل", "م"],
+      "pattern_letters": ["ي", "َ", "ْ", "َ", "ُ"],
+      "segments": [
+        { "text": "ي", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ع", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "ُ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "3allama": {
+    "id": "3allama",
+    "arabic": "عَلَّمَ",
+    "normalized": "علم",
+    "transliteration": "ʿallama",
+    "meaning": "taught",
+    "short_meaning": "taught",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "3lm",
+    "pattern_id": "fa33ala",
+    "breakdown": {
+      "display": "عَلَّمَ",
+      "root_letters": ["ع", "ل", "م"],
+      "pattern_letters": ["َ", "َ", "ّ", "َ"],
+      "segments": [
+        { "text": "ع", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ّ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "3ilm": {
+    "id": "3ilm",
+    "arabic": "عِلْم",
+    "normalized": "علم",
+    "transliteration": "ʿilm",
+    "meaning": "knowledge",
+    "short_meaning": "knowledge",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "3lm",
+    "pattern_id": "fi3l",
+    "breakdown": {
+      "display": "عِلْم",
+      "root_letters": ["ع", "ل", "م"],
+      "pattern_letters": ["ِ", "ْ"],
+      "segments": [
+        { "text": "ع", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "م", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "3aalim": {
+    "id": "3aalim",
+    "arabic": "عَالِم",
+    "normalized": "عالم",
+    "transliteration": "ʿālim",
+    "meaning": "scholar",
+    "short_meaning": "scholar",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "3lm",
+    "pattern_id": "faa3il",
+    "breakdown": {
+      "display": "عَالِم",
+      "root_letters": ["ع", "ل", "م"],
+      "pattern_letters": ["َ", "ا", "ِ"],
+      "segments": [
+        { "text": "ع", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "م", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "ma3luum": {
+    "id": "ma3luum",
+    "arabic": "مَعْلُوم",
+    "normalized": "معلوم",
+    "transliteration": "maʿlūm",
+    "meaning": "known",
+    "short_meaning": "known",
+    "word_type": "adjective",
+    "pos": "adjective",
+    "level": "beginner",
+    "root_id": "3lm",
+    "pattern_id": "maf3uul",
+    "breakdown": {
+      "display": "مَعْلُوم",
+      "root_letters": ["ع", "ل", "م"],
+      "pattern_letters": ["م", "َ", "ْ", "ُ", "و"],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ع", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "و", "type": "pattern" },
+        { "text": "م", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "ta3liim": {
+    "id": "ta3liim",
+    "arabic": "تَعْلِيم",
+    "normalized": "تعليم",
+    "transliteration": "taʿlīm",
+    "meaning": "teaching",
+    "short_meaning": "teaching",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "3lm",
+    "pattern_id": "taf3iil",
+    "breakdown": {
+      "display": "تَعْلِيم",
+      "root_letters": ["ع", "ل", "م"],
+      "pattern_letters": ["ت", "َ", "ْ", "ِ", "ي"],
+      "segments": [
+        { "text": "ت", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ع", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ي", "type": "pattern" },
+        { "text": "م", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "mu3allim": {
+    "id": "mu3allim",
+    "arabic": "مُعَلِّم",
+    "normalized": "معلم",
+    "transliteration": "muʿallim",
+    "meaning": "teacher",
+    "short_meaning": "teacher",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "3lm",
+    "pattern_id": "mufa33il",
+    "breakdown": {
+      "display": "مُعَلِّم",
+      "root_letters": ["ع", "ل", "م"],
+      "pattern_letters": ["م", "ُ", "َ", "ِ", "ّ"],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "ع", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ّ", "type": "pattern" },
+        { "text": "م", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+
+  "darasa": {
+    "id": "darasa",
+    "arabic": "دَرَسَ",
+    "normalized": "درس",
+    "transliteration": "darasa",
+    "meaning": "studied",
+    "short_meaning": "studied",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "drs",
+    "pattern_id": "fa3ala",
+    "breakdown": {
+      "display": "دَرَسَ",
+      "root_letters": ["د", "ر", "س"],
+      "pattern_letters": ["َ", "َ", "َ"],
+      "segments": [
+        { "text": "د", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "yadrusu": {
+    "id": "yadrusu",
+    "arabic": "يَدْرُسُ",
+    "normalized": "يدرس",
+    "transliteration": "yadrusu",
+    "meaning": "studies",
+    "short_meaning": "studies",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "drs",
+    "pattern_id": "yaf3ulu",
+    "breakdown": {
+      "display": "يَدْرُسُ",
+      "root_letters": ["د", "ر", "س"],
+      "pattern_letters": ["ي", "َ", "ْ", "ُ", "ُ"],
+      "segments": [
+        { "text": "ي", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "د", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "ُ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "dars": {
+    "id": "dars",
+    "arabic": "دَرْس",
+    "normalized": "درس",
+    "transliteration": "dars",
+    "meaning": "lesson",
+    "short_meaning": "lesson",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "drs",
+    "pattern_id": "fa3l",
+    "breakdown": {
+      "display": "دَرْس",
+      "root_letters": ["د", "ر", "س"],
+      "pattern_letters": ["َ", "ْ"],
+      "segments": [
+        { "text": "د", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "س", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "diraasa": {
+    "id": "diraasa",
+    "arabic": "دِرَاسَة",
+    "normalized": "دراسه",
+    "transliteration": "dirāsa",
+    "meaning": "study",
+    "short_meaning": "study",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "drs",
+    "pattern_id": "fi3aala",
+    "breakdown": {
+      "display": "دِرَاسَة",
+      "root_letters": ["د", "ر", "س"],
+      "pattern_letters": ["ِ", "َ", "ا", "َ", "ة"],
+      "segments": [
+        { "text": "د", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ة", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "madrasa": {
+    "id": "madrasa",
+    "arabic": "مَدْرَسَة",
+    "normalized": "مدرسه",
+    "transliteration": "madrasa",
+    "meaning": "school",
+    "short_meaning": "school",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "drs",
+    "pattern_id": "maf3ala",
+    "breakdown": {
+      "display": "مَدْرَسَة",
+      "root_letters": ["د", "ر", "س"],
+      "pattern_letters": ["م", "َ", "ْ", "َ", "َ", "ة"],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "د", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ة", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "mudarris": {
+    "id": "mudarris",
+    "arabic": "مُدَرِّس",
+    "normalized": "مدرس",
+    "transliteration": "mudarris",
+    "meaning": "teacher",
+    "short_meaning": "teacher",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "drs",
+    "pattern_id": "mufa33il",
+    "breakdown": {
+      "display": "مُدَرِّس",
+      "root_letters": ["د", "ر", "س"],
+      "pattern_letters": ["م", "ُ", "َ", "ِ", "ّ"],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "د", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ّ", "type": "pattern" },
+        { "text": "س", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "tadriis": {
+    "id": "tadriis",
+    "arabic": "تَدْرِيس",
+    "normalized": "تدريس",
+    "transliteration": "tadrīs",
+    "meaning": "teaching",
+    "short_meaning": "teaching",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "drs",
+    "pattern_id": "taf3iil",
+    "breakdown": {
+      "display": "تَدْرِيس",
+      "root_letters": ["د", "ر", "س"],
+      "pattern_letters": ["ت", "َ", "ْ", "ِ", "ي"],
+      "segments": [
+        { "text": "ت", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "د", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ي", "type": "pattern" },
+        { "text": "س", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "daaris": {
+    "id": "daaris",
+    "arabic": "دَارِس",
+    "normalized": "دارس",
+    "transliteration": "dāris",
+    "meaning": "student",
+    "short_meaning": "student",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "drs",
+    "pattern_id": "faa3il",
+    "breakdown": {
+      "display": "دَارِس",
+      "root_letters": ["د", "ر", "س"],
+      "pattern_letters": ["َ", "ا", "ِ"],
+      "segments": [
+        { "text": "د", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "س", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+
+  "qaraa": {
+    "id": "qaraa",
+    "arabic": "قَرَأَ",
+    "normalized": "قرأ",
+    "transliteration": "qaraʾa",
+    "meaning": "read",
+    "short_meaning": "read",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "qra",
+    "pattern_id": "fa3ala",
+    "breakdown": {
+      "display": "قَرَأَ",
+      "root_letters": ["ق", "ر", "أ"],
+      "pattern_letters": ["َ", "َ", "َ"],
+      "segments": [
+        { "text": "ق", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "أ", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "yaqrau": {
+    "id": "yaqrau",
+    "arabic": "يَقْرَأُ",
+    "normalized": "يقرأ",
+    "transliteration": "yaqraʾu",
+    "meaning": "reads",
+    "short_meaning": "reads",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "qra",
+    "pattern_id": "yaf3alu",
+    "breakdown": {
+      "display": "يَقْرَأُ",
+      "root_letters": ["ق", "ر", "أ"],
+      "pattern_letters": ["ي", "َ", "ْ", "َ", "ُ"],
+      "segments": [
+        { "text": "ي", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ق", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "أ", "type": "root" },
+        { "text": "ُ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "iqra": {
+    "id": "iqra",
+    "arabic": "اِقْرَأْ",
+    "normalized": "اقرأ",
+    "transliteration": "iqraʾ",
+    "meaning": "read",
+    "short_meaning": "read",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "qra",
+    "pattern_id": "if3al",
+    "breakdown": {
+      "display": "اِقْرَأْ",
+      "root_letters": ["ق", "ر", "أ"],
+      "pattern_letters": ["ا", "ِ", "ْ", "َ", "ْ"],
+      "segments": [
+        { "text": "ا", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ق", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "أ", "type": "root" },
+        { "text": "ْ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "qiraa": {
+    "id": "qiraa",
+    "arabic": "قِرَاءَة",
+    "normalized": "قراءه",
+    "transliteration": "qirāʾa",
+    "meaning": "reading",
+    "short_meaning": "reading",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "qra",
+    "pattern_id": "fi3aala",
+    "breakdown": {
+      "display": "قِرَاءَة",
+      "root_letters": ["ق", "ر", "أ"],
+      "pattern_letters": ["ِ", "َ", "ا", "َ", "ة"],
+      "segments": [
+        { "text": "ق", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ء", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ة", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "qaari": {
+    "id": "qaari",
+    "arabic": "قَارِئ",
+    "normalized": "قارئ",
+    "transliteration": "qāriʾ",
+    "meaning": "reader",
+    "short_meaning": "reader",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "qra",
+    "pattern_id": "faa3il",
+    "breakdown": {
+      "display": "قَارِئ",
+      "root_letters": ["ق", "ر", "أ"],
+      "pattern_letters": ["َ", "ا", "ِ"],
+      "segments": [
+        { "text": "ق", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ئ", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "maqruu": {
+    "id": "maqruu",
+    "arabic": "مَقْرُوء",
+    "normalized": "مقروء",
+    "transliteration": "maqrūʾ",
+    "meaning": "readable",
+    "short_meaning": "readable",
+    "word_type": "adjective",
+    "pos": "adjective",
+    "level": "beginner",
+    "root_id": "qra",
+    "pattern_id": "maf3uul",
+    "breakdown": {
+      "display": "مَقْرُوء",
+      "root_letters": ["ق", "ر", "أ"],
+      "pattern_letters": ["م", "َ", "ْ", "ُ", "و"],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ق", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "و", "type": "pattern" },
+        { "text": "ء", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "quraan": {
+    "id": "quraan",
+    "arabic": "قُرْآن",
+    "normalized": "قرآن",
+    "transliteration": "qurʾān",
+    "meaning": "Quran",
+    "short_meaning": "Quran",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "qra",
+    "pattern_id": "fu3laan",
+    "breakdown": {
+      "display": "قُرْآن",
+      "root_letters": ["ق", "ر", "أ"],
+      "pattern_letters": ["ُ", "ْ", "ا"],
+      "segments": [
+        { "text": "ق", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "آ", "type": "root" },
+        { "text": "ن", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "qurraa": {
+    "id": "qurraa",
+    "arabic": "قُرَّاء",
+    "normalized": "قراء",
+    "transliteration": "qurrāʾ",
+    "meaning": "readers",
+    "short_meaning": "readers",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "intermediate",
+    "root_id": "qra",
+    "pattern_id": "fu33aal",
+    "breakdown": {
+      "display": "قُرَّاء",
+      "root_letters": ["ق", "ر", "أ"],
+      "pattern_letters": ["ُ", "َ", "ّ", "ا"],
+      "segments": [
+        { "text": "ق", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ّ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ء", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+
+  "sami3a": {
+    "id": "sami3a",
+    "arabic": "سَمِعَ",
+    "normalized": "سمع",
+    "transliteration": "samiʿa",
+    "meaning": "heard",
+    "short_meaning": "heard",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "sm3",
+    "pattern_id": "fa3ila",
+    "breakdown": {
+      "display": "سَمِعَ",
+      "root_letters": ["س", "م", "ع"],
+      "pattern_letters": ["َ", "ِ", "َ"],
+      "segments": [
+        { "text": "س", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ع", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "yasma3u": {
+    "id": "yasma3u",
+    "arabic": "يَسْمَعُ",
+    "normalized": "يسمع",
+    "transliteration": "yasmaʿu",
+    "meaning": "hears",
+    "short_meaning": "hears",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "sm3",
+    "pattern_id": "yaf3alu",
+    "breakdown": {
+      "display": "يَسْمَعُ",
+      "root_letters": ["س", "م", "ع"],
+      "pattern_letters": ["ي", "َ", "ْ", "َ", "ُ"],
+      "segments": [
+        { "text": "ي", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ع", "type": "root" },
+        { "text": "ُ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "sam3": {
+    "id": "sam3",
+    "arabic": "سَمْع",
+    "normalized": "سمع",
+    "transliteration": "samʿ",
+    "meaning": "hearing",
+    "short_meaning": "hearing",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "sm3",
+    "pattern_id": "fa3l",
+    "breakdown": {
+      "display": "سَمْع",
+      "root_letters": ["س", "م", "ع"],
+      "pattern_letters": ["َ", "ْ"],
+      "segments": [
+        { "text": "س", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ع", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "saami3": {
+    "id": "saami3",
+    "arabic": "سَامِع",
+    "normalized": "سامع",
+    "transliteration": "sāmiʿ",
+    "meaning": "listener",
+    "short_meaning": "listener",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "sm3",
+    "pattern_id": "faa3il",
+    "breakdown": {
+      "display": "سَامِع",
+      "root_letters": ["س", "م", "ع"],
+      "pattern_letters": ["َ", "ا", "ِ"],
+      "segments": [
+        { "text": "س", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ع", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "masmuu3": {
+    "id": "masmuu3",
+    "arabic": "مَسْمُوع",
+    "normalized": "مسموع",
+    "transliteration": "masmūʿ",
+    "meaning": "audible",
+    "short_meaning": "audible",
+    "word_type": "adjective",
+    "pos": "adjective",
+    "level": "beginner",
+    "root_id": "sm3",
+    "pattern_id": "maf3uul",
+    "breakdown": {
+      "display": "مَسْمُوع",
+      "root_letters": ["س", "م", "ع"],
+      "pattern_letters": ["م", "َ", "ْ", "ُ", "و"],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "و", "type": "pattern" },
+        { "text": "ع", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "sammaa3a": {
+    "id": "sammaa3a",
+    "arabic": "سَمَّاعَة",
+    "normalized": "سماعه",
+    "transliteration": "sammāʿa",
+    "meaning": "earphone",
+    "short_meaning": "earphone",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "sm3",
+    "pattern_id": "fa33aala",
+    "breakdown": {
+      "display": "سَمَّاعَة",
+      "root_letters": ["س", "م", "ع"],
+      "pattern_letters": ["َ", "َ", "ّ", "ا", "َ", "ة"],
+      "segments": [
+        { "text": "س", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ّ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ع", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ة", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "istimaa3": {
+    "id": "istimaa3",
+    "arabic": "اِسْتِمَاع",
+    "normalized": "استماع",
+    "transliteration": "istimāʿ",
+    "meaning": "listening",
+    "short_meaning": "listening",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "sm3",
+    "pattern_id": "ifti3aal",
+    "breakdown": {
+      "display": "اِسْتِمَاع",
+      "root_letters": ["س", "م", "ع"],
+      "pattern_letters": ["ا", "ِ", "ْ", "ت", "ِ", "َ", "ا"],
+      "segments": [
+        { "text": "ا", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ت", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ع", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "mustami3": {
+    "id": "mustami3",
+    "arabic": "مُسْتَمِع",
+    "normalized": "مستمع",
+    "transliteration": "mustamiʿ",
+    "meaning": "listener",
+    "short_meaning": "listener",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "sm3",
+    "pattern_id": "mustaf3il",
+    "breakdown": {
+      "display": "مُسْتَمِع",
+      "root_letters": ["س", "م", "ع"],
+      "pattern_letters": ["م", "ُ", "ْ", "ت", "َ", "ِ"],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ت", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ع", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+
+  "nazara": {
+    "id": "nazara",
+    "arabic": "نَظَرَ",
+    "normalized": "نظر",
+    "transliteration": "naẓara",
+    "meaning": "looked",
+    "short_meaning": "looked",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "nzr",
+    "pattern_id": "fa3ala",
+    "breakdown": {
+      "display": "نَظَرَ",
+      "root_letters": ["ن", "ظ", "ر"],
+      "pattern_letters": ["َ", "َ", "َ"],
+      "segments": [
+        { "text": "ن", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ظ", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "yanzuru": {
+    "id": "yanzuru",
+    "arabic": "يَنْظُرُ",
+    "normalized": "ينظر",
+    "transliteration": "yanẓuru",
+    "meaning": "looks",
+    "short_meaning": "looks",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "nzr",
+    "pattern_id": "yaf3ulu",
+    "breakdown": {
+      "display": "يَنْظُرُ",
+      "root_letters": ["ن", "ظ", "ر"],
+      "pattern_letters": ["ي", "َ", "ْ", "ُ", "ُ"],
+      "segments": [
+        { "text": "ي", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ظ", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "ُ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "nazar": {
+    "id": "nazar",
+    "arabic": "نَظَر",
+    "normalized": "نظر",
+    "transliteration": "naẓar",
+    "meaning": "sight",
+    "short_meaning": "sight",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "nzr",
+    "pattern_id": "fa3ala",
+    "breakdown": {
+      "display": "نَظَر",
+      "root_letters": ["ن", "ظ", "ر"],
+      "pattern_letters": ["َ", "َ"],
+      "segments": [
+        { "text": "ن", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ظ", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ر", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "nazra": {
+    "id": "nazra",
+    "arabic": "نَظْرَة",
+    "normalized": "نظره",
+    "transliteration": "naẓra",
+    "meaning": "glance",
+    "short_meaning": "glance",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "nzr",
+    "pattern_id": "fa3la",
+    "breakdown": {
+      "display": "نَظْرَة",
+      "root_letters": ["ن", "ظ", "ر"],
+      "pattern_letters": ["َ", "ْ", "َ", "ة"],
+      "segments": [
+        { "text": "ن", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ظ", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ة", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "manzar": {
+    "id": "manzar",
+    "arabic": "مَنْظَر",
+    "normalized": "منظر",
+    "transliteration": "manẓar",
+    "meaning": "view",
+    "short_meaning": "view",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "nzr",
+    "pattern_id": "maf3al",
+    "breakdown": {
+      "display": "مَنْظَر",
+      "root_letters": ["ن", "ظ", "ر"],
+      "pattern_letters": ["م", "َ", "ْ", "َ"],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ظ", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ر", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "manzuur": {
+    "id": "manzuur",
+    "arabic": "مَنْظُور",
+    "normalized": "منظور",
+    "transliteration": "manẓūr",
+    "meaning": "perspective",
+    "short_meaning": "perspective",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "intermediate",
+    "root_id": "nzr",
+    "pattern_id": "maf3uul",
+    "breakdown": {
+      "display": "مَنْظُور",
+      "root_letters": ["ن", "ظ", "ر"],
+      "pattern_letters": ["م", "َ", "ْ", "ُ", "و"],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ظ", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "و", "type": "pattern" },
+        { "text": "ر", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "nazzaara": {
+    "id": "nazzaara",
+    "arabic": "نَظَّارَة",
+    "normalized": "نظاره",
+    "transliteration": "naẓẓāra",
+    "meaning": "glasses",
+    "short_meaning": "glasses",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "nzr",
+    "pattern_id": "fa33aala",
+    "breakdown": {
+      "display": "نَظَّارَة",
+      "root_letters": ["ن", "ظ", "ر"],
+      "pattern_letters": ["َ", "َ", "ّ", "ا", "َ", "ة"],
+      "segments": [
+        { "text": "ن", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ظ", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ّ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ة", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "intizaar": {
+    "id": "intizaar",
+    "arabic": "اِنْتِظَار",
+    "normalized": "انتظار",
+    "transliteration": "intiẓār",
+    "meaning": "waiting",
+    "short_meaning": "waiting",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "nzr",
+    "pattern_id": "ifti3aal",
+    "breakdown": {
+      "display": "اِنْتِظَار",
+      "root_letters": ["ن", "ظ", "ر"],
+      "pattern_letters": ["ا", "ِ", "ْ", "ت", "ِ", "َ", "ا"],
+      "segments": [
+        { "text": "ا", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ت", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ظ", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ر", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "taajir": {
+  "id": "taajir",
+  "arabic": "تَاجِر",
+  "normalized": "تاجر",
+  "transliteration": "tājir",
+  "meaning": "merchant",
+  "short_meaning": "merchant",
+  "word_type": "noun",
+  "pos": "noun",
+  "level": "beginner",
+  "root_id": "tjr",
+  "pattern_id": "faa3il",
+  "breakdown": {
+    "display": "تَاجِر",
+    "root_letters": ["ت", "ج", "ر"],
+    "pattern_letters": ["َ", "ا", "ِ"],
+    "segments": [
+      { "text": "ت", "type": "root" },
+      { "text": "َ", "type": "pattern" },
+      { "text": "ا", "type": "pattern" },
+      { "text": "ج", "type": "root" },
+      { "text": "ِ", "type": "pattern" },
+      { "text": "ر", "type": "root" }
+    ]
+  },
+  "verified": false,
+  "demo_safe": true
+  },
+  "tijaara": {
+    "id": "tijaara",
+    "arabic": "تِجَارَة",
+    "normalized": "تجاره",
+    "transliteration": "tijāra",
+    "meaning": "trade",
+    "short_meaning": "trade",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "tjr",
+    "pattern_id": "fi3aala",
+    "breakdown": {
+      "display": "تِجَارَة",
+      "root_letters": ["ت", "ج", "ر"],
+      "pattern_letters": ["ِ", "َ", "ا", "َ", "ة"],
+      "segments": [
+        { "text": "ت", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ج", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ة", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "matjar": {
+    "id": "matjar",
+    "arabic": "مَتْجَر",
+    "normalized": "متجر",
+    "transliteration": "matjar",
+    "meaning": "store",
+    "short_meaning": "store",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "tjr",
+    "pattern_id": "maf3al",
+    "breakdown": {
+      "display": "مَتْجَر",
+      "root_letters": ["ت", "ج", "ر"],
+      "pattern_letters": ["م", "َ", "ْ", "َ"],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ت", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ج", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ر", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "tujjaar": {
+    "id": "tujjaar",
+    "arabic": "تُجَّار",
+    "normalized": "تجار",
+    "transliteration": "tujjār",
+    "meaning": "merchants",
+    "short_meaning": "merchants",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "tjr",
+    "pattern_id": "fu33aal",
+    "breakdown": {
+      "display": "تُجَّار",
+      "root_letters": ["ت", "ج", "ر"],
+      "pattern_letters": ["ُ", "َ", "ّ", "ا"],
+      "segments": [
+        { "text": "ت", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "ج", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ّ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ر", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "ittajara": {
+    "id": "ittajara",
+    "arabic": "اِتَّجَرَ",
+    "normalized": "اتجر",
+    "transliteration": "ittajara",
+    "meaning": "traded",
+    "short_meaning": "traded",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "tjr",
+    "pattern_id": "ifta3ala",
+    "breakdown": {
+      "display": "اِتَّجَرَ",
+      "root_letters": ["ت", "ج", "ر"],
+      "pattern_letters": ["ا", "ِ", "َ", "ّ", "َ", "َ"],
+      "segments": [
+        { "text": "ا", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ت", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ّ", "type": "pattern" },
+        { "text": "ج", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "ittijaar": {
+    "id": "ittijaar",
+    "arabic": "اِتِّجَار",
+    "normalized": "اتجار",
+    "transliteration": "ittijār",
+    "meaning": "trading",
+    "short_meaning": "trading",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "tjr",
+    "pattern_id": "ifti3aal",
+    "breakdown": {
+      "display": "اِتِّجَار",
+      "root_letters": ["ت", "ج", "ر"],
+      "pattern_letters": ["ا", "ِ", "ِ", "ّ", "َ", "ا"],
+      "segments": [
+        { "text": "ا", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ت", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ّ", "type": "pattern" },
+        { "text": "ج", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ر", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "yattajiru": {
+    "id": "yattajiru",
+    "arabic": "يَتَّجِرُ",
+    "normalized": "يتجر",
+    "transliteration": "yattajiru",
+    "meaning": "trades",
+    "short_meaning": "trades",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "tjr",
+    "pattern_id": "yafta3ilu",
+    "breakdown": {
+      "display": "يَتَّجِرُ",
+      "root_letters": ["ت", "ج", "ر"],
+      "pattern_letters": ["ي", "َ", "َ", "ّ", "ِ", "ُ"],
+      "segments": [
+        { "text": "ي", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ت", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ّ", "type": "pattern" },
+        { "text": "ج", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "ُ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "tijaarii": {
+    "id": "tijaarii",
+    "arabic": "تِجَارِيّ",
+    "normalized": "تجاري",
+    "transliteration": "tijārī",
+    "meaning": "commercial",
+    "short_meaning": "commercial",
+    "word_type": "adjective",
+    "pos": "adjective",
+    "level": "beginner",
+    "root_id": "tjr",
+    "pattern_id": "fi3aalii",
+    "breakdown": {
+      "display": "تِجَارِيّ",
+      "root_letters": ["ت", "ج", "ر"],
+      "pattern_letters": ["ِ", "َ", "ا", "ِ", "ي", "ّ"],
+      "segments": [
+        { "text": "ت", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ج", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ي", "type": "pattern" },
+        { "text": "ّ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  }
+}

@@ -1,0 +1,33 @@
+Generate a 5-question quiz from the input.
+
+Use only the Arabic words, root, patterns, meanings, pattern effects, and root evidence provided in the input.
+
+Generate exactly 5 questions.
+
+Use 5 distinct question types from this allowed list:
+
+1. root_meaning
+2. leaf_meaning
+3. meaning_to_leaf
+4. pattern_recognition
+5. pattern_meaning_effect
+6. pattern_application
+
+Make the quiz beginner-friendly and useful for learning Arabic root-pattern morphology.
+
+Make the feedback mistake-aware:
+
+* explain why the correct answer is correct
+* explain why each wrong choice is wrong
+* contrast wrong choices with the correct answer when the input supports it
+
+For pattern_application questions:
+
+* ask which provided Arabic word results from applying a provided pattern to the provided root
+* use only Arabic words from the input as choices
+* do not invent new Arabic words
+
+Return valid JSON only.
+
+Input:
+{llm_input}

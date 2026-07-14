@@ -1,0 +1,29 @@
+{
+  "meaning_mcq": {
+    "id": "meaning_mcq",
+    "type": "multiple_choice",
+    "category": "meaning",
+    "question_template": "What does {word_arabic} mean?",
+    "explanation_template": "{word_arabic} means {correct_answer}.",
+    "enabled": true,
+    "demo_safe": true
+  },
+  "root_mcq": {
+    "id": "root_mcq",
+    "type": "multiple_choice",
+    "category": "root",
+    "question_template": "What is the root of {word_arabic}?",
+    "explanation_template": "The root of {word_arabic} is {correct_answer}.",
+    "enabled": true,
+    "demo_safe": true
+  },
+  "pattern_mcq": {
+    "id": "pattern_mcq",
+    "type": "multiple_choice",
+    "category": "pattern",
+    "question_template": "Which pattern does {word_arabic} follow?",
+    "explanation_template": "{word_arabic} follows the pattern {correct_answer}.",
+    "enabled": true,
+    "demo_safe": true
+  }
+}

@@ -1,0 +1,29 @@
+button {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+body,
+input,
+button,
+.helper-text,
+.keyboard-section-label,
+.footer,
+.result-panel {
+  font-family: "Inter", sans-serif;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  margin: -1px;
+  white-space: nowrap;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

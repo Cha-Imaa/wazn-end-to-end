@@ -1,0 +1,163 @@
+/*
+ =========================
+   Learning page layout
+   =========================
+*/
+
+/*
+ =========================
+   Learning page compact search bar
+   Scoped so landing page search stays unchanged
+   =========================
+*/
+
+.learning-search-area .search-row {
+  min-height: 48px;
+  padding: 5px;
+  gap: 8px;
+  border: 1px solid rgba(151, 166, 151, 0.46);
+  border-radius: 14px;
+  background: rgba(241, 242, 235, 0.72);
+  box-shadow: 0 6px 16px rgba(37, 89, 74, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.32) inset;
+}
+
+.learning-search-area .search-row:focus-within {
+  border-color: rgba(78, 129, 116, 0.56);
+  box-shadow: 0 8px 18px rgba(37, 89, 74, 0.08),
+    0 0 0 3px rgba(151, 166, 151, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.34) inset;
+}
+
+.learning-search-area .search-input-wrap {
+  padding: 0 8px;
+}
+
+.learning-search-area .search-input {
+  height: 36px;
+  font-size: 22px;
+}
+
+.learning-search-area .search-input::placeholder {
+  font-size: 15px;
+  color: rgba(78, 129, 116, 0.58);
+}
+
+.learning-search-area .keyboard-toggle,
+.learning-search-area .find-root-button {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+}
+
+.learning-search-area .keyboard-toggle {
+  background: rgba(230, 233, 224, 0.72);
+  border-color: rgba(151, 166, 151, 0.44);
+}
+
+.learning-search-area .keyboard-toggle:hover,
+.learning-search-area .keyboard-toggle.is-active {
+  transform: translateY(-1px);
+  background: rgba(250, 248, 239, 0.9);
+  box-shadow: 0 6px 14px rgba(37, 89, 74, 0.08),
+    0 0 0 2px rgba(151, 166, 151, 0.18);
+}
+
+.learning-search-area .find-root-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(37, 89, 74, 0.14),
+    0 0 0 2px rgba(151, 166, 151, 0.18);
+}
+
+.learning-search-area .keyboard-icon-img,
+.learning-search-area .search-action-icon-img {
+  width: 19px;
+  height: 19px;
+}
+
+/*
+ =========================
+   Learning page floating Arabic keyboard
+   Compact popover style
+   =========================
+*/
+
+.learning-search-area .keyboard-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: none;
+  margin-top: 0;
+  transform: none;
+  z-index: 60;
+  padding: 14px 18px 16px;
+  border-radius: 18px;
+  border: 1.5px solid rgba(151, 166, 151, 0.5);
+  background: rgba(250, 248, 239, 0.96);
+  box-shadow: 0 16px 34px rgba(37, 89, 74, 0.13),
+    0 5px 12px rgba(37, 89, 74, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.36) inset;
+}
+
+.learning-search-area .keyboard-panel::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  right: 46px;
+  width: 14px;
+  height: 14px;
+  border-left: 1.5px solid rgba(151, 166, 151, 0.5);
+  border-top: 1.5px solid rgba(151, 166, 151, 0.5);
+  background: rgba(250, 248, 239, 0.96);
+  transform: rotate(45deg);
+}
+
+.learning-search-area .keyboard-section {
+  margin-bottom: 8px;
+}
+
+.learning-search-area .keyboard-section:last-of-type {
+  margin-bottom: 8px;
+}
+
+.learning-search-area .keyboard-row {
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.learning-search-area .keyboard-key {
+  min-width: 42px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 22px;
+  box-shadow: 0 3px 8px rgba(37, 89, 74, 0.05),
+    0 0 0 1px rgba(255, 255, 255, 0.28) inset;
+}
+
+.learning-search-area .diacritic-key {
+  font-size: 26px;
+}
+
+.learning-search-area .keyboard-actions {
+  margin-top: 2px;
+  gap: 8px;
+}
+
+.learning-search-area .keyboard-key.space {
+  min-width: min(340px, 48%);
+  height: 38px;
+  font-size: 18px;
+}
+
+.learning-search-area .icon-key {
+  width: 58px;
+  height: 38px;
+}
+
+.learning-search-area .icon-key img {
+  width: 20px;
+  height: 20px;
+}
+

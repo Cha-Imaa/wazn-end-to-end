@@ -1,0 +1,30 @@
+/*
+  WAZN CSS entrypoint
+  Imports are intentionally ordered to preserve the original cascade from styles.css.
+  Do not alphabetize these imports unless you also verify the UI visually.
+*/
+
+@import "./00-fonts.css";
+@import "./01-variables.css";
+@import "./02-base.css";
+@import "./03-app-shell.css";
+@import "./04-decorative-leaves.css";
+@import "./05-landing-page.css";
+@import "./06-search-box.css";
+@import "./07-arabic-keyboard.css";
+@import "./08-landing-keyboard-popover.css";
+@import "./09-landing-examples-footer.css";
+@import "./10-learning-search-keyboard.css";
+@import "./11-word-detail-panel.css";
+@import "./12-word-tree.css";
+@import "./13-focus-states.css";
+@import "./14-shared-responsive.css";
+@import "./15-word-tree-empty.css";
+@import "./16-word-breakdown.css";
+@import "./17-word-quiz.css";
+@import "./18-word-tree-animation.css";
+@import "./19-learning-layout-final.css";
+@import "./20-learning-companion-panel.css";
+@import "./21-quiz-active-tree-state.css";
+@import "./22-learning-companion-refinements.css";
+@import "./23-landing-final-overrides.css";

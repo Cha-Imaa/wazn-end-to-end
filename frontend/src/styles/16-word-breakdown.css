@@ -1,0 +1,90 @@
+/*
+ =========================
+   Learning controls and connected Arabic breakdown
+   =========================
+*/
+
+/*
+  Connected Arabic breakdown:
+  Render the word as one text node so Arabic shaping stays joined.
+  Color is applied with a clipped gradient instead of separate spans.
+*/
+
+.word-breakdown-part {
+  display: inline;
+  letter-spacing: 0;
+}
+
+.word-breakdown-part--root {
+  color: var(--color-red);
+}
+
+.word-breakdown-part--pattern {
+  color: var(--color-green-secondary);
+}
+
+/* When the detail word is the originally searched word:
+   root stays red, pattern becomes the existing orange. */
+.word-detail-panel--origin .word-breakdown-part--root {
+  color: var(--color-red);
+}
+
+.word-detail-panel--origin .word-breakdown-part--pattern {
+  color: var(--color-green-secondary);
+}
+
+@media (max-width: 1100px) {
+  .learning-search-area {
+    width: min(920px, 100%);
+    padding-inline: 0;
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .learning-search-area {
+    width: 100%;
+  }
+
+  .learning-search-area .search-row {
+    min-height: 46px;
+  }
+
+  .learning-search-area .keyboard-toggle,
+  .learning-search-area .find-root-button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .learning-search-area .keyboard-panel {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    top: auto;
+    width: auto;
+    max-height: min(72vh, 520px);
+    overflow-y: auto;
+    transform: none;
+    padding: 18px 14px 16px;
+    border-radius: 22px;
+  }
+
+  .learning-search-area .keyboard-panel::before {
+    display: none;
+  }
+
+  .learning-search-area .keyboard-row {
+    flex-wrap: wrap;
+  }
+
+  .learning-search-area .keyboard-key {
+    min-width: 42px;
+    height: 40px;
+  }
+
+  .learning-search-area .keyboard-key.space {
+    min-width: 180px;
+  }
+}
+

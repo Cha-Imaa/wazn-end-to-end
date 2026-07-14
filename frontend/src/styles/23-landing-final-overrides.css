@@ -1,0 +1,247 @@
+/* =========================
+   Landing page spacing rebalance
+   Header/logo version
+   ========================= */
+
+.app-shell-landing .main {
+  height: calc(100vh - (var(--page-padding-y) * 2) - 76px);
+  min-height: 0;
+  padding-top: clamp(62px, 8vh, 108px);
+  padding-bottom: clamp(74px, 8vh, 96px);
+}
+
+.app-shell-landing .content-column {
+  height: 100%;
+  justify-content: flex-start;
+}
+
+.app-shell-landing .hero {
+  margin-top: 0;
+  margin-bottom: clamp(28px, 3.4vh, 42px);
+}
+
+.app-shell-landing .hero-brand-lockup {
+  margin-bottom: 14px;
+}
+
+.app-shell-landing .search-area {
+  margin-top: clamp(28px, 4vh, 46px);
+}
+
+.app-shell-landing .examples-section {
+  margin-top: clamp(50px, 6vh, 72px);
+}
+
+.app-shell-landing .examples-sprout {
+  margin: 10px auto clamp(38px, 4.8vh, 56px);
+}
+
+.app-shell-landing .examples-grid {
+  margin-top: 0;
+}
+
+.app-shell-landing .footer {
+  bottom: clamp(28px, 3vh, 40px);
+}
+
+/* =========================
+   Landing page visual scale + safe footer
+   Landing only: text larger, search/cards lighter
+   ========================= */
+
+.app-shell-landing .main {
+  height: auto;
+  min-height: 0;
+  padding-top: clamp(62px, 8vh, 104px);
+  padding-bottom: 0;
+}
+
+.app-shell-landing .content-column {
+  width: min(900px, 74vw);
+  height: auto;
+  justify-content: flex-start;
+}
+
+.app-shell-landing .hero {
+  margin-top: 0;
+  margin-bottom: clamp(34px, 4.4vh, 56px);
+}
+
+.app-shell-landing .hero-brand-lockup {
+  margin-bottom: 12px;
+}
+
+.app-shell-landing .hero-english {
+  font-size: clamp(86px, 6.5vw, 124px);
+  line-height: 0.8;
+}
+
+.app-shell-landing .hero-title {
+  font-size: clamp(24px, 1.55vw, 31px);
+  margin-bottom: 8px;
+}
+
+.app-shell-landing .hero-subtitle {
+  font-size: clamp(14px, 0.95vw, 17px);
+}
+
+.app-shell-landing .search-area {
+  width: min(760px, 100%);
+  margin-top: 0;
+}
+
+.app-shell-landing .search-row {
+  min-height: 52px;
+  padding: 5px;
+  border-width: 1.5px;
+  border-radius: 13px;
+}
+
+.app-shell-landing .search-input {
+  height: 40px;
+  font-size: 21px;
+}
+
+.app-shell-landing .search-input::placeholder {
+  font-size: 16px;
+}
+
+.app-shell-landing .keyboard-toggle,
+.app-shell-landing .find-root-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+}
+
+.app-shell-landing .keyboard-icon-img,
+.app-shell-landing .search-action-icon-img {
+  width: 19px;
+  height: 19px;
+}
+
+.app-shell-landing .examples-section {
+  width: min(820px, 100%);
+  margin-top: clamp(42px, 5.4vh, 64px);
+}
+
+.app-shell-landing .examples-title {
+  font-size: clamp(25px, 1.75vw, 34px);
+}
+
+.app-shell-landing .examples-title-row {
+  grid-template-columns: 128px auto 128px;
+  gap: 20px;
+}
+
+.app-shell-landing .examples-sprout {
+  width: 32px;
+  height: 32px;
+  margin: 10px auto clamp(32px, 4vh, 46px);
+}
+
+.app-shell-landing .examples-grid {
+  width: min(820px, 100%);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(22px, 2vw, 32px);
+  margin-top: 0;
+}
+
+
+.app-shell-landing .example-card {
+  min-height: clamp(164px, 18vh, 184px);
+  padding: 22px 16px 20px;
+  border-radius: 16px;
+}
+
+.app-shell-landing .example-card-icon,
+.app-shell-landing .example-card img {
+  height: clamp(48px, 3.6vw, 60px);
+  margin-bottom: 14px;
+}
+
+.app-shell-landing .example-arabic {
+  font-size: clamp(28px, 1.75vw, 34px);
+  margin-bottom: 10px;
+}
+
+.app-shell-landing .example-english {
+  font-size: 14px;
+  padding-bottom: 11px;
+}
+
+.app-shell-landing .footer {
+  position: relative;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  margin: clamp(34px, 4.5vh, 56px) auto clamp(24px, 3vh, 34px);
+  padding: 0;
+}
+
+@media (max-width: 1100px) {
+  .app-shell-landing .content-column {
+    width: min(860px, 88vw);
+  }
+
+  .app-shell-landing .examples-grid {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .app-shell-landing .main {
+    padding-top: 44px;
+  }
+
+  .app-shell-landing .content-column,
+  .app-shell-landing .search-area,
+  .app-shell-landing .examples-section,
+  .app-shell-landing .examples-grid {
+    width: 100%;
+  }
+
+  .app-shell-landing .examples-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .app-shell-landing .footer {
+    margin-top: 30px;
+  }
+}
+
+.same-pattern-card {
+  min-height: 70px;
+  padding: 11px 10px 11px;
+}
+
+.app-shell-landing .example-card::after {
+  /* adjust landing-page leaf location here */
+  right: 7px;
+  bottom: 6px;
+
+  /* adjust landing-page leaf size here */
+  width: 42px;
+  height: 42px;
+
+  /* adjust landing-page leaf opacity here */
+  opacity: 0.34;
+}
+
+.app-shell-landing .example-english {
+  padding-bottom: 9px;
+}
+
+.app-shell-landing .example-english::after {
+  width: 22px;
+  height: 1.5px;
+  bottom: 0;
+}
+
+.app-shell-landing .example-card::after {
+  right: -10px;
+  bottom: -3px;
+  width: 60px;
+  height: 60px;
+  opacity: 0.54;
+}
+

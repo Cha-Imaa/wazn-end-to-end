@@ -1,0 +1,230 @@
+/*
+ =========================
+   Landing examples
+   =========================
+*/
+
+.result-placeholder,
+.empty-result-panel,
+.outcome-panel,
+.outcome-panel:empty,
+.result-panel:empty {
+  display: none !important;
+}
+
+.result-panel {
+  width: min(920px, 100%);
+  min-height: 42px;
+  margin-top: 16px;
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 16px;
+  color: var(--color-text-black);
+  background: var(--color-key-default);
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+}
+
+.result-panel strong {
+  color: var(--color-green-primary);
+  font-family: "Amiri", serif;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.examples-section {
+  width: min(980px, 100%);
+  margin-top: clamp(42px, 5vh, 70px);
+  text-align: center;
+}
+
+.examples-title-row {
+  display: grid;
+  grid-template-columns: 140px auto 140px;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  margin-bottom: 2px;
+}
+
+.examples-title-row::before,
+.examples-title-row::after {
+  content: "";
+  height: 1.5px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(184, 154, 79, 0.72),
+    transparent
+  );
+  border-radius: 999px;
+}
+
+.examples-title {
+  margin: 0;
+  font-family: "EB Garamond", serif;
+  font-size: clamp(18px, 1.15vw, 24px);
+  font-weight: 500;
+  color: var(--color-green-primary);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.examples-sprout {
+  display: block;
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  opacity: 0.52;
+  pointer-events: none;
+  user-select: none;
+  margin: 14px auto 18px;
+}
+
+.examples-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(170px, 1fr));
+  gap: clamp(22px, 2vw, 34px);
+  width: min(980px, 100%);
+}
+
+.example-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 170px;
+  padding: 24px 20px 20px;
+  border-radius: 18px;
+  border: 2px solid var(--color-border-rest);
+  background: var(--color-panel-surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.example-card::after {
+  content: "";
+  position: absolute;
+
+  /* Adjust leaf location here */
+  right: 80px;
+  bottom: 6px;
+
+  /* Adjust leaf size here */
+  width: 46px;
+  height: 46px;
+
+  background-image: url("/assets/decor/leaves-bottom-right.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+
+  /* Adjust leaf opacity here */
+  opacity: 0.68;
+
+  pointer-events: none;
+}
+
+button.example-card {
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  appearance: none;
+  text-align: center;
+}
+
+.example-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(184, 154, 79, 0.78);
+  background: var(--color-panel-surface);
+  box-shadow:
+    0 8px 18px rgba(184, 154, 79, 0.08),
+    0 0 0 2px rgba(184, 154, 79, 0.12);
+}
+
+.example-card-icon,
+.example-card img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: auto;
+  height: clamp(52px, 4vw, 72px);
+  object-fit: contain;
+  margin-bottom: 16px;
+}
+
+.example-arabic {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 6px;
+  font-family: "Amiri", serif;
+  font-size: clamp(30px, 2vw, 40px);
+  line-height: 1.05;
+  color: var(--color-card-text);
+  font-weight: 700;
+}
+
+.example-english {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding-bottom: 10px;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 400;
+  color: var(--color-card-text);
+}
+
+.example-english::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 1px;
+  width: 22px;
+  height: 1.5px;
+  transform: translateX(-50%);
+  background: rgba(184, 154, 79, 0.82);
+  border-radius: 999px;
+}
+
+.footer {
+  position: absolute;
+  left: 32px;
+  right: 32px;
+  bottom: 26px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #31552f;
+  pointer-events: none;
+  opacity: 1;
+}
+
+.footerText {
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.footerLogo {
+  height: 28px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  display: block;
+}

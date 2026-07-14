@@ -1,0 +1,242 @@
+{
+  "fa3ila": {
+    "id": "fa3ila",
+    "arabic": "فَعِلَ",
+    "transliteration": "faʿila",
+    "name": "basic past-tense verb pattern",
+    "short_explanation": "a basic verb pattern often used for states or actions",
+    "meaning_effect": "often expresses the basic action or state connected to the root",
+    "verified": false,
+    "demo_safe": true
+  },
+  "yaf3alu": {
+    "id": "yaf3alu",
+    "arabic": "يَفْعَلُ",
+    "transliteration": "yafʿalu",
+    "name": "present-tense verb pattern",
+    "short_explanation": "a present-tense verb pattern for ongoing or repeated action",
+    "meaning_effect": "often expresses doing the root action now or generally",
+    "verified": false,
+    "demo_safe": true
+  },
+  "fa33ala": {
+    "id": "fa33ala",
+    "arabic": "فَعَّلَ",
+    "transliteration": "faʿʿala",
+    "name": "intensive verb pattern",
+    "short_explanation": "a verb pattern that often adds causing or intensifying",
+    "meaning_effect": "often means making someone or something do the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "fi3l": {
+    "id": "fi3l",
+    "arabic": "فِعْل",
+    "transliteration": "fiʿl",
+    "name": "noun pattern",
+    "short_explanation": "a short noun pattern for core concepts",
+    "meaning_effect": "often forms an abstract noun connected to the root",
+    "verified": false,
+    "demo_safe": true
+  },
+  "faa3il": {
+    "id": "faa3il",
+    "arabic": "فَاعِل",
+    "transliteration": "fāʿil",
+    "name": "active participle pattern",
+    "short_explanation": "a pattern for the doer of an action",
+    "meaning_effect": "often means the person or thing doing the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "maf3uul": {
+    "id": "maf3uul",
+    "arabic": "مَفْعُول",
+    "transliteration": "mafʿūl",
+    "name": "passive participle pattern",
+    "short_explanation": "a pattern for something affected by an action",
+    "meaning_effect": "often means the thing receiving or having the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "taf3iil": {
+    "id": "taf3iil",
+    "arabic": "تَفْعِيل",
+    "transliteration": "tafʿīl",
+    "name": "verbal noun pattern",
+    "short_explanation": "a noun pattern often linked to Form II verbs",
+    "meaning_effect": "often names the process of causing or doing the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "mufa33il": {
+    "id": "mufa33il",
+    "arabic": "مُفَعِّل",
+    "transliteration": "mufaʿʿil",
+    "name": "active participle pattern",
+    "short_explanation": "a pattern for the doer of a Form II action",
+    "meaning_effect": "often means someone who causes or teaches the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "fa3ala": {
+    "id": "fa3ala",
+    "arabic": "فَعَلَ",
+    "transliteration": "faʿala",
+    "name": "basic past-tense verb pattern",
+    "short_explanation": "a basic verb pattern often used for the core action of a root",
+    "meaning_effect": "often expresses the basic action connected to the root meaning",
+    "verified": false,
+    "demo_safe": true
+  },
+  "yaf3ulu": {
+    "id": "yaf3ulu",
+    "arabic": "يَفْعُلُ",
+    "transliteration": "yafʿulu",
+    "name": "present-tense verb pattern",
+    "short_explanation": "a present-tense verb pattern for ongoing or repeated action",
+    "meaning_effect": "often expresses doing the root action now or generally",
+    "verified": false,
+    "demo_safe": true
+  },
+  "fa3l": {
+    "id": "fa3l",
+    "arabic": "فَعْل",
+    "transliteration": "faʿl",
+    "name": "noun pattern",
+    "short_explanation": "a short noun pattern often used for simple concepts",
+    "meaning_effect": "often forms a compact noun connected to the root",
+    "verified": false,
+    "demo_safe": true
+  },
+  "fi3aala": {
+    "id": "fi3aala",
+    "arabic": "فِعَالَة",
+    "transliteration": "fiʿāla",
+    "name": "verbal noun pattern",
+    "short_explanation": "a noun pattern often used for activities or practices",
+    "meaning_effect": "often names an activity related to the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "maf3ala": {
+    "id": "maf3ala",
+    "arabic": "مَفْعَلَة",
+    "transliteration": "mafʿala",
+    "name": "place noun pattern",
+    "short_explanation": "a noun pattern often used for places",
+    "meaning_effect": "often means a place connected to the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "if3al": {
+    "id": "if3al",
+    "arabic": "اِفْعَلْ",
+    "transliteration": "ifʿal",
+    "name": "imperative verb pattern",
+    "short_explanation": "a command pattern for asking someone to do an action",
+    "meaning_effect": "often expresses a direct command using the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "fu3laan": {
+    "id": "fu3laan",
+    "arabic": "فُعْلَان",
+    "transliteration": "fuʿlān",
+    "name": "noun pattern",
+    "short_explanation": "a noun pattern used in some common Arabic words",
+    "meaning_effect": "often forms a noun connected to the root meaning",
+    "verified": false,
+    "demo_safe": true
+  },
+  "fu33aal": {
+    "id": "fu33aal",
+    "arabic": "فُعَّال",
+    "transliteration": "fuʿʿāl",
+    "name": "plural noun pattern",
+    "short_explanation": "a plural pattern often used for groups of people",
+    "meaning_effect": "often means multiple people doing the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "fa33aala": {
+    "id": "fa33aala",
+    "arabic": "فَعَّالَة",
+    "transliteration": "faʿʿāla",
+    "name": "tool noun pattern",
+    "short_explanation": "a noun pattern often used for tools or devices",
+    "meaning_effect": "often means a tool connected to the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "ifti3aal": {
+    "id": "ifti3aal",
+    "arabic": "اِفْتِعَال",
+    "transliteration": "iftiʿāl",
+    "name": "verbal noun pattern",
+    "short_explanation": "a noun pattern often linked to Form VIII verbs",
+    "meaning_effect": "often names a process or activity connected to the root",
+    "verified": false,
+    "demo_safe": true
+  },
+  "mustaf3il": {
+    "id": "mustaf3il",
+    "arabic": "مُسْتَفْعِل",
+    "transliteration": "mustafʿil",
+    "name": "active participle pattern",
+    "short_explanation": "a pattern for the doer of a Form X action",
+    "meaning_effect": "often means someone actively seeking or doing the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "fa3la": {
+    "id": "fa3la",
+    "arabic": "فَعْلَة",
+    "transliteration": "faʿla",
+    "name": "single-instance noun pattern",
+    "short_explanation": "a noun pattern often used for one instance of an action",
+    "meaning_effect": "often means one act or instance connected to the root",
+    "verified": false,
+    "demo_safe": true
+  },
+  "maf3al": {
+    "id": "maf3al",
+    "arabic": "مَفْعَل",
+    "transliteration": "mafʿal",
+    "name": "place or result noun pattern",
+    "short_explanation": "a noun pattern often used for places, results, or views",
+    "meaning_effect": "often forms a noun connected to where or how the root action appears",
+    "verified": false,
+    "demo_safe": true
+    },
+    "ifta3ala": {
+    "id": "ifta3ala",
+    "arabic": "اِفْتَعَلَ",
+    "transliteration": "iftaʿala",
+    "name": "Form VIII past-tense verb pattern",
+    "short_explanation": "a verb pattern often used for actions involving effort, interaction, or involvement",
+    "meaning_effect": "often expresses engaging in the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "yafta3ilu": {
+    "id": "yafta3ilu",
+    "arabic": "يَفْتَعِلُ",
+    "transliteration": "yaftaʿilu",
+    "name": "Form VIII present-tense verb pattern",
+    "short_explanation": "a present-tense pattern for ongoing Form VIII actions",
+    "meaning_effect": "often expresses currently or generally engaging in the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "fi3aalii": {
+    "id": "fi3aalii",
+    "arabic": "فِعَالِيّ",
+    "transliteration": "fiʿālī",
+    "name": "relational adjective pattern",
+    "short_explanation": "an adjective pattern often used to describe relation to a noun or field",
+    "meaning_effect": "often means related to the root concept",
+    "verified": false,
+    "demo_safe": true
+  }
+}

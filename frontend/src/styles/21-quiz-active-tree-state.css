@@ -1,0 +1,162 @@
+/*
+ =========================
+   Quiz active tree state
+   =========================
+*/
+
+/*
+.learning-panels--quiz-active .big-leaf-content,
+.learning-panels--quiz-active .word-tree-generated-text,
+.learning-panels--quiz-active [id^="BigLeafDivider_"] {
+  opacity: 0.08 !important;
+}
+
+.learning-panels--quiz-active .big-leaf-node {
+  pointer-events: none;
+}
+
+.learning-panels--quiz-active .big-leaf-shape {
+  fill: rgba(78, 129, 116, 0.24);
+  stroke: rgba(78, 129, 116, 0.36);
+}
+
+.learning-panels--quiz-active .big-leaf-node--origin .big-leaf-shape {
+  fill: rgba(191, 143, 84, 0.3);
+  stroke: rgba(191, 143, 84, 0.46);
+}
+*/
+
+.tree-quiz-overlay {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  max-width: 270px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(151, 166, 151, 0.38);
+  background: rgba(250, 248, 239, 0.9);
+  box-shadow: 0 14px 28px rgba(37, 89, 74, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.36) inset;
+  pointer-events: none;
+}
+
+.tree-quiz-overlay-title {
+  margin: 0 0 4px;
+  color: var(--color-green-primary);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.tree-quiz-overlay-text {
+  margin: 0;
+  color: var(--color-green-secondary);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.companion-empty-state {
+  height: 100%;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.companion-empty-title {
+  margin: 0 0 8px;
+  font-family: "EB Garamond", serif;
+  font-size: 30px;
+  color: var(--color-green-primary);
+  font-weight: 700;
+}
+
+.companion-empty-text {
+  max-width: 280px;
+  margin: 0;
+  color: var(--color-green-secondary);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+@media (max-width: 1200px) {
+  .learning-panels {
+    height: auto;
+    min-height: calc(100vh - 40px);
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .learning-results-panel {
+    height: calc(100vh - 40px);
+    min-height: 620px;
+    padding: 22px 28px 18px;
+  }
+
+  .learning-companion-panel {
+    min-height: 620px;
+  }
+}
+
+@media (max-width: 760px) {
+  body {
+    padding: 18px;
+  }
+
+  .learning-results-panel {
+    padding: 18px;
+    border-radius: 18px;
+    min-height: 560px;
+  }
+
+  .learning-search-area {
+    width: 100%;
+  }
+
+  .learning-companion-panel {
+    min-height: 560px;
+    border-radius: 22px;
+  }
+
+  .companion-tabs {
+    min-height: 58px;
+  }
+
+  .companion-tab {
+    font-size: 14px;
+  }
+}
+
+.learning-panels {
+  width: min(100%, 1480px);
+  margin: 0 auto;
+
+  min-height: calc(100vh - 64px);
+  height: calc(100vh - 64px);
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* Bigger tree visibility */
+.tree-stage {
+  padding: 0;
+}
+
+.word-tree {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.word-tree-svg {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  overflow: visible;
+}

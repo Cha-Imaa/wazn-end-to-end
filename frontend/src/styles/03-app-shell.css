@@ -1,0 +1,74 @@
+/*
+ =========================
+   Shared shell
+   =========================
+*/
+
+.page {
+  min-height: calc(100vh - 64px);
+  display: flex;
+}
+
+.app-shell {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 64px);
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.app-shell-landing {
+  background: radial-gradient(
+      circle at 50% 28%,
+      rgba(255, 255, 250, 0.58) 0%,
+      rgba(241, 242, 235, 0.92) 32%,
+      rgba(235, 238, 228, 0.98) 100%
+    ),
+    linear-gradient(180deg, #fbfaf4 0%, #f1f2eb 48%, #ecefe4 100%);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.app-shell-learning {
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.app-shell-landing {
+  min-height: calc(100vh - (var(--page-padding-y) * 2));
+}
+
+.app-shell-landing .main {
+  min-height: calc(
+    100vh - (var(--page-padding-y) * 2) - 76px
+  );
+  padding-top: clamp(6px, 1.4vh, 18px);
+  padding-bottom: 84px;
+  align-items: flex-start;
+}
+
+.app-shell-landing .hero {
+  margin-top: clamp(8px, 1.8vh, 20px);
+  margin-bottom: clamp(16px, 2vh, 28px);
+}
+
+.app-shell-landing .search-area {
+  margin-top: clamp(10px, 1.6vh, 18px);
+}
+
+.app-shell-landing .examples-section {
+  margin-top: clamp(36px, 4.4vh, 62px);
+}
+
+.app-shell-landing .example-card {
+  min-height: clamp(142px, 17vh, 170px);
+  padding-top: clamp(18px, 2.2vh, 24px);
+  padding-bottom: clamp(16px, 2vh, 20px);
+}
+

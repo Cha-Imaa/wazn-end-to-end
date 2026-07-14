@@ -1,0 +1,29 @@
+Write the WAZN explanation fields for this selected Arabic word.
+
+Use only the input below.
+
+Return valid JSON only.
+
+The JSON must contain exactly these fields:
+
+{
+"explanation": "string",
+"pattern_explanation": "string",
+"same_pattern_explanation": "string"
+}
+
+Teaching goal:
+Help the learner understand how the root meaning and the pattern role combine to lead toward the word meaning.
+
+Important:
+
+* Do not add Arabic words that are not in the input.
+* Do not add same-pattern examples that are not in the input.
+* Do not add grammar details that are not in the input.
+* Keep the explanation beginner-friendly.
+* Keep pattern_explanation short.
+* Make same_pattern_explanation focus on transfer learning across same-pattern cards.
+
+Input:
+
+{llm_input}

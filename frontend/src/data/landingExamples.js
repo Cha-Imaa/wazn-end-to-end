@@ -1,0 +1,38 @@
+export const landingExamples = [
+  {
+    id: "school",
+    arabic: "مَدْرَسَة",
+    plain: "مدرسة",
+    english: "school",
+    imageSrc: "/assets/cards/school.png",
+    alt: "School illustration",
+    staticDataKey: "مدرسة",
+  },
+  {
+    id: "library",
+    arabic: "مَكْتَبَة",
+    plain: "مكتبة",
+    english: "library",
+    imageSrc: "/assets/cards/library.png",
+    alt: "Library illustration",
+    staticDataKey: "مكتبة",
+  },
+  {
+    id: "key",
+    arabic: "مِفْتَاح",
+    plain: "مفتاح",
+    english: "key",
+    imageSrc: "/assets/cards/key.png",
+    alt: "Key illustration",
+    staticDataKey: "مفتاح",
+  },
+  {
+    id: "trade",
+    arabic: "تِجَارَة",
+    plain: "تجارة",
+    english: "trade",
+    imageSrc: "/assets/cards/trade.png",
+    alt: "Trade illustration",
+    staticDataKey: "تجارة",
+  },
+];

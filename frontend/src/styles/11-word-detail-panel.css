@@ -1,0 +1,503 @@
+/*
+ =========================
+   Learning mode area
+   Tree OR quiz, never both
+   =========================
+*/
+
+.learning-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #31552f;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.learning-footer-icon {
+  display: block;
+  width: 30px;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.95;
+}
+
+.word-detail-panel {
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 64px);
+  border: 1.5px solid var(--color-border-rest);
+  border-radius: 28px;
+  background: radial-gradient(
+      circle at 50% 12%,
+      rgba(255, 255, 250, 0.78) 0%,
+      rgba(250, 248, 239, 0.95) 42%,
+      rgba(241, 242, 235, 0.98) 100%
+    );
+  box-shadow: -18px 22px 44px rgba(37, 89, 74, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.46) inset;
+  padding: 18px 20px 18px;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  opacity: 0;
+  transform: translateX(34px);
+  pointer-events: none;
+  transition: opacity 240ms ease,
+    transform 260ms ease;
+}
+
+.word-detail-panel--open {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.word-detail-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-green-primary);
+  font-size: 34px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background-color 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
+}
+
+.word-detail-close:hover {
+  background: rgba(78, 129, 116, 0.12);
+  color: var(--color-green-secondary);
+  transform: translateY(-1px);
+}
+
+.word-detail-shell-content {
+  height: auto;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: initial;
+}
+
+.word-detail-kicker {
+  margin: 4px 0 10px;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-green-secondary);
+}
+
+/* Hide the oversized upper Arabic word and its meaning */
+.word-detail-arabic,
+.word-detail-english {
+  display: none;
+}
+
+/* Hide the divider below the removed word/meaning area */
+.word-detail-header + .word-detail-divider {
+  display: none;
+}
+
+.word-detail-english {
+  margin: 8px 0 0;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--color-text-black);
+  text-align: center;
+}
+
+/* .word-detail-divider {
+  width: 100%;
+  height: 1px;
+  margin: 16px 0;
+  background: rgba(37, 89, 74, 0.24);
+} */
+
+.word-detail-divider {
+  width: 100%;
+  height: 22px;
+  margin: 8px 0;
+  background-image: url("/assets/decor/panel-divider.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: min(100%, 280px) auto;
+}
+
+.word-detail-placeholder {
+  display: none;
+}
+
+/*
+ =========================
+   Word detail content
+   =========================
+*/
+
+/* Header: Arabic word + English meaning */
+
+.word-detail-header {
+  padding-top: 0;
+  text-align: center;
+}
+
+/* Shared section layout */
+
+.word-detail-section {
+  margin-top: 0px;
+  text-align: center;
+}
+
+.word-detail-section:first-child {
+  margin-top: 0;
+}
+
+/* Shared section title: Pattern, Word Breakdown, Explanation */
+
+.word-detail-section-label {
+  margin: 0 0 10px;
+  font-family: "Fraunces", sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--color-green-primary);
+}
+
+/* Arabic section title, if used */
+
+.word-detail-section-label-arabic {
+  font-family: "Noto Naskh Arabic", serif;
+  font-size: 19px;
+  color: var(--color-green-secondary);
+}
+
+/* Pattern section */
+
+.word-detail-pattern {
+  margin: 0;
+  font-family: "Noto Naskh Arabic", serif;
+  font-size: 40px;
+  line-height: 1.15;
+  font-weight: 600;
+  color: var(--color-green-secondary);
+}
+
+.word-detail-pattern-meaning {
+  max-width: 380px;
+  margin: 8px auto 0;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.35;
+  font-style: italic;
+  color: var(--color-text-black);
+  white-space: normal;
+  overflow-wrap: break-word;
+  text-align: center;
+}
+
+/* Word Breakdown section */
+
+.word-detail-breakdown-word {
+  margin: 2px 0 4px;
+  font-family: "Noto Naskh Arabic", serif;
+  font-size: 42px;
+  line-height: 1.25;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Word Breakdown legend */
+
+.word-detail-legend {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 22px;
+  margin-top: 6px;
+}
+
+.word-detail-legend-item {
+  display: grid;
+  grid-template-columns: 12px auto;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--color-text-black);
+  text-align: left;
+}
+
+.word-detail-legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  display: block;
+}
+
+.word-detail-legend-dot--root {
+  background: var(--color-red);
+}
+
+.word-detail-legend-dot--pattern {
+  background: var(--color-green-secondary);
+}
+
+/* Explanation section */
+
+.word-detail-explanation-section {
+  text-align: left;
+}
+
+.word-detail-explanation-section .word-detail-section-label {
+  text-align: left;
+}
+
+.word-detail-explanation {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-black);
+}
+
+/*
+ =========================
+   Same-pattern navigation cards
+   =========================
+*/
+
+.same-pattern-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.same-pattern-card {
+  min-height: 70px;
+  width: 100%;
+  padding: 11px 10px 11px 10px;
+  border-radius: 14px;
+  border: 1.5px solid var(--color-border-rest);
+  background: var(--color-panel-surface);
+  color: var(--color-card-text);
+  box-shadow: 0 8px 18px rgba(37, 89, 74, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.34) inset;
+  text-align: center;
+  cursor: pointer;
+  appearance: none;
+  font: inherit;
+  transition: transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    filter 180ms ease;
+}
+
+.same-pattern-arabic {
+  margin: 8px 0px 4px;
+  font-family: "Amiri", serif;
+  font-size: 25px;
+  line-height: 1.05;
+  font-weight: 700;
+  color: var(--color-card-text);
+}
+
+.same-pattern-english {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  line-height: 1.0;
+  color: var(--color-card-text);
+}
+
+.word-detail-panel {
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 64px);
+  border: 1.5px solid var(--color-border-rest);
+  border-radius: 28px;
+  background: radial-gradient(
+      circle at 50% 12%,
+      rgba(255, 255, 250, 0.78) 0%,
+      rgba(250, 248, 239, 0.95) 42%,
+      rgba(241, 242, 235, 0.98) 100%
+    );
+  box-shadow: -18px 22px 44px rgba(37, 89, 74, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.46) inset;
+  padding: 22px 24px 24px;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  opacity: 0;
+  transform: translateX(34px);
+  pointer-events: none;
+  transition: opacity 240ms ease,
+    transform 260ms ease;
+}
+
+.word-detail-shell-content {
+  height: auto;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: initial;
+  gap: 2px;
+}
+
+.word-detail-divider {
+  width: 100%;
+  height: 20px;
+  margin: 15px 0;
+  background-image: url("/assets/decor/panel-divider.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: min(100%, 270px) auto;
+}
+
+.word-detail-section-label {
+  margin: 0 0 12px;
+  font-family: "Fraunces", sans-serif;
+  font-size: 16px;
+  line-height: 1.35;
+  font-weight: 600;
+  color: var(--color-green-primary);
+}
+
+.word-detail-pattern-meaning {
+  max-width: 380px;
+  margin: 10px auto 0;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  font-style: italic;
+  color: var(--color-text-black);
+  white-space: normal;
+  overflow-wrap: break-word;
+  text-align: center;
+}
+.word-detail-breakdown-word {
+  margin: 2px 0 8px;
+  font-family: "Noto Naskh Arabic", serif;
+  font-size: 42px;
+  line-height: 1.2;
+  font-weight: 600;
+  text-align: center;
+}
+
+.word-detail-legend {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.word-detail-explanation {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--color-text-black);
+}
+.same-pattern-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 4px;
+}
+
+.same-pattern-card {
+  min-height: 96px;
+  width: 100%;
+  padding: 18px 12px 16px;
+  border-radius: 16px;
+  border: 1.5px solid var(--color-border-rest);
+  background: rgba(255, 255, 250, 0.62);
+  color: var(--color-card-text);
+  box-shadow: 0 10px 20px rgba(37, 89, 74, 0.07),
+    0 0 0 1px rgba(255, 255, 255, 0.38) inset;
+  text-align: center;
+  cursor: pointer;
+  appearance: none;
+  font: inherit;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  transition: transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    filter 180ms ease;
+}
+
+.same-pattern-arabic {
+  margin: 0 0 8px;
+  font-family: "Amiri", serif;
+  font-size: 26px;
+  line-height: 1.05;
+  font-weight: 700;
+  color: var(--color-card-text);
+}
+
+.same-pattern-english {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  line-height: 1.2;
+  color: var(--color-card-text);
+}
+.same-pattern-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-border-active);
+  background: var(--color-panel-surface);
+  box-shadow: 0 14px 26px rgba(37, 89, 74, 0.11),
+    0 0 0 2px var(--color-active-ring);
+}
+
+
+
+
+.word-detail-panel .same-pattern-grid .same-pattern-card {
+  min-height: 90px;
+  padding: 20px 14px 18px;
+}
+
+.word-detail-panel .same-pattern-grid .same-pattern-arabic {
+  margin: 0 0 10px;
+}
+
+.word-detail-panel .same-pattern-grid .same-pattern-english {
+  line-height: 1.25;
+}
+
+.word-detail-panel .same-pattern-grid .same-pattern-card {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.word-detail-panel .same-pattern-grid .same-pattern-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(184, 154, 79, 0.78);
+  background: var(--color-panel-surface);
+  box-shadow:
+    0 8px 18px rgba(184, 154, 79, 0.08),
+    0 0 0 2px rgba(184, 154, 79, 0.12);
+}

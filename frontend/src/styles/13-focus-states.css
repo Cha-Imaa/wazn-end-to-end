@@ -1,0 +1,22 @@
+/*
+ =========================
+   Focus states
+   =========================
+*/
+
+.example-card:focus-visible,
+.keyboard-key:focus-visible,
+.find-root-button:focus-visible,
+.keyboard-toggle:focus-visible,
+.search-input:focus-visible {
+  outline: 2px solid var(--color-border-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/*
+ =========================
+   Responsive
+   =========================
+*/
+

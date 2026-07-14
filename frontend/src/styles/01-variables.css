@@ -1,0 +1,62 @@
+:root {
+  --color-green-primary: #25594a;
+  --color-green-secondary: #4e8174;
+  --color-olive-bg: #97a697;
+  --color-cream-bg: #f1f2eb;
+  --color-panel-surface: #faf8ef;
+  --color-key-lower: #e6e9e0;
+  --color-key-default: #f4f3eb;
+  --color-orange: #bf8f54;
+  --color-red: #a65149;
+  --color-text-black: #363d01;
+  --color-card-text: #363d01;
+  --color-border-accent: #97a697;
+  --border-soft: rgba(37, 89, 74, 0.2);
+  --border-medium: rgba(37, 89, 74, 0.34);
+  --border-key: rgba(37, 89, 74, 0.26);
+  --shadow-green-soft: rgba(37, 89, 74, 0.12);
+  --shadow-green-subtle: rgba(37, 89, 74, 0.08);
+  --accent-orange-soft: rgba(191, 143, 84, 0.12);
+  --shadow-soft: 0 14px 36px rgba(37, 89, 74, 0.13);
+  --color-border-rest: rgba(151, 166, 151, 0.55);
+  --color-border-active: #97a697;
+  --color-active-ring: rgba(151, 166, 151, 0.26);
+  --page-padding-y: 32px;
+  --page-padding-x: 100px;
+  /* Learning page tuning controls */
+  --learning-quiz-panel-width: 280px;
+  --learning-quiz-panel-width-detail-open: 220px;
+  --learning-quiz-panel-collapsed-width: 54px;
+  --learning-quiz-panel-gap: 12px;
+  --learning-quiz-panel-gap-detail-open: 10px;
+  --learning-quiz-card-padding-y: 14px;
+  --learning-quiz-card-padding-x: 14px;
+  --learning-quiz-card-radius: 20px;
+  --learning-quiz-option-min-height: 40px;
+  --learning-quiz-option-gap: 8px;
+  --learning-quiz-feedback-min-height: 120px;
+  --learning-workspace-min-height: 0;
+  --learning-workspace-transition: 220ms ease;
+  --color-gold: #b89a4f;
+  --color-gold-ring: rgba(184, 154, 79, 0.24);
+  --shadow-gold-soft: rgba(184, 154, 79, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--color-olive-bg);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: var(--page-padding-y) var(--page-padding-x);
+  overflow-x: hidden;
+  background: var(--color-olive-bg);
+  color: var(--color-text-black);
+  font-family: "Inter", sans-serif;
+}

@@ -1,0 +1,175 @@
+/*
+ =========================
+   Final stable learning layout
+   One source of truth for all states
+   =========================
+*/
+
+.learning-search-area {
+  grid-row: 1;
+  flex-shrink: 0;
+}
+
+.learning-footer {
+  grid-row: 3;
+  min-height: 34px;
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+/* Tree viewport */
+
+/* Tree wrapper */
+
+/* Force the SVG to obey the tree viewport in every state */
+
+/*
+ =========================
+   Added learning workspace + mode controls
+   =========================
+*/
+
+.learning-controls {
+  position: relative;
+  z-index: 5;
+  width: min(980px, 100%);
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.learning-mode-toggle,
+.learning-control-button {
+  min-height: 38px;
+  padding: 8px 14px;
+  border: 1px solid rgba(37, 89, 74, 0.18);
+  border-radius: 999px;
+  background: rgba(250, 248, 239, 0.72);
+  color: var(--color-green-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(37, 89, 74, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+  transition: transform 150ms ease,
+    border-color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease,
+    color 150ms ease;
+}
+
+.learning-mode-toggle:hover,
+.learning-control-button:hover {
+  transform: translateY(-1px);
+  border-color: var(--color-border-active);
+  background: var(--color-panel-surface);
+  box-shadow: 0 12px 24px rgba(37, 89, 74, 0.1),
+    0 0 0 3px var(--color-active-ring);
+}
+
+.learning-mode-toggle:focus-visible,
+.learning-control-button:focus-visible {
+  outline: 2px solid var(--color-border-accent);
+  outline-offset: 3px;
+}
+
+.learning-mode-toggle.is-active,
+.learning-control-button.is-active,
+.learning-mode-toggle[aria-pressed="true"],
+.learning-control-button[aria-pressed="true"] {
+  border-color: var(--color-green-primary);
+  background: var(--color-green-primary);
+  color: var(--color-panel-surface);
+  box-shadow: 0 10px 20px rgba(37, 89, 74, 0.16),
+    0 0 0 2px rgba(37, 89, 74, 0.16);
+}
+
+.learning-control-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+}
+
+.learning-control-label {
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .learning-controls {
+    width: 100%;
+    margin-bottom: 10px;
+    justify-content: stretch;
+  }
+
+  .learning-mode-toggle,
+  .learning-control-button {
+    flex: 1 1 120px;
+    min-height: 36px;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}
+
+.learning-results-panel {
+  position: relative;
+}
+
+.learning-logo-link {
+  position: absolute;
+  top: 28px;
+  left: 20px;
+  z-index: 7;
+
+  width: 80px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+
+  display: block;
+  cursor: pointer;
+  opacity: 0.88;
+
+  transition:
+    transform 160ms ease,
+    opacity 160ms ease,
+    filter 160ms ease;
+}
+
+.learning-logo-link:hover,
+.learning-logo-link:focus-visible {
+  opacity: 1;
+  transform: translateY(-1px);
+  filter: drop-shadow(0 5px 8px rgba(37, 89, 74, 0.15));
+}
+
+.learning-logo-link:focus-visible {
+  outline: 2px solid rgba(78, 129, 116, 0.42);
+  outline-offset: 5px;
+  border-radius: 6px;
+}
+
+.learning-logo-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+@media (max-width: 760px) {
+  .learning-logo-link {
+    top: 20px;
+    left: 22px;
+    width: 62px;
+  }
+}

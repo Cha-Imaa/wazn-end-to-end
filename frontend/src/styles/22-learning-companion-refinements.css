@@ -1,0 +1,118 @@
+/* =========================
+   Final learning companion refinements
+   ========================= */
+
+/* Details / Quiz tab image icons */
+.companion-tab-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  object-fit: contain;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.companion-tab--active .companion-tab-icon {
+  width: 19px;
+  height: 19px;
+}
+
+.companion-tab:disabled .companion-tab-icon {
+  opacity: 0.45;
+}
+
+/* Normal clicked leaf:
+   root = red, pattern = green */
+.word-breakdown-part--root {
+  color: var(--color-red);
+}
+
+.word-breakdown-part--pattern {
+  color: var(--color-green-secondary);
+}
+
+/* Searched/origin word:
+   root = red, pattern = existing orange */
+.word-detail-panel--origin .word-breakdown-part--root {
+  color: var(--color-red);
+}
+
+.word-detail-panel--origin .word-breakdown-part--pattern {
+  color: var(--color-green-secondary);
+}
+
+/* Smaller helper text under the tree */
+.learning-footer {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+/* Normal clicked leaf:
+   root = red, pattern = green */
+.word-breakdown-part--root {
+  color: var(--color-red);
+}
+
+.word-breakdown-part--pattern {
+  color: var(--color-green-secondary);
+}
+
+/* Searched/origin word:
+   root = red, pattern = existing orange */
+.word-detail-panel--origin .word-breakdown-part--root {
+  color: var(--color-red);
+}
+
+.word-detail-panel--origin .word-breakdown-part--pattern {
+  color: var(--color-green-secondary);
+}
+
+.search-clear-button {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-green-secondary);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  opacity: 0.9;
+  transition:
+    opacity 140ms ease,
+    background-color 140ms ease,
+    transform 140ms ease;
+}
+
+.search-clear-button:hover {
+  opacity: 1;
+  background: rgba(78, 129, 116, 0.12);
+  transform: translateY(-1px);
+}
+
+.search-clear-button:focus-visible {
+  outline: 2px solid var(--color-border-accent);
+  outline-offset: 2px;
+}
+
+.search-clear-icon-img {
+  display: block;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.learning-search-area .search-clear-button {
+  width: 34px;
+  height: 34px;
+}
+
+.learning-search-area .search-clear-icon-img {
+  width: 16px;
+  height: 16px;
+}
+
