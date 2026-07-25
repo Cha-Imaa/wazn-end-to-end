@@ -75,7 +75,7 @@ def extract_letters_by_role(
     letters: list[str] = []
 
     for segment in segments:
-        segment_role = segment.get("role")
+        segment_role = segment.get("type") or segment.get("role")
         segment_text = segment.get("text") or segment.get("letter") or ""
 
         if segment_role != role:
