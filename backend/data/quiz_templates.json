@@ -25,5 +25,23 @@
     "explanation_template": "{word_arabic} follows the pattern {correct_answer}.",
     "enabled": true,
     "demo_safe": true
+  },
+  "root_meaning_mcq": {
+    "id": "root_meaning_mcq",
+    "type": "multiple_choice",
+    "category": "root_meaning",
+    "question_template": "What core idea does the root of {word_arabic} carry?",
+    "explanation_template": "The root of {word_arabic} carries the idea of {correct_answer}.",
+    "enabled": true,
+    "demo_safe": true
+  },
+  "transliteration_mcq": {
+    "id": "transliteration_mcq",
+    "type": "multiple_choice",
+    "category": "transliteration",
+    "question_template": "How is {word_arabic} pronounced?",
+    "explanation_template": "{word_arabic} is pronounced {correct_answer}.",
+    "enabled": true,
+    "demo_safe": true
   }
 }
