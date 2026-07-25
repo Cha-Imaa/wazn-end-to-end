@@ -2,6 +2,7 @@ from typing import Any
 
 from app.modules.lookup_module import run_lookup_module
 from app.modules.morphology_reasoning_module import run_morphology_reasoning_module
+from app.services.k2_think_service import build_k2_think
 from app.services.leaf_details_service import build_leaf_details_for_tree
 from app.services.quiz_service import build_quiz_for_word
 from app.services.tree_service import build_tree_response
@@ -77,6 +78,15 @@ def run_wazn_pipeline(query: str) -> dict[str, Any]:
         quiz=quiz,
     )
 
+    k2_think = build_k2_think(
+        selected_word=selected_word,
+        root=root,
+        pattern=pattern,
+        quiz=quiz,
+        pipeline_trace=pipeline_trace,
+        selected_leaf=selected_leaf,
+    )
+
     return {
         "status": STATUS_FOUND,
         "query": query,
@@ -93,6 +103,7 @@ def run_wazn_pipeline(query: str) -> dict[str, Any]:
         "leaf_details": leaf_details,
         "selected_leaf": selected_leaf,
         "quiz": quiz,
+        "k2_think": k2_think,
         "source": DETERMINISTIC_SOURCE,
         "pipeline_trace": pipeline_trace,
     }
@@ -136,6 +147,7 @@ def build_not_found_response(
         "leaf_details": {},
         "selected_leaf": None,
         "quiz": [],
+        "k2_think": None,
         "source": DETERMINISTIC_SOURCE,
         "reason": reason,
         "message": message,

@@ -36,6 +36,12 @@ class Settings:
     enable_k2_guardrail_review: bool
     enable_k2_evaluation: bool
 
+    # When true (default), the K2 Think transparency tab is fed mockup-faithful
+    # sample values for the LLM-dependent parts (explanation / guardrail /
+    # evaluation) that are not yet on the request path. When false, those parts
+    # are reported as "skipped" and no sample scores are emitted.
+    enable_k2_think_demo: bool
+
     k2_api_key: str | None
     k2_base_url: str
     k2_model: str
@@ -59,6 +65,10 @@ def get_settings() -> Settings:
         enable_k2_evaluation=_get_bool_env(
             "ENABLE_K2_EVALUATION",
             default=False,
+        ),
+        enable_k2_think_demo=_get_bool_env(
+            "ENABLE_K2_THINK_DEMO",
+            default=True,
         ),
         k2_api_key=os.getenv("K2_API_KEY"),
         k2_base_url=os.getenv(
