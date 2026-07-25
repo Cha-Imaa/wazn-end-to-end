@@ -18,7 +18,7 @@
   min-height: calc(100vh - 64px);
   height: calc(100vh - 64px);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
+  grid-template-columns: minmax(0, 1fr) minmax(460px, 500px);
   gap: 22px;
   align-items: stretch;
 }
@@ -119,7 +119,7 @@
 .companion-tabs {
   min-height: 48px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   border-bottom: 1px solid rgba(37, 89, 74, 0.18);
   background: rgba(250, 248, 239, 0.58);
 }

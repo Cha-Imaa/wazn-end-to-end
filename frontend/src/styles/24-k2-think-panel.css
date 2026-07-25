@@ -1,0 +1,610 @@
+/*
+ =========================
+   K2 Think transparency tab
+   Tuned to match inspiration/details-tab.png.
+   Loads after 20/22 so it wins tab + panel tuning for the 3-tab layout.
+   Deliberate identity exception: agent "Completed" checks use orange.
+ =========================
+*/
+
+/* --- 3-tab bar tuning (Details / Quiz / K2 Think) --- */
+.companion-tab {
+  font-size: 15px;
+  gap: 7px;
+}
+
+.companion-tab--active::after {
+  left: 20px;
+  right: 20px;
+}
+
+/* --- panel fills + scrolls the companion body --- */
+.learning-companion-panel .k2-think-panel {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 18px 20px 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.k2-think-panel {
+  color: var(--color-text-black);
+}
+
+/* --- header --- */
+.k2-think-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+  min-height: 64px;
+  padding-right: 150px; /* room for the branch flourish */
+}
+
+.k2-think-mark {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  flex-shrink: 0;
+  color: var(--color-green-primary);
+}
+
+/* "Insights" tab glyph sits inside the shared 30px companion-tab chip */
+.companion-tab-glyph {
+  width: 17px;
+  height: 17px;
+  color: var(--color-green-primary);
+}
+
+.k2-think-title {
+  margin: 0;
+  font-family: "EB Garamond", serif;
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--color-green-primary);
+  line-height: 1;
+}
+
+.k2-think-subtitle {
+  margin: 5px 0 0;
+  font-size: 13px;
+  line-height: 1.35;
+  color: rgba(37, 89, 74, 0.72);
+  max-width: 300px;
+}
+
+.k2-think-header-branch {
+  position: absolute;
+  top: -10px;
+  right: -8px;
+  width: 190px;
+  height: auto;
+  pointer-events: none;
+}
+
+/* --- section + centered pill label overlapping its container --- */
+.k2-think-section {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.k2-think-section-label {
+  position: relative;
+  z-index: 2;
+  width: fit-content;
+  margin: 0 auto -14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 18px;
+  border-radius: 999px;
+  background: var(--color-panel-surface);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 3px 8px var(--shadow-green-subtle);
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--color-green-secondary);
+}
+
+.k2-label-leaf {
+  width: 15px;
+  height: 15px;
+  color: var(--color-green-secondary);
+  opacity: 0.85;
+  flex-shrink: 0;
+}
+
+.k2-flow-container,
+.k2-eval-container {
+  border: 1px solid var(--border-soft);
+  border-radius: 20px;
+  background: rgba(255, 255, 250, 0.5);
+  padding: 24px 14px 14px;
+}
+
+/* --- agentic reasoning flow (timeline: numbers in a left gutter) --- */
+.k2-agent-flow {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.k2-agent-flow::before {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 20px;
+  bottom: 20px;
+  width: 2px;
+  background: var(--color-gold-ring);
+  border-radius: 999px;
+}
+
+.k2-agent-item {
+  position: relative;
+  padding-left: 40px;
+}
+
+.k2-agent-step {
+  position: absolute;
+  left: 2px;
+  top: 20px;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--color-panel-surface);
+  background: var(--color-green-primary);
+  box-shadow: 0 0 0 4px rgba(241, 242, 235, 0.9);
+}
+
+.k2-agent {
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  background: var(--color-panel-surface);
+  box-shadow: 0 5px 13px var(--shadow-green-subtle);
+  overflow: hidden;
+}
+
+.k2-agent-summary {
+  list-style: none;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+}
+
+.k2-agent-summary::-webkit-details-marker {
+  display: none;
+}
+
+.k2-agent-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid rgba(37, 89, 74, 0.14);
+  background: var(--color-panel-surface);
+}
+
+.k2-agent-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.k2-agent-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--color-green-primary);
+  line-height: 1.15;
+}
+
+.k2-agent-desc {
+  font-size: 12px;
+  line-height: 1.35;
+  color: rgba(54, 61, 1, 0.72);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.k2-agent-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.k2-agent-status-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-green-secondary);
+}
+
+.k2-agent-status--skipped .k2-agent-status-label {
+  color: rgba(54, 61, 1, 0.5);
+}
+
+/* orange completed check (deliberate inspiration match) */
+.k2-agent-status-icon {
+  width: 23px;
+  height: 23px;
+}
+
+.k2-agent-status--completed .k2-agent-status-icon {
+  color: var(--color-orange);
+}
+
+.k2-agent-status--skipped .k2-agent-status-icon {
+  color: rgba(37, 89, 74, 0.35);
+}
+
+.k2-agent-chevron {
+  width: 16px;
+  height: 16px;
+  color: rgba(37, 89, 74, 0.5);
+  transition: transform 180ms ease;
+}
+
+.k2-agent[open] .k2-agent-chevron {
+  transform: rotate(180deg);
+}
+
+/* --- expandable trace: engine badge + reasoning + output --- */
+.k2-agent-trace {
+  padding: 2px 14px 14px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.k2-engine-badge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.k2-engine-badge--k2 {
+  color: var(--color-green-primary);
+  background: rgba(78, 129, 116, 0.14);
+  border: 1px solid rgba(78, 129, 116, 0.34);
+}
+
+.k2-engine-badge--det {
+  color: rgba(37, 89, 74, 0.7);
+  background: rgba(151, 166, 151, 0.16);
+  border: 1px solid var(--border-soft);
+}
+
+.k2-engine-badge-mark {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+
+.k2-trace-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.k2-trace-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-green-secondary);
+}
+
+.k2-trace-text {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(37, 89, 74, 0.06);
+  border: 1px solid var(--border-soft);
+  font-family: "JetBrains Mono", "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: rgba(37, 89, 74, 0.9);
+  white-space: pre-wrap;
+  word-break: break-word;
+  min-height: 1.5em;
+}
+
+.k2-caret {
+  display: inline-block;
+  width: 7px;
+  height: 1.05em;
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  background: var(--color-green-secondary);
+  border-radius: 1px;
+  animation: k2-caret-blink 900ms steps(2, start) infinite;
+}
+
+@keyframes k2-caret-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.k2-output-text {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(191, 143, 84, 0.08);
+  border: 1px solid var(--color-gold-ring);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--color-text-black);
+}
+
+.k2-think-fallback-note {
+  margin: 12px 2px 0;
+  padding: 9px 14px;
+  border-radius: 12px;
+  background: rgba(151, 166, 151, 0.16);
+  font-size: 11.5px;
+  line-height: 1.4;
+  font-style: italic;
+  color: rgba(37, 89, 74, 0.75);
+  text-align: center;
+}
+
+/* --- quality evaluation: 4 cards in one row --- */
+.k2-eval-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+}
+
+.k2-eval-overall-card,
+.k2-gauge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 4px 8px;
+  border-radius: 13px;
+  border: 1px solid var(--border-soft);
+  background: var(--color-panel-surface);
+  box-shadow: 0 4px 11px var(--shadow-green-subtle);
+}
+
+.k2-eval-overall-card {
+  justify-content: center;
+  gap: 3px;
+}
+
+.k2-eval-overall-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--color-green-secondary);
+  text-align: center;
+}
+
+.k2-eval-overall-figure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.k2-eval-branch {
+  width: 16px;
+  height: 46px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  flex-shrink: 0;
+}
+
+/* both sides use the right image so the laurels are true mirrors */
+.k2-eval-branch--left,
+.k2-eval-branch--right {
+  background-image: url("/assets/k2/score-branch-right.png");
+}
+
+.k2-eval-branch--left {
+  transform: scaleX(-1);
+}
+
+.k2-eval-overall-score {
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color-green-primary);
+}
+
+.k2-eval-overall-max {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(37, 89, 74, 0.55);
+}
+
+.k2-eval-stars {
+  display: inline-flex;
+  gap: 1px;
+  color: var(--color-gold);
+}
+
+.k2-star {
+  width: 14px;
+  height: 14px;
+}
+
+.k2-gauge-head {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 18px;
+}
+
+.k2-gauge-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--color-green-secondary);
+  flex-shrink: 0;
+}
+
+.k2-gauge-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--color-green-primary);
+  text-align: center;
+}
+
+.k2-gauge-arc {
+  position: relative;
+  width: 100%;
+  max-width: 82px;
+}
+
+.k2-gauge-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.k2-gauge-track {
+  fill: none;
+  stroke: rgba(37, 89, 74, 0.14);
+  stroke-width: 9;
+  stroke-linecap: round;
+}
+
+.k2-gauge-fill {
+  fill: none;
+  stroke: var(--color-green-secondary);
+  stroke-width: 9;
+  stroke-linecap: round;
+  transition: stroke-dasharray 500ms ease;
+}
+
+.k2-gauge--very-good .k2-gauge-fill {
+  stroke: var(--color-gold);
+}
+
+.k2-gauge--good .k2-gauge-fill,
+.k2-gauge--fair .k2-gauge-fill {
+  stroke: #a9b58c;
+}
+
+.k2-gauge-value {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--color-green-primary);
+}
+
+.k2-gauge-rating {
+  font-size: 10px;
+  color: rgba(54, 61, 1, 0.6);
+}
+
+/* --- safety & guardrails (bordered card with internal header) --- */
+.k2-guardrails {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 18px 16px;
+  border-radius: 18px;
+  border: 1px solid var(--border-soft);
+  background: rgba(255, 255, 250, 0.5);
+}
+
+.k2-guardrails-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--border-soft);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-green-primary);
+}
+
+.k2-guardrails-head-icon {
+  width: 19px;
+  height: 19px;
+  color: var(--color-green-secondary);
+}
+
+.k2-check-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+}
+
+.k2-check {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  color: var(--color-text-black);
+}
+
+/* guardrail checks stay green (inspiration) */
+.k2-check-icon {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  color: var(--color-green-secondary);
+}
+
+.k2-check--fail .k2-check-icon {
+  color: rgba(37, 89, 74, 0.35);
+}
+
+.k2-check-badge {
+  align-self: center;
+  margin-top: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 18px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--color-green-primary);
+  background: rgba(78, 129, 116, 0.12);
+  border: 1px solid rgba(78, 129, 116, 0.3);
+}
+
+.k2-check-badge-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--color-green-secondary);
+}

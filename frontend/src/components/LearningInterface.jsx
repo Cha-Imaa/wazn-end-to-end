@@ -4,6 +4,8 @@ import ArabicKeyboard from "./ArabicKeyboard.jsx";
 import WordTree from "./WordTree.jsx";
 import WordQuiz from "./WordQuiz.jsx";
 import WordDetailPanel from "./WordDetailPanel.jsx";
+import K2ThinkPanel from "./k2-think/K2ThinkPanel.jsx";
+import { BulbIcon } from "./k2-think/icons.jsx";
 import { useArabicKeyboardInput } from "../hooks/useArabicKeyboardInput.js";
 
 function normalizeText(value = "") {
@@ -34,6 +36,7 @@ export default function LearningInterface({
   const activeQuizQuestions = learningResult?.quiz || [];
   const selectedLeafDetail = learningResult?.selected_leaf || null;
   const activeWord = selectedLeafDetail?.word || null;
+  const k2Think = learningResult?.k2_think || null;
 
   const [companionTab, setCompanionTab] = useState("details");
 
@@ -274,6 +277,22 @@ export default function LearningInterface({
               />
               Quiz
             </button>
+
+            <button
+              type="button"
+              role="tab"
+              aria-selected={companionTab === "k2think"}
+              className={`companion-tab ${
+                companionTab === "k2think" ? "companion-tab--active" : ""
+              }`}
+              onClick={() => handleTabChange("k2think")}
+              disabled={isNotFound}
+            >
+              <span className="companion-tab-icon companion-tab-icon--insight" aria-hidden="true">
+                <BulbIcon className="companion-tab-glyph" />
+              </span>
+              Insights
+            </button>
           </div>
 
           <div className="companion-panel-body">
@@ -299,6 +318,10 @@ export default function LearningInterface({
 
             {!isNotFound && companionTab === "quiz" && (
               <WordQuiz key={searchedWord} questions={activeQuizQuestions} />
+            )}
+
+            {!isNotFound && companionTab === "k2think" && (
+              <K2ThinkPanel k2Think={k2Think} word={activeWord?.arabic || searchedWord} />
             )}
 
             {!isNotFound && !hasCompanionContent && (
