@@ -1,0 +1,8 @@
+inspiration/
+
+# Local working directories — kept out of clone weight.
+# Source PNGs live in design-assets/; the exported, in-app versions are
+# committed under frontend/public/assets/.
+.tmp/
+design-assets/
+screenshots/
