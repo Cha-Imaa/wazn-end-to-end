@@ -2,7 +2,19 @@ inspiration/
 
 # Local working directories — kept out of clone weight.
 # Source PNGs live in design-assets/; the exported, in-app versions are
-# committed under frontend/public/assets/.
+# committed under frontend/public/assets/ and ARE tracked, because the app
+# cannot render the tree without them.
 .tmp/
 design-assets/
 screenshots/
+
+# Documentation and agent scaffolding stay local.
+# The repo carries code only. Build docs (docs/, NEXT_STEPS.md, CLAUDE.md)
+# and the frontend-identity skill live on the working machine, not in git.
+# Deliberately a blanket rule so a new doc is never committed by accident —
+# no code reads a .md file, so nothing breaks. If a README is ever wanted,
+# add `!README.md` here rather than dropping this line.
+*.md
+
+# Local editor permissions, not shared config.
+.claude/settings.local.json
