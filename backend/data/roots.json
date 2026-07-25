@@ -21,7 +21,7 @@
   },
   "qra": {
     "id": "qra",
-    "arabic": "ق ر أ",
+    "arabic": "ق ر ء",
     "transliteration": "q-r-ʾ",
     "meaning": "reading",
     "description": "This root carries meanings related to reading, reciting, readers, readable things, and reading aloud.",
@@ -50,13 +50,13 @@
     "demo_safe": true
   },
   "tjr": {
-  "id": "tjr",
-  "arabic": "ت ج ر",
-  "transliteration": "t-j-r",
-  "meaning": "trade",
-  "description": "This root carries meanings related to trade, commerce, merchants, stores, trading, and commercial things.",
-  "word_ids": ["taajir", "tijaara", "matjar", "tujjaar", "ittajara", "ittijaar", "yattajiru", "tijaarii"],
-  "verified": false,
-  "demo_safe": true
+    "id": "tjr",
+    "arabic": "ت ج ر",
+    "transliteration": "t-j-r",
+    "meaning": "trade",
+    "description": "This root carries meanings related to trade, commerce, merchants, stores, trading, and commercial things.",
+    "word_ids": ["taajir", "tijaara", "matjar", "tujjaar", "ittajara", "ittijaar", "yattajiru", "tijaarii"],
+    "verified": false,
+    "demo_safe": true
   }
 }

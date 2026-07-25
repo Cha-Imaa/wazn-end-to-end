@@ -72,13 +72,13 @@
     "breakdown": {
       "display": "عَلَّمَ",
       "root_letters": ["ع", "ل", "م"],
-      "pattern_letters": ["َ", "َ", "ّ", "َ"],
+      "pattern_letters": ["َ", "ّ", "َ", "َ"],
       "segments": [
         { "text": "ع", "type": "root" },
         { "text": "َ", "type": "pattern" },
         { "text": "ل", "type": "root" },
-        { "text": "َ", "type": "pattern" },
         { "text": "ّ", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
         { "text": "م", "type": "root" },
         { "text": "َ", "type": "pattern" }
       ]
@@ -216,15 +216,15 @@
     "breakdown": {
       "display": "مُعَلِّم",
       "root_letters": ["ع", "ل", "م"],
-      "pattern_letters": ["م", "ُ", "َ", "ِ", "ّ"],
+      "pattern_letters": ["م", "ُ", "َ", "ّ", "ِ"],
       "segments": [
         { "text": "م", "type": "pattern" },
         { "text": "ُ", "type": "pattern" },
         { "text": "ع", "type": "root" },
         { "text": "َ", "type": "pattern" },
         { "text": "ل", "type": "root" },
-        { "text": "ِ", "type": "pattern" },
         { "text": "ّ", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
         { "text": "م", "type": "root" }
       ]
     },
@@ -393,15 +393,15 @@
     "breakdown": {
       "display": "مُدَرِّس",
       "root_letters": ["د", "ر", "س"],
-      "pattern_letters": ["م", "ُ", "َ", "ِ", "ّ"],
+      "pattern_letters": ["م", "ُ", "َ", "ّ", "ِ"],
       "segments": [
         { "text": "م", "type": "pattern" },
         { "text": "ُ", "type": "pattern" },
         { "text": "د", "type": "root" },
         { "text": "َ", "type": "pattern" },
         { "text": "ر", "type": "root" },
-        { "text": "ِ", "type": "pattern" },
         { "text": "ّ", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
         { "text": "س", "type": "root" }
       ]
     },
@@ -443,7 +443,7 @@
     "arabic": "دَارِس",
     "normalized": "دارس",
     "transliteration": "dāris",
-    "meaning": "student",
+    "meaning": "one who studies",
     "short_meaning": "student",
     "word_type": "noun",
     "pos": "noun",
@@ -470,7 +470,7 @@
   "qaraa": {
     "id": "qaraa",
     "arabic": "قَرَأَ",
-    "normalized": "قرأ",
+    "normalized": "قرا",
     "transliteration": "qaraʾa",
     "meaning": "read",
     "short_meaning": "read",
@@ -481,7 +481,7 @@
     "pattern_id": "fa3ala",
     "breakdown": {
       "display": "قَرَأَ",
-      "root_letters": ["ق", "ر", "أ"],
+      "root_letters": ["ق", "ر", "ء"],
       "pattern_letters": ["َ", "َ", "َ"],
       "segments": [
         { "text": "ق", "type": "root" },
@@ -498,7 +498,7 @@
   "yaqrau": {
     "id": "yaqrau",
     "arabic": "يَقْرَأُ",
-    "normalized": "يقرأ",
+    "normalized": "يقرا",
     "transliteration": "yaqraʾu",
     "meaning": "reads",
     "short_meaning": "reads",
@@ -509,7 +509,7 @@
     "pattern_id": "yaf3alu",
     "breakdown": {
       "display": "يَقْرَأُ",
-      "root_letters": ["ق", "ر", "أ"],
+      "root_letters": ["ق", "ر", "ء"],
       "pattern_letters": ["ي", "َ", "ْ", "َ", "ُ"],
       "segments": [
         { "text": "ي", "type": "pattern" },
@@ -528,10 +528,10 @@
   "iqra": {
     "id": "iqra",
     "arabic": "اِقْرَأْ",
-    "normalized": "اقرأ",
+    "normalized": "اقرا",
     "transliteration": "iqraʾ",
-    "meaning": "read",
-    "short_meaning": "read",
+    "meaning": "read! (command)",
+    "short_meaning": "read!",
     "word_type": "verb",
     "pos": "verb",
     "level": "beginner",
@@ -539,7 +539,7 @@
     "pattern_id": "if3al",
     "breakdown": {
       "display": "اِقْرَأْ",
-      "root_letters": ["ق", "ر", "أ"],
+      "root_letters": ["ق", "ر", "ء"],
       "pattern_letters": ["ا", "ِ", "ْ", "َ", "ْ"],
       "segments": [
         { "text": "ا", "type": "pattern" },
@@ -569,7 +569,7 @@
     "pattern_id": "fi3aala",
     "breakdown": {
       "display": "قِرَاءَة",
-      "root_letters": ["ق", "ر", "أ"],
+      "root_letters": ["ق", "ر", "ء"],
       "pattern_letters": ["ِ", "َ", "ا", "َ", "ة"],
       "segments": [
         { "text": "ق", "type": "root" },
@@ -599,7 +599,7 @@
     "pattern_id": "faa3il",
     "breakdown": {
       "display": "قَارِئ",
-      "root_letters": ["ق", "ر", "أ"],
+      "root_letters": ["ق", "ر", "ء"],
       "pattern_letters": ["َ", "ا", "ِ"],
       "segments": [
         { "text": "ق", "type": "root" },
@@ -627,7 +627,7 @@
     "pattern_id": "maf3uul",
     "breakdown": {
       "display": "مَقْرُوء",
-      "root_letters": ["ق", "ر", "أ"],
+      "root_letters": ["ق", "ر", "ء"],
       "pattern_letters": ["م", "َ", "ْ", "ُ", "و"],
       "segments": [
         { "text": "م", "type": "pattern" },
@@ -646,7 +646,7 @@
   "quraan": {
     "id": "quraan",
     "arabic": "قُرْآن",
-    "normalized": "قرآن",
+    "normalized": "قران",
     "transliteration": "qurʾān",
     "meaning": "Quran",
     "short_meaning": "Quran",
@@ -657,8 +657,8 @@
     "pattern_id": "fu3laan",
     "breakdown": {
       "display": "قُرْآن",
-      "root_letters": ["ق", "ر", "أ"],
-      "pattern_letters": ["ُ", "ْ", "ا"],
+      "root_letters": ["ق", "ر", "ء"],
+      "pattern_letters": ["ُ", "ْ", "ن"],
       "segments": [
         { "text": "ق", "type": "root" },
         { "text": "ُ", "type": "pattern" },
@@ -685,14 +685,14 @@
     "pattern_id": "fu33aal",
     "breakdown": {
       "display": "قُرَّاء",
-      "root_letters": ["ق", "ر", "أ"],
-      "pattern_letters": ["ُ", "َ", "ّ", "ا"],
+      "root_letters": ["ق", "ر", "ء"],
+      "pattern_letters": ["ُ", "ّ", "َ", "ا"],
       "segments": [
         { "text": "ق", "type": "root" },
         { "text": "ُ", "type": "pattern" },
         { "text": "ر", "type": "root" },
-        { "text": "َ", "type": "pattern" },
         { "text": "ّ", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
         { "text": "ا", "type": "pattern" },
         { "text": "ء", "type": "root" }
       ]
@@ -791,8 +791,8 @@
     "arabic": "سَامِع",
     "normalized": "سامع",
     "transliteration": "sāmiʿ",
-    "meaning": "listener",
-    "short_meaning": "listener",
+    "meaning": "hearer",
+    "short_meaning": "hearer",
     "word_type": "noun",
     "pos": "noun",
     "level": "beginner",
@@ -859,13 +859,13 @@
     "breakdown": {
       "display": "سَمَّاعَة",
       "root_letters": ["س", "م", "ع"],
-      "pattern_letters": ["َ", "َ", "ّ", "ا", "َ", "ة"],
+      "pattern_letters": ["َ", "ّ", "َ", "ا", "َ", "ة"],
       "segments": [
         { "text": "س", "type": "root" },
         { "text": "َ", "type": "pattern" },
         { "text": "م", "type": "root" },
-        { "text": "َ", "type": "pattern" },
         { "text": "ّ", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
         { "text": "ا", "type": "pattern" },
         { "text": "ع", "type": "root" },
         { "text": "َ", "type": "pattern" },
@@ -918,7 +918,7 @@
     "pos": "noun",
     "level": "beginner",
     "root_id": "sm3",
-    "pattern_id": "mustaf3il",
+    "pattern_id": "mufta3il",
     "breakdown": {
       "display": "مُسْتَمِع",
       "root_letters": ["س", "م", "ع"],
@@ -1008,7 +1008,7 @@
     "pos": "noun",
     "level": "beginner",
     "root_id": "nzr",
-    "pattern_id": "fa3ala",
+    "pattern_id": "fa3al",
     "breakdown": {
       "display": "نَظَر",
       "root_letters": ["ن", "ظ", "ر"],
@@ -1087,11 +1087,11 @@
     "arabic": "مَنْظُور",
     "normalized": "منظور",
     "transliteration": "manẓūr",
-    "meaning": "perspective",
-    "short_meaning": "perspective",
-    "word_type": "noun",
-    "pos": "noun",
-    "level": "intermediate",
+    "meaning": "visible",
+    "short_meaning": "visible",
+    "word_type": "adjective",
+    "pos": "adjective",
+    "level": "beginner",
     "root_id": "nzr",
     "pattern_id": "maf3uul",
     "breakdown": {
@@ -1127,13 +1127,13 @@
     "breakdown": {
       "display": "نَظَّارَة",
       "root_letters": ["ن", "ظ", "ر"],
-      "pattern_letters": ["َ", "َ", "ّ", "ا", "َ", "ة"],
+      "pattern_letters": ["َ", "ّ", "َ", "ا", "َ", "ة"],
       "segments": [
         { "text": "ن", "type": "root" },
         { "text": "َ", "type": "pattern" },
         { "text": "ظ", "type": "root" },
-        { "text": "َ", "type": "pattern" },
         { "text": "ّ", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
         { "text": "ا", "type": "pattern" },
         { "text": "ر", "type": "root" },
         { "text": "َ", "type": "pattern" },
@@ -1176,32 +1176,32 @@
     "demo_safe": true
   },
   "taajir": {
-  "id": "taajir",
-  "arabic": "تَاجِر",
-  "normalized": "تاجر",
-  "transliteration": "tājir",
-  "meaning": "merchant",
-  "short_meaning": "merchant",
-  "word_type": "noun",
-  "pos": "noun",
-  "level": "beginner",
-  "root_id": "tjr",
-  "pattern_id": "faa3il",
-  "breakdown": {
-    "display": "تَاجِر",
-    "root_letters": ["ت", "ج", "ر"],
-    "pattern_letters": ["َ", "ا", "ِ"],
-    "segments": [
-      { "text": "ت", "type": "root" },
-      { "text": "َ", "type": "pattern" },
-      { "text": "ا", "type": "pattern" },
-      { "text": "ج", "type": "root" },
-      { "text": "ِ", "type": "pattern" },
-      { "text": "ر", "type": "root" }
-    ]
-  },
-  "verified": false,
-  "demo_safe": true
+    "id": "taajir",
+    "arabic": "تَاجِر",
+    "normalized": "تاجر",
+    "transliteration": "tājir",
+    "meaning": "merchant",
+    "short_meaning": "merchant",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "tjr",
+    "pattern_id": "faa3il",
+    "breakdown": {
+      "display": "تَاجِر",
+      "root_letters": ["ت", "ج", "ر"],
+      "pattern_letters": ["َ", "ا", "ِ"],
+      "segments": [
+        { "text": "ت", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ج", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ر", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
   },
   "tijaara": {
     "id": "tijaara",
@@ -1277,13 +1277,13 @@
     "breakdown": {
       "display": "تُجَّار",
       "root_letters": ["ت", "ج", "ر"],
-      "pattern_letters": ["ُ", "َ", "ّ", "ا"],
+      "pattern_letters": ["ُ", "ّ", "َ", "ا"],
       "segments": [
         { "text": "ت", "type": "root" },
         { "text": "ُ", "type": "pattern" },
         { "text": "ج", "type": "root" },
-        { "text": "َ", "type": "pattern" },
         { "text": "ّ", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
         { "text": "ا", "type": "pattern" },
         { "text": "ر", "type": "root" }
       ]
@@ -1306,13 +1306,13 @@
     "breakdown": {
       "display": "اِتَّجَرَ",
       "root_letters": ["ت", "ج", "ر"],
-      "pattern_letters": ["ا", "ِ", "َ", "ّ", "َ", "َ"],
+      "pattern_letters": ["ا", "ِ", "ّ", "َ", "َ", "َ"],
       "segments": [
         { "text": "ا", "type": "pattern" },
         { "text": "ِ", "type": "pattern" },
         { "text": "ت", "type": "root" },
-        { "text": "َ", "type": "pattern" },
         { "text": "ّ", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
         { "text": "ج", "type": "root" },
         { "text": "َ", "type": "pattern" },
         { "text": "ر", "type": "root" },
@@ -1337,13 +1337,13 @@
     "breakdown": {
       "display": "اِتِّجَار",
       "root_letters": ["ت", "ج", "ر"],
-      "pattern_letters": ["ا", "ِ", "ِ", "ّ", "َ", "ا"],
+      "pattern_letters": ["ا", "ِ", "ّ", "ِ", "َ", "ا"],
       "segments": [
         { "text": "ا", "type": "pattern" },
         { "text": "ِ", "type": "pattern" },
         { "text": "ت", "type": "root" },
-        { "text": "ِ", "type": "pattern" },
         { "text": "ّ", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
         { "text": "ج", "type": "root" },
         { "text": "َ", "type": "pattern" },
         { "text": "ا", "type": "pattern" },
@@ -1368,13 +1368,13 @@
     "breakdown": {
       "display": "يَتَّجِرُ",
       "root_letters": ["ت", "ج", "ر"],
-      "pattern_letters": ["ي", "َ", "َ", "ّ", "ِ", "ُ"],
+      "pattern_letters": ["ي", "َ", "ّ", "َ", "ِ", "ُ"],
       "segments": [
         { "text": "ي", "type": "pattern" },
         { "text": "َ", "type": "pattern" },
         { "text": "ت", "type": "root" },
-        { "text": "َ", "type": "pattern" },
         { "text": "ّ", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
         { "text": "ج", "type": "root" },
         { "text": "ِ", "type": "pattern" },
         { "text": "ر", "type": "root" },
