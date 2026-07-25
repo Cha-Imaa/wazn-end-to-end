@@ -1,9 +1,9 @@
 :root {
-  --color-green-primary: #25594a;
-  --color-green-secondary: #4e8174;
-  --color-olive-bg: #97a697;
-  --color-cream-bg: #f1f2eb;
-  --color-panel-surface: #faf8ef;
+  --color-green-primary: #235a49;
+  --color-green-secondary: #3f8a6f;
+  --color-olive-bg: #9aad95;
+  --color-cream-bg: #f4f4ec;
+  --color-panel-surface: #fdfbf3;
   --color-key-lower: #e6e9e0;
   --color-key-default: #f4f3eb;
   --color-orange: #bf8f54;
@@ -37,7 +37,7 @@
   --learning-quiz-feedback-min-height: 120px;
   --learning-workspace-min-height: 0;
   --learning-workspace-transition: 220ms ease;
-  --color-gold: #b89a4f;
+  --color-gold: #c1a04f;
   --color-gold-ring: rgba(184, 154, 79, 0.24);
   --shadow-gold-soft: rgba(184, 154, 79, 0.16);
 }
