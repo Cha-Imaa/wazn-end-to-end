@@ -23,7 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-LLM_CONTEXT.md
 .env
 .env.local
 .env.*.local
