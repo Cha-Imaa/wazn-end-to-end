@@ -16,5 +16,7 @@ screenshots/
 # add `!README.md` here rather than dropping this line.
 *.md
 
-# Local editor permissions, not shared config.
-.claude/settings.local.json
+# Agent scaffolding: skills, their reference images, local permissions.
+# The whole directory, not just *.md — skills bundle PNG references, and those
+# are exactly the design images that must stay out of the repo.
+.claude/
