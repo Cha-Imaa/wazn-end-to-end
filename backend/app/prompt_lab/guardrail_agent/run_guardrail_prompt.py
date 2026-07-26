@@ -113,8 +113,8 @@ def run_agent_json(
         user_prompt=user_prompt,
     )
 
-    _reasoning, answer = split_k2_think_output(raw_output)
-    parsed_answer = parse_json_answer(answer)
+    parsed = split_k2_think_output(raw_output)
+    parsed_answer = parse_json_answer(parsed["answer"])
 
     return parsed_answer
 
