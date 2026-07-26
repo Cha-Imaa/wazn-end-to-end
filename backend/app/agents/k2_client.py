@@ -68,9 +68,13 @@ def call_k2_json(
     except json.JSONDecodeError as error:
         raise K2ClientError("K2 returned invalid JSON response.") from error
 
-    raw_content = extract_message_content(raw_response)
+    message = extract_message(raw_response)
+    raw_content = extract_content_from_message(message)
 
-    separated_content = split_k2_reasoning_and_answer(raw_content)
+    separated_content = split_k2_reasoning_and_answer(
+        raw_content,
+        reasoning_field=message.get("reasoning"),
+    )
 
     try:
         parsed_output = parse_json_object_from_answer(
@@ -87,12 +91,13 @@ def call_k2_json(
         "raw_response": raw_response,
         "raw_content": raw_content,
         "reasoning": separated_content["reasoning"],
+        "reasoning_tokens": extract_reasoning_tokens(raw_response),
         "answer_content": separated_content["answer_content"],
         "parsed_output": parsed_output,
     }
 
 
-def extract_message_content(raw_response: dict[str, Any]) -> str:
+def extract_message(raw_response: dict[str, Any]) -> dict[str, Any]:
     choices = raw_response.get("choices")
 
     if not isinstance(choices, list) or not choices:
@@ -108,6 +113,10 @@ def extract_message_content(raw_response: dict[str, Any]) -> str:
     if not isinstance(message, dict):
         raise K2ClientError("K2 response does not include a message.")
 
+    return message
+
+
+def extract_content_from_message(message: dict[str, Any]) -> str:
     content = message.get("content")
 
     if not isinstance(content, str) or not content.strip():
@@ -116,36 +125,85 @@ def extract_message_content(raw_response: dict[str, Any]) -> str:
     return content
 
 
-def split_k2_reasoning_and_answer(raw_content: str) -> dict[str, str | None]:
+def extract_message_content(raw_response: dict[str, Any]) -> str:
+    return extract_content_from_message(extract_message(raw_response))
+
+
+def extract_reasoning_tokens(raw_response: dict[str, Any]) -> int | None:
     """
-    K2 always returns reasoning between <think> and </think>, then the final answer.
+    Read the reasoning-token count, if the endpoint reports one.
 
-    Example:
-        <think>
-        reasoning here
-        </think>
-        {"explanation": "..."}
+    Present as `usage.completion_tokens_details.reasoning_tokens` on
+    api.k2think.ai. Absent on hosts that don't break usage down, so this is
+    always optional — never treat a None as an error.
+    """
+    usage = raw_response.get("usage")
 
-    For the prompt lab, we preserve reasoning because it helps prompt debugging.
-    For JSON parsing, we parse only the answer after </think>.
+    if not isinstance(usage, dict):
+        return None
+
+    details = usage.get("completion_tokens_details")
+
+    if not isinstance(details, dict):
+        return None
+
+    reasoning_tokens = details.get("reasoning_tokens")
+
+    if not isinstance(reasoning_tokens, int):
+        return None
+
+    return reasoning_tokens
+
+
+def split_k2_reasoning_and_answer(
+    raw_content: str,
+    reasoning_field: str | None = None,
+) -> dict[str, str | None]:
+    """
+    Separate K2's reasoning trace from its final answer.
+
+    K2 Think generates reasoning inside <think> / </think>, but it does not
+    always arrive that way — it depends on whether the host strips the tags
+    before responding. This endpoint has served both shapes:
+
+    1. A dedicated `message.reasoning` field, tags already stripped by the
+       server. This is what api.k2think.ai returns for K2-Think-v2 as of
+       2026-07-26: `content` is the bare answer. Pass the field in as
+       `reasoning_field`.
+    2. Inline in `content`, delimited by the tags. Saved prompt-lab runs from
+       2026-07-03 have this shape, so the endpoint changed under us; raw model
+       hosts still return it. The opening tag is sometimes missing, leaving
+       reasoning followed by a lone </think>.
+
+    `reasoning_field` wins when it holds text; tag-splitting is the fallback,
+    so a change in either direction keeps working. Either way the answer is the
+    content with any reasoning block removed, which is what gets parsed as JSON.
+
+    Returns `reasoning: None` only when neither shape carried a trace.
     """
     opening_tag = "<think>"
     closing_tag = "</think>"
 
-    start_index = raw_content.find(opening_tag)
     end_index = raw_content.find(closing_tag)
 
-    if start_index == -1 or end_index == -1 or end_index < start_index:
-        return {
-            "reasoning": None,
-            "answer_content": raw_content.strip(),
-        }
+    if end_index == -1:
+        inline_reasoning = None
+        answer_content = raw_content.strip()
+    else:
+        before_tag = raw_content[:end_index].lstrip()
 
-    reasoning_start = start_index + len(opening_tag)
-    reasoning = raw_content[reasoning_start:end_index].strip()
+        if before_tag.startswith(opening_tag):
+            before_tag = before_tag[len(opening_tag):]
 
-    answer_start = end_index + len(closing_tag)
-    answer_content = raw_content[answer_start:].strip()
+        inline_reasoning = before_tag.strip() or None
+        answer_content = raw_content[end_index + len(closing_tag):].strip()
+
+    reasoning = None
+
+    if isinstance(reasoning_field, str) and reasoning_field.strip():
+        reasoning = reasoning_field.strip()
+    elif inline_reasoning:
+        reasoning = inline_reasoning
 
     return {
         "reasoning": reasoning,
