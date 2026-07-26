@@ -106,7 +106,13 @@ def get_same_pattern_words(
     if not candidates:
         return []
 
-    sampled_words = random.sample(
+    # Seeded per word, the way quiz_service seeds its own sampling. Unseeded,
+    # this re-drew the related cards on every request: two identical searches
+    # showed different words, `same_pattern_explanation` named different
+    # examples, and prompt-lab runs of one word were not reproducible. It also
+    # broke review — cached insights would describe a card set that a later
+    # /api/analyze no longer sends.
+    sampled_words = random.Random(f"{pattern_id}_{selected_word_id}").sample(
         candidates,
         k=min(limit, len(candidates)),
     )
