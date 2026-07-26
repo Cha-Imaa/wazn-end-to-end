@@ -258,5 +258,135 @@
     "meaning_effect": "often means related to the root concept",
     "verified": false,
     "demo_safe": true
+  },
+  "yaf3ilu": {
+    "id": "yaf3ilu",
+    "arabic": "يَفْعِلُ",
+    "transliteration": "yafʿilu",
+    "name": "present-tense verb pattern (i-type)",
+    "short_explanation": "a present-tense verb pattern for ongoing or repeated action",
+    "meaning_effect": "often expresses doing the root action now or generally",
+    "verified": false,
+    "demo_safe": true
+  },
+  "fa33aal": {
+    "id": "fa33aal",
+    "arabic": "فَعَّال",
+    "transliteration": "faʿʿāl",
+    "name": "profession noun pattern",
+    "short_explanation": "a noun pattern for someone who does the root action as a job",
+    "meaning_effect": "often means a person who does the root action habitually",
+    "verified": false,
+    "demo_safe": true
+  },
+  "mif3aal": {
+    "id": "mif3aal",
+    "arabic": "مِفْعَال",
+    "transliteration": "mifʿāl",
+    "name": "instrument noun pattern",
+    "short_explanation": "a noun pattern for the tool that performs the action",
+    "meaning_effect": "often means an instrument used for the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "istif3aal": {
+    "id": "istif3aal",
+    "arabic": "اِسْتِفْعَال",
+    "transliteration": "istifʿāl",
+    "name": "verbal noun pattern (Form X)",
+    "short_explanation": "a noun pattern often linked to Form X verbs",
+    "meaning_effect": "often names seeking or asking for the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "fi3aal": {
+    "id": "fi3aal",
+    "arabic": "فِعَال",
+    "transliteration": "fiʿāl",
+    "name": "concrete noun pattern",
+    "short_explanation": "a very common noun pattern for everyday things",
+    "meaning_effect": "often names a concrete thing connected to the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "fa3aal": {
+    "id": "fa3aal",
+    "arabic": "فَعَال",
+    "transliteration": "faʿāl",
+    "name": "substance noun pattern",
+    "short_explanation": "a noun pattern often used for substances and states",
+    "meaning_effect": "often names a substance or condition linked to the root",
+    "verified": false,
+    "demo_safe": true
+  },
+  "fu3uul": {
+    "id": "fu3uul",
+    "arabic": "فُعُول",
+    "transliteration": "fuʿūl",
+    "name": "verbal noun pattern (movement)",
+    "short_explanation": "a noun pattern common for verbs of motion and change",
+    "meaning_effect": "often names the act of the root action happening",
+    "verified": false,
+    "demo_safe": true
+  },
+  "fi3la": {
+    "id": "fi3la",
+    "arabic": "فِعْلَة",
+    "transliteration": "fiʿla",
+    "name": "unit noun pattern",
+    "short_explanation": "a noun pattern for a single unit or a way of doing something",
+    "meaning_effect": "often names one piece or one manner of the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "mafaa3il": {
+    "id": "mafaa3il",
+    "arabic": "مَفَاعِل",
+    "transliteration": "mafāʿil",
+    "name": "broken plural pattern (places)",
+    "short_explanation": "the plural pattern for place nouns like مَفْعَل and مَفْعَلَة",
+    "meaning_effect": "often means many of the places connected to the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "tafa33ala": {
+    "id": "tafa33ala",
+    "arabic": "تَفَعَّلَ",
+    "transliteration": "tafaʿʿala",
+    "name": "Form V past-tense verb pattern",
+    "short_explanation": "a verb pattern for doing something to or for oneself",
+    "meaning_effect": "often expresses gradually taking on the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "yatafa33alu": {
+    "id": "yatafa33alu",
+    "arabic": "يَتَفَعَّلُ",
+    "transliteration": "yatafaʿʿalu",
+    "name": "Form V present-tense verb pattern",
+    "short_explanation": "a present-tense pattern for ongoing Form V actions",
+    "meaning_effect": "often expresses currently taking on the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "tafa33ul": {
+    "id": "tafa33ul",
+    "arabic": "تَفَعُّل",
+    "transliteration": "tafaʿʿul",
+    "name": "verbal noun pattern (Form V)",
+    "short_explanation": "a noun pattern often linked to Form V verbs",
+    "meaning_effect": "often names the process of taking on the root action",
+    "verified": false,
+    "demo_safe": true
+  },
+  "mutafa33il": {
+    "id": "mutafa33il",
+    "arabic": "مُتَفَعِّل",
+    "transliteration": "mutafaʿʿil",
+    "name": "active participle pattern (Form V)",
+    "short_explanation": "a pattern for the doer of a Form V action",
+    "meaning_effect": "often means someone taking on the root action themselves",
+    "verified": false,
+    "demo_safe": true
   }
 }

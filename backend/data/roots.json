@@ -5,7 +5,16 @@
     "transliteration": "ʿ-l-m",
     "meaning": "knowledge",
     "description": "This root carries meanings related to knowing, knowledge, teaching, learning, teachers, scholars, and known things.",
-    "word_ids": ["3alima", "ya3lamu", "3allama", "3ilm", "3aalim", "ma3luum", "ta3liim", "mu3allim"],
+    "word_ids": [
+      "3alima",
+      "ya3lamu",
+      "3allama",
+      "3ilm",
+      "3aalim",
+      "ma3luum",
+      "ta3liim",
+      "mu3allim"
+    ],
     "verified": false,
     "demo_safe": true
   },
@@ -15,7 +24,16 @@
     "transliteration": "d-r-s",
     "meaning": "study",
     "description": "This root carries meanings related to studying, lessons, schools, teaching, teachers, and students.",
-    "word_ids": ["darasa", "yadrusu", "dars", "diraasa", "madrasa", "mudarris", "tadriis", "daaris"],
+    "word_ids": [
+      "darasa",
+      "yadrusu",
+      "dars",
+      "diraasa",
+      "madrasa",
+      "mudarris",
+      "tadriis",
+      "daaris"
+    ],
     "verified": false,
     "demo_safe": true
   },
@@ -25,7 +43,16 @@
     "transliteration": "q-r-ʾ",
     "meaning": "reading",
     "description": "This root carries meanings related to reading, reciting, readers, readable things, and reading aloud.",
-    "word_ids": ["qaraa", "yaqrau", "iqra", "qiraa", "qaari", "maqruu", "quraan", "qurraa"],
+    "word_ids": [
+      "qaraa",
+      "yaqrau",
+      "iqra",
+      "qiraa",
+      "qaari",
+      "maqruu",
+      "quraan",
+      "qurraa"
+    ],
     "verified": false,
     "demo_safe": true
   },
@@ -35,7 +62,16 @@
     "transliteration": "s-m-ʿ",
     "meaning": "hearing",
     "description": "This root carries meanings related to hearing, listening, sounds, listeners, and things that are heard.",
-    "word_ids": ["sami3a", "yasma3u", "sam3", "saami3", "masmuu3", "sammaa3a", "istimaa3", "mustami3"],
+    "word_ids": [
+      "sami3a",
+      "yasma3u",
+      "sam3",
+      "saami3",
+      "masmuu3",
+      "sammaa3a",
+      "istimaa3",
+      "mustami3"
+    ],
     "verified": false,
     "demo_safe": true
   },
@@ -45,7 +81,16 @@
     "transliteration": "n-ẓ-r",
     "meaning": "looking",
     "description": "This root carries meanings related to looking, seeing, views, glances, perspectives, glasses, and waiting.",
-    "word_ids": ["nazara", "yanzuru", "nazar", "nazra", "manzar", "manzuur", "nazzaara", "intizaar"],
+    "word_ids": [
+      "nazara",
+      "yanzuru",
+      "nazar",
+      "nazra",
+      "manzar",
+      "manzuur",
+      "nazzaara",
+      "intizaar"
+    ],
     "verified": false,
     "demo_safe": true
   },
@@ -55,7 +100,491 @@
     "transliteration": "t-j-r",
     "meaning": "trade",
     "description": "This root carries meanings related to trade, commerce, merchants, stores, trading, and commercial things.",
-    "word_ids": ["taajir", "tijaara", "matjar", "tujjaar", "ittajara", "ittijaar", "yattajiru", "tijaarii"],
+    "word_ids": [
+      "taajir",
+      "tijaara",
+      "matjar",
+      "tujjaar",
+      "ittajara",
+      "ittijaar",
+      "yattajiru",
+      "tijaarii"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "3ml": {
+    "id": "3ml",
+    "arabic": "ع م ل",
+    "transliteration": "ʿ-m-l",
+    "meaning": "work",
+    "description": "This root carries meanings related to work, working, jobs, deeds, workers, factories, and putting things to use.",
+    "word_ids": [
+      "3amila",
+      "ya3malu",
+      "3aamil",
+      "ma3muul",
+      "3amal",
+      "ma3mal",
+      "musta3mil",
+      "isti3maal"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "df3": {
+    "id": "df3",
+    "arabic": "د ف ع",
+    "transliteration": "d-f-ʿ",
+    "meaning": "pushing",
+    "description": "This root carries meanings related to pushing and driving forward, to paying, and to defending — warding something off.",
+    "word_ids": [
+      "dafa3a",
+      "yadfa3u",
+      "daafi3",
+      "madfuu3",
+      "difaa3",
+      "difaa3ii",
+      "idfa3",
+      "madfa3"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "dhkr": {
+    "id": "dhkr",
+    "arabic": "ذ ك ر",
+    "transliteration": "dh-k-r",
+    "meaning": "remembering",
+    "description": "This root carries meanings related to remembering, mentioning, recollection, reminders, and calling something to mind.",
+    "word_ids": [
+      "dhakara",
+      "yadhkuru",
+      "dhaakir",
+      "madhkuur",
+      "dhikr",
+      "tadhakkara",
+      "yatadhakkaru",
+      "tadhakkur"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "fhm": {
+    "id": "fhm",
+    "arabic": "ف ه م",
+    "transliteration": "f-h-m",
+    "meaning": "understanding",
+    "description": "This root carries meanings related to understanding, grasping an idea, concepts, insight, and sympathy for another person's position.",
+    "word_ids": [
+      "fahima",
+      "yafhamu",
+      "faahim",
+      "mafhuum",
+      "istifhaam",
+      "yatafahhamu",
+      "tafahhum",
+      "mutafahhim"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "fth": {
+    "id": "fth",
+    "arabic": "ف ت ح",
+    "transliteration": "f-t-ḥ",
+    "meaning": "opening",
+    "description": "This root carries meanings related to opening, keys, openings, beginnings, conquest, and things that are open.",
+    "word_ids": [
+      "fataha",
+      "yaftahu",
+      "faatih",
+      "maftuuh",
+      "miftaah",
+      "fath",
+      "iftataha",
+      "yaftatihu"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "ghfr": {
+    "id": "ghfr",
+    "arabic": "غ ف ر",
+    "transliteration": "gh-f-r",
+    "meaning": "forgiveness",
+    "description": "This root carries meanings related to forgiving, pardoning, covering over a fault, and asking to be forgiven.",
+    "word_ids": [
+      "ghafara",
+      "yaghfiru",
+      "ghaafir",
+      "maghfuur",
+      "ghufraan",
+      "ghaffaar",
+      "maghfara",
+      "istighfaar"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "ghsl": {
+    "id": "ghsl",
+    "arabic": "غ س ل",
+    "transliteration": "gh-s-l",
+    "meaning": "washing",
+    "description": "This root carries meanings related to washing, cleaning, laundry, and the places and machines used for washing.",
+    "word_ids": [
+      "ghasala",
+      "yaghsilu",
+      "ghaasil",
+      "maghsuul",
+      "ghassaala",
+      "maghsal",
+      "maghaasil",
+      "taghsiil"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "hkm": {
+    "id": "hkm",
+    "arabic": "ح ك م",
+    "transliteration": "ḥ-k-m",
+    "meaning": "judging",
+    "description": "This root carries meanings related to judging, ruling, governing, wisdom, control, and those who hold authority.",
+    "word_ids": [
+      "hakama",
+      "yahkumu",
+      "haakim",
+      "mahkuum",
+      "mahkama",
+      "tahakkama",
+      "tahakkum",
+      "mutahakkim"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "hml": {
+    "id": "hml",
+    "arabic": "ح م ل",
+    "transliteration": "ḥ-m-l",
+    "meaning": "carrying",
+    "description": "This root carries meanings related to carrying, loads, bearing weight, putting up with hardship, and things that can be carried.",
+    "word_ids": [
+      "hamala",
+      "yahmilu",
+      "haamil",
+      "mahmuul",
+      "himl",
+      "tahammala",
+      "yatahammalu",
+      "mutahammil"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "hrm": {
+    "id": "hrm",
+    "arabic": "ح ر م",
+    "transliteration": "ḥ-r-m",
+    "meaning": "prohibition",
+    "description": "This root carries meanings related to what is forbidden or sacred, to being denied something, and — through the sense of holding something sacred — to respect.",
+    "word_ids": [
+      "harama",
+      "yahrimu",
+      "haarim",
+      "mahruum",
+      "haraam",
+      "hurmaan",
+      "ihtarama",
+      "ihtiraam"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "hsb": {
+    "id": "hsb",
+    "arabic": "ح س ب",
+    "transliteration": "ḥ-s-b",
+    "meaning": "counting",
+    "description": "This root carries meanings related to counting, calculating, accounts, reckoning, thinking something to be so, and lineage.",
+    "word_ids": [
+      "hasiba",
+      "yahsibu",
+      "haasib",
+      "mahsuub",
+      "hisaab",
+      "hasab",
+      "yahtasibu",
+      "ihtisaab"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "jm3": {
+    "id": "jm3",
+    "arabic": "ج م ع",
+    "transliteration": "j-m-ʿ",
+    "meaning": "gathering",
+    "description": "This root carries meanings related to gathering, collecting, meeting together, totals, and places where people assemble.",
+    "word_ids": [
+      "jama3a",
+      "yajma3u",
+      "jaami3",
+      "majmuu3",
+      "jam3",
+      "ijtama3a",
+      "ijtimaa3",
+      "mujtami3"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "khdm": {
+    "id": "khdm",
+    "arabic": "خ د م",
+    "transliteration": "kh-d-m",
+    "meaning": "serving",
+    "description": "This root carries meanings related to serving, service, servants, employers, and putting something to use.",
+    "word_ids": [
+      "khadama",
+      "yakhdumu",
+      "khaadim",
+      "makhduum",
+      "khidma",
+      "mustakhdim",
+      "istikhdaam",
+      "khuddaam"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "ktb": {
+    "id": "ktb",
+    "arabic": "ك ت ب",
+    "transliteration": "k-t-b",
+    "meaning": "writing",
+    "description": "This root carries meanings related to writing, books, writers, offices, libraries, and written things.",
+    "word_ids": [
+      "kataba",
+      "yaktubu",
+      "kaatib",
+      "maktuub",
+      "kitaab",
+      "maktaba",
+      "maktab",
+      "makaatib"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "lbs": {
+    "id": "lbs",
+    "arabic": "ل ب س",
+    "transliteration": "l-b-s",
+    "meaning": "wearing",
+    "description": "This root carries meanings related to wearing, dressing, clothing, and — by extension — things that are unclear or mixed up.",
+    "word_ids": [
+      "labisa",
+      "yalbasu",
+      "laabis",
+      "malbuus",
+      "libaas",
+      "malaabis",
+      "iltabasa",
+      "multabis"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "nshr": {
+    "id": "nshr",
+    "arabic": "ن ش ر",
+    "transliteration": "n-sh-r",
+    "meaning": "publishing",
+    "description": "This root carries meanings related to publishing, spreading, unfolding, publishers, bulletins, and things that spread widely.",
+    "word_ids": [
+      "nashara",
+      "yanshuru",
+      "naashir",
+      "manshuur",
+      "minshaar",
+      "nashra",
+      "intashara",
+      "muntashir"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "qbl": {
+    "id": "qbl",
+    "arabic": "ق ب ل",
+    "transliteration": "q-b-l",
+    "meaning": "accepting",
+    "description": "This root carries meanings related to accepting, receiving, facing towards something, welcoming, and what lies ahead.",
+    "word_ids": [
+      "qabila",
+      "yaqbalu",
+      "qaabil",
+      "maqbuul",
+      "qibla",
+      "mustaqbil",
+      "qubuul",
+      "qabbala"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "qdr": {
+    "id": "qdr",
+    "arabic": "ق د ر",
+    "transliteration": "q-d-r",
+    "meaning": "ability",
+    "description": "This root carries meanings related to ability, capacity, measuring, amounts, destiny, and estimating worth.",
+    "word_ids": [
+      "qadara",
+      "yaqdiru",
+      "qaadir",
+      "maqduur",
+      "miqdaar",
+      "qadar",
+      "qaddara",
+      "taqdiir"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "qt3": {
+    "id": "qt3",
+    "arabic": "ق ط ع",
+    "transliteration": "q-ṭ-ʿ",
+    "meaning": "cutting",
+    "description": "This root carries meanings related to cutting, pieces, sections, sectors, excerpts, and separating one thing from another.",
+    "word_ids": [
+      "qata3a",
+      "yaqta3u",
+      "qaati3",
+      "maqtuu3",
+      "qit3a",
+      "qat3",
+      "maqta3",
+      "maqaati3"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "rsm": {
+    "id": "rsm",
+    "arabic": "ر س م",
+    "transliteration": "r-s-m",
+    "meaning": "drawing",
+    "description": "This root carries meanings related to drawing, painting, official documents, formal ceremonies, and prescribed fees.",
+    "word_ids": [
+      "rasama",
+      "yarsumu",
+      "raasim",
+      "marsuum",
+      "rasm",
+      "rassaam",
+      "rusuum",
+      "maraasim"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "shrb": {
+    "id": "shrb",
+    "arabic": "ش ر ب",
+    "transliteration": "sh-r-b",
+    "meaning": "drinking",
+    "description": "This root carries meanings related to drinking, drinks and beverages, and the places where people drink.",
+    "word_ids": [
+      "shariba",
+      "yashrabu",
+      "shaarib",
+      "mashruub",
+      "sharaab",
+      "ishrab",
+      "mashrab",
+      "mashaarib"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "sn3": {
+    "id": "sn3",
+    "arabic": "ص ن ع",
+    "transliteration": "ṣ-n-ʿ",
+    "meaning": "making",
+    "description": "This root carries meanings related to making, manufacturing, craftsmanship, factories, and industry.",
+    "word_ids": [
+      "sana3a",
+      "yasna3u",
+      "saani3",
+      "masnuu3",
+      "masna3",
+      "sinaa3a",
+      "sinaa3ii",
+      "musanni3"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "t3m": {
+    "id": "t3m",
+    "arabic": "ط ع م",
+    "transliteration": "ṭ-ʿ-m",
+    "meaning": "food",
+    "description": "This root carries meanings related to food and eating, to taste, and to the places where food is served.",
+    "word_ids": [
+      "ta3ima",
+      "yat3amu",
+      "taa3im",
+      "mat3uum",
+      "ta3aam",
+      "mat3am",
+      "mataa3im",
+      "tat3iim"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "tbkh": {
+    "id": "tbkh",
+    "arabic": "ط ب خ",
+    "transliteration": "ṭ-b-kh",
+    "meaning": "cooking",
+    "description": "This root carries meanings related to cooking, kitchens, cooks, prepared dishes, and food that has been cooked.",
+    "word_ids": [
+      "tabakha",
+      "yatbukhu",
+      "taabikh",
+      "matbuukh",
+      "matbakh",
+      "tabbaakh",
+      "tabkha",
+      "mataabikh"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "zr3": {
+    "id": "zr3",
+    "arabic": "ز ر ع",
+    "transliteration": "z-r-ʿ",
+    "meaning": "planting",
+    "description": "This root carries meanings related to planting, sowing, farms, crops, agriculture, and those who work the land.",
+    "word_ids": [
+      "zara3a",
+      "yazra3u",
+      "zaari3",
+      "mazruu3",
+      "mazra3a",
+      "mazaari3",
+      "ziraa3a",
+      "zuruu3"
+    ],
     "verified": false,
     "demo_safe": true
   }
