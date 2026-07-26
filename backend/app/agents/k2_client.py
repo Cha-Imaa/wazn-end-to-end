@@ -14,8 +14,22 @@ def call_k2_json(
     system_prompt: str,
     user_prompt: str,
     settings: Settings | None = None,
+    timeout_seconds: int | None = None,
 ) -> dict[str, Any]:
+    """
+    Call K2 and return its reasoning, answer, and parsed JSON output.
+
+    `timeout_seconds` overrides `settings.k2_timeout_seconds` for this call. The
+    insights path passes the tighter `k2_insights_timeout_seconds` so four
+    sequential agents cannot add up to a 2-minute request.
+    """
     active_settings = settings or get_settings()
+
+    active_timeout = (
+        timeout_seconds
+        if timeout_seconds is not None
+        else active_settings.k2_timeout_seconds
+    )
 
     if not active_settings.k2_api_key:
         raise K2ClientError("K2_API_KEY is not configured.")
@@ -50,7 +64,7 @@ def call_k2_json(
     try:
         with urllib.request.urlopen(
             request,
-            timeout=active_settings.k2_timeout_seconds,
+            timeout=active_timeout,
         ) as response:
             response_body = response.read().decode("utf-8")
     except urllib.error.HTTPError as error:

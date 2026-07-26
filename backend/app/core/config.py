@@ -36,6 +36,14 @@ class Settings:
     enable_k2_guardrail_review: bool
     enable_k2_evaluation: bool
 
+    # The quiz agent was labelled `engine: "k2"` while running deterministic
+    # templates, so it had no flag of its own. It has one now.
+    enable_k2_quiz: bool
+
+    # Pre-warm the insights cache at startup for the demo words. Off by default:
+    # it fires four sequential K2 calls per word before the app serves traffic.
+    enable_k2_insights_prewarm: bool
+
     # When true (default), the K2 Think transparency tab is fed mockup-faithful
     # sample values for the LLM-dependent parts (explanation / guardrail /
     # evaluation) that are not yet on the request path. When false, those parts
@@ -45,7 +53,19 @@ class Settings:
     k2_api_key: str | None
     k2_base_url: str
     k2_model: str
+
+    # Prompt-lab timeout. Generous on purpose — an offline experiment can wait.
     k2_timeout_seconds: int
+
+    # Per-call ceiling for /api/insights, bounding four sequential agents.
+    #
+    # NEXT_STEPS.md §1.1 proposed ~12s. Measured against the live endpoint, that
+    # would make the feature useless: the guardrail agent alone spends 17-18k
+    # reasoning tokens and the evaluation agent 7-8k, so both take ~10-25s and
+    # would fall back every time. Observed worst case is ~25s per call, with all
+    # four completing in 31-43s total — consistent with the "up to ~2 min"
+    # sequential budget the same document assumes elsewhere.
+    k2_insights_timeout_seconds: int
 
 
 def get_settings() -> Settings:
@@ -66,6 +86,14 @@ def get_settings() -> Settings:
             "ENABLE_K2_EVALUATION",
             default=False,
         ),
+        enable_k2_quiz=_get_bool_env(
+            "ENABLE_K2_QUIZ",
+            default=False,
+        ),
+        enable_k2_insights_prewarm=_get_bool_env(
+            "ENABLE_K2_INSIGHTS_PREWARM",
+            default=False,
+        ),
         enable_k2_think_demo=_get_bool_env(
             "ENABLE_K2_THINK_DEMO",
             default=True,
@@ -82,5 +110,9 @@ def get_settings() -> Settings:
         k2_timeout_seconds=_get_int_env(
             "K2_TIMEOUT_SECONDS",
             default=30,
+        ),
+        k2_insights_timeout_seconds=_get_int_env(
+            "K2_INSIGHTS_TIMEOUT_SECONDS",
+            default=45,
         ),
     )
