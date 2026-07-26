@@ -110,7 +110,32 @@ def call_k2(
 
     response_json = json.loads(response_body)
 
-    return response_json["choices"][0]["message"]["content"]
+    return normalize_k2_message(response_json["choices"][0]["message"])
+
+
+def normalize_k2_message(message: dict[str, Any]) -> str:
+    """
+    Return the message as tag-delimited text, whichever shape it arrived in.
+
+    api.k2think.ai used to return reasoning inline in `content` between <think>
+    and </think>; it now returns it in a separate `message.reasoning` field and
+    leaves `content` as the bare answer. That change silently emptied the
+    Reasoning section of every lab run saved after it happened.
+
+    Re-inlining the tags here keeps the whole lab — the splitter, the saved
+    Reasoning section, the comparison views — working on one shape, so runs
+    stay diffable against outputs saved before the switch.
+    """
+    content = message.get("content") or ""
+    reasoning = message.get("reasoning")
+
+    if not isinstance(reasoning, str) or not reasoning.strip():
+        return content
+
+    if "</think>" in content:
+        return content
+
+    return f"<think>\n{reasoning.strip()}\n</think>\n{content.lstrip()}"
 
 
 def split_k2_think_output(raw_output: str) -> dict[str, str]:
@@ -132,6 +157,10 @@ def split_k2_think_output(raw_output: str) -> dict[str, str]:
         answer only
 
     This function separates reasoning and final answer.
+
+    Reasoning delivered in a separate `message.reasoning` field is folded back
+    into Case 1 by `normalize_k2_message` before it gets here, so this only ever
+    sees tag-delimited text.
     """
     closing_tag = "</think>"
 
@@ -654,7 +683,7 @@ def save_markdown_output(
 ---
 
 <details>
-<summary><strong>Raw K2 Output</strong></summary>
+<summary><strong>K2 Output (reasoning re-inlined)</strong></summary>
 
 ```text
 {raw_output}
