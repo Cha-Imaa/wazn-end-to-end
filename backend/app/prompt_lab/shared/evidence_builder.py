@@ -54,26 +54,77 @@ def build_base_state(word: str) -> dict[str, Any]:
     pipeline_trace = lookup_result.get("pipeline_trace", {})
     pipeline_trace.update(morphology_result.get("pipeline_trace", {}))
 
+    return build_state_from_components(
+        query=word,
+        normalized_query=lookup_result["normalized_query"],
+        selected_word_id=selected_word_id,
+        selected_word=selected_word,
+        root=root,
+        pattern=pattern,
+        tree=tree,
+        leaf_details=leaf_details,
+        selected_leaf=selected_leaf,
+        quiz=quiz,
+        morphology={
+            "root_letters": morphology_result.get("root_letters", []),
+            "pattern_letters": morphology_result.get("pattern_letters", []),
+            "reasoning_summary": morphology_result.get("reasoning_summary", ""),
+        },
+        family_words=lookup_result.get("family_words", []),
+        same_pattern_words=lookup_result.get("same_pattern_words", []),
+        pipeline_trace=pipeline_trace,
+    )
+
+
+def build_state_from_components(
+    query: str,
+    normalized_query: str,
+    selected_word_id: str,
+    selected_word: dict[str, Any],
+    root: dict[str, Any],
+    pattern: dict[str, Any] | None,
+    tree: dict[str, Any],
+    leaf_details: dict[str, Any],
+    selected_leaf: dict[str, Any] | None,
+    quiz: list[dict[str, Any]],
+    morphology: dict[str, Any] | None = None,
+    family_words: list[dict[str, Any]] | None = None,
+    same_pattern_words: list[dict[str, Any]] | None = None,
+    pipeline_trace: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """
+    Assemble the evidence state from pieces the caller already has.
+
+    `build_base_state` re-runs the entire pipeline from a query string, which is
+    correct for the prompt lab and unacceptable on a request path — /api/insights
+    would redo the lookup, morphology, tree, leaf-detail and quiz work that
+    /api/analyze just did. The request path calls this instead, handing over what
+    the pipeline already computed.
+
+    This is the single definition of the state shape; `build_base_state` fills it
+    from a word, everything else reads it.
+    """
     return {
         "found": True,
-        "query": word,
-        "normalized_query": lookup_result["normalized_query"],
+        "query": query,
+        "normalized_query": normalized_query,
         "selected_word_id": selected_word_id,
         "selected_word": selected_word,
         "root": root,
         "pattern": pattern,
-        "family_words": lookup_result.get("family_words", []),
-        "same_pattern_words": lookup_result.get("same_pattern_words", []),
-        "morphology": {
-            "root_letters": morphology_result.get("root_letters", []),
-            "pattern_letters": morphology_result.get("pattern_letters", []),
-            "reasoning_summary": morphology_result.get("reasoning_summary", ""),
+        "family_words": family_words or [],
+        "same_pattern_words": same_pattern_words or [],
+        "morphology": morphology
+        or {
+            "root_letters": [],
+            "pattern_letters": [],
+            "reasoning_summary": "",
         },
         "tree": tree,
         "leaf_details": leaf_details,
         "selected_leaf": selected_leaf,
         "quiz": quiz,
-        "pipeline_trace": pipeline_trace,
+        "pipeline_trace": pipeline_trace or {},
     }
 
 
@@ -153,7 +204,10 @@ def compact_leaf_detail(word_id: str, detail: dict[str, Any]) -> dict[str, Any]:
 
 
 def build_explanation_evidence(word: str) -> dict[str, Any]:
-    state = build_base_state(word)
+    return build_explanation_evidence_from_state(build_base_state(word))
+
+
+def build_explanation_evidence_from_state(state: dict[str, Any]) -> dict[str, Any]:
     require_found_state(state)
 
     selected_leaf = state["selected_leaf"] or {}
@@ -229,7 +283,10 @@ def build_quiz_leaf_input(
 
 
 def build_quiz_evidence(word: str) -> dict[str, Any]:
-    state = build_base_state(word)
+    return build_quiz_evidence_from_state(build_base_state(word))
+
+
+def build_quiz_evidence_from_state(state: dict[str, Any]) -> dict[str, Any]:
     require_found_state(state)
 
     tree_leaves = state["tree"].get("leaves", [])
@@ -286,7 +343,18 @@ def build_combined_guardrail_input(
     tutor_output: dict[str, Any] | None,
     quiz_output: dict[str, Any] | None,
 ) -> dict[str, Any]:
-    state = build_base_state(word)
+    return build_combined_guardrail_input_from_state(
+        state=build_base_state(word),
+        tutor_output=tutor_output,
+        quiz_output=quiz_output,
+    )
+
+
+def build_combined_guardrail_input_from_state(
+    state: dict[str, Any],
+    tutor_output: dict[str, Any] | None,
+    quiz_output: dict[str, Any] | None,
+) -> dict[str, Any]:
     require_found_state(state)
 
     selected_leaf = state["selected_leaf"] or {}
@@ -500,7 +568,18 @@ def build_combined_evaluation_input(
     tutor_output: dict[str, Any] | None,
     quiz_output: dict[str, Any] | None,
 ) -> dict[str, Any]:
-    state = build_base_state(word)
+    return build_combined_evaluation_input_from_state(
+        state=build_base_state(word),
+        tutor_output=tutor_output,
+        quiz_output=quiz_output,
+    )
+
+
+def build_combined_evaluation_input_from_state(
+    state: dict[str, Any],
+    tutor_output: dict[str, Any] | None,
+    quiz_output: dict[str, Any] | None,
+) -> dict[str, Any]:
     require_found_state(state)
 
     selected_leaf = state["selected_leaf"] or {}
