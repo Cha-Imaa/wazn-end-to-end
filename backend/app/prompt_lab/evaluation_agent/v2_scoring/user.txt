@@ -1,0 +1,5 @@
+Input JSON:
+
+{llm_input}
+
+Score all applicable metrics per the rubric. Return the JSON scores only.
