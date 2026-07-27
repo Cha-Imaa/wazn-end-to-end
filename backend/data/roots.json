@@ -208,6 +208,25 @@
     "verified": false,
     "demo_safe": true
   },
+  "dkhl": {
+    "id": "dkhl",
+    "arabic": "د خ ل",
+    "transliteration": "d-kh-l",
+    "meaning": "entering",
+    "description": "This root carries meanings related to entering, entrances, entry, income, and intervening.",
+    "word_ids": [
+      "dakhala",
+      "yadkhulu",
+      "daakhil",
+      "madkhuul",
+      "madkhal",
+      "dukhuul",
+      "tadakhkhala",
+      "tadakhkhul"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
   "fhm": {
     "id": "fhm",
     "arabic": "ف ه م",
@@ -322,6 +341,25 @@
     "verified": false,
     "demo_safe": true
   },
+  "hjz": {
+    "id": "hjz",
+    "arabic": "ح ج ز",
+    "transliteration": "ḥ-j-z",
+    "meaning": "reserving",
+    "description": "This root carries meanings related to reserving, booking, barriers, and detaining.",
+    "word_ids": [
+      "hajaza",
+      "yahjizu",
+      "haajiz",
+      "mahjuuz",
+      "hajz",
+      "ihtajaza",
+      "yahtajizu",
+      "ihtijaaz"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
   "hkm": {
     "id": "hkm",
     "arabic": "ح ك م",
@@ -398,6 +436,25 @@
     "verified": false,
     "demo_safe": true
   },
+  "hsl": {
+    "id": "hsl",
+    "arabic": "ح ص ل",
+    "transliteration": "ḥ-ṣ-l",
+    "meaning": "obtaining",
+    "description": "This root carries meanings related to obtaining, results, harvests, and collecting.",
+    "word_ids": [
+      "hasala",
+      "yahsulu",
+      "haasil",
+      "mahsuul",
+      "hassala",
+      "tahsiil",
+      "muhassil",
+      "mahsala"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
   "jm3": {
     "id": "jm3",
     "arabic": "ج م ع",
@@ -436,6 +493,25 @@
     "verified": false,
     "demo_safe": true
   },
+  "khzn": {
+    "id": "khzn",
+    "arabic": "خ ز ن",
+    "transliteration": "kh-z-n",
+    "meaning": "storing",
+    "description": "This root carries meanings related to storing, storage, warehouses, tanks, and stock.",
+    "word_ids": [
+      "khazana",
+      "yakhzunu",
+      "khaazin",
+      "makhzuun",
+      "makhzan",
+      "makhaazin",
+      "khazzaan",
+      "takhziin"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
   "ksb": {
     "id": "ksb",
     "arabic": "ك س ب",
@@ -451,6 +527,25 @@
       "maksab",
       "iktasaba",
       "iktisaab"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "kshf": {
+    "id": "kshf",
+    "arabic": "ك ش ف",
+    "transliteration": "k-sh-f",
+    "meaning": "revealing",
+    "description": "This root carries meanings related to revealing, uncovering, discovering, and detection.",
+    "word_ids": [
+      "kashafa",
+      "yakshifu",
+      "kaashif",
+      "makshuuf",
+      "iktashafa",
+      "yaktashifu",
+      "iktishaaf",
+      "muktashif"
     ],
     "verified": false,
     "demo_safe": true
