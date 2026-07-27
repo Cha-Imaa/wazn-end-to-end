@@ -151,6 +151,25 @@
     "verified": false,
     "demo_safe": true
   },
+  "bhth": {
+    "id": "bhth",
+    "arabic": "ب ح ث",
+    "transliteration": "b-ḥ-th",
+    "meaning": "searching",
+    "description": "This root carries meanings related to searching, examining and researching — looking for something, the one who investigates, and the studies that result.",
+    "word_ids": [
+      "bahatha",
+      "yabhathu",
+      "baahith",
+      "mabhuuth",
+      "bahth",
+      "buhuuth",
+      "mabhath",
+      "mabaahith"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
   "df3": {
     "id": "df3",
     "arabic": "د ف ع",
@@ -398,6 +417,25 @@
     "verified": false,
     "demo_safe": true
   },
+  "ksb": {
+    "id": "ksb",
+    "arabic": "ك س ب",
+    "transliteration": "k-s-b",
+    "meaning": "earning",
+    "description": "This root carries meanings related to earning, gaining and acquiring — making a living, what is gained, and skills or habits a person picks up over time.",
+    "word_ids": [
+      "kasaba",
+      "yaksibu",
+      "kaasib",
+      "maksuub",
+      "kasb",
+      "maksab",
+      "iktasaba",
+      "iktisaab"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
   "ktb": {
     "id": "ktb",
     "arabic": "ك ت ب",
@@ -474,6 +512,25 @@
     "verified": false,
     "demo_safe": true
   },
+  "nsr": {
+    "id": "nsr",
+    "arabic": "ن ص ر",
+    "transliteration": "n-ṣ-r",
+    "meaning": "helping",
+    "description": "This root carries meanings related to helping, supporting and victory — coming to someone's aid, the supporter who stands by them, and the triumph that follows.",
+    "word_ids": [
+      "nasara",
+      "yansuru",
+      "naasir",
+      "mansuur",
+      "nasr",
+      "intasara",
+      "intisaar",
+      "muntasir"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
   "qbl": {
     "id": "qbl",
     "arabic": "ق ب ل",
@@ -531,6 +588,25 @@
     "verified": false,
     "demo_safe": true
   },
+  "rkb": {
+    "id": "rkb",
+    "arabic": "ر ك ب",
+    "transliteration": "r-k-b",
+    "meaning": "riding",
+    "description": "This root carries meanings related to riding, mounting and boarding — getting on a vehicle or animal, the one riding it, and things put together or assembled.",
+    "word_ids": [
+      "rakiba",
+      "yarkabu",
+      "raakib",
+      "markuub",
+      "markab",
+      "rukkaab",
+      "rukuub",
+      "tarkiib"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
   "rsm": {
     "id": "rsm",
     "arabic": "ر س م",
@@ -546,6 +622,25 @@
       "rassaam",
       "rusuum",
       "maraasim"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "shkr": {
+    "id": "shkr",
+    "arabic": "ش ك ر",
+    "transliteration": "sh-k-r",
+    "meaning": "thanking",
+    "description": "This root carries meanings related to thanking and gratitude — expressing thanks, the one who is grateful, and the state of being appreciated.",
+    "word_ids": [
+      "shakara",
+      "yashkuru",
+      "shaakir",
+      "mashkuur",
+      "shukuur",
+      "shukraan",
+      "tashakkur",
+      "mutashakkir"
     ],
     "verified": false,
     "demo_safe": true
