@@ -246,6 +246,25 @@
     "verified": false,
     "demo_safe": true
   },
+  "fhs": {
+    "id": "fhs",
+    "arabic": "ف ح ص",
+    "transliteration": "f-ḥ-ṣ",
+    "meaning": "examining",
+    "description": "This root carries meanings related to examining, checkups, inspection, and close scrutiny.",
+    "word_ids": [
+      "fahasa",
+      "yafhasu",
+      "faahis",
+      "mafhuus",
+      "fahs",
+      "tafahhasa",
+      "yatafahhasu",
+      "tafahhus"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
   "fqd": {
     "id": "fqd",
     "arabic": "ف ق د",
@@ -474,6 +493,25 @@
     "verified": false,
     "demo_safe": true
   },
+  "jrh": {
+    "id": "jrh",
+    "arabic": "ج ر ح",
+    "transliteration": "j-r-ḥ",
+    "meaning": "wounding",
+    "description": "This root carries meanings related to wounding, injuries, surgeons, and surgery.",
+    "word_ids": [
+      "jaraha",
+      "yajrahu",
+      "jaarih",
+      "majruuh",
+      "jarh",
+      "juruuh",
+      "jarraah",
+      "jiraaha"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
   "khdm": {
     "id": "khdm",
     "arabic": "خ د م",
@@ -550,6 +588,25 @@
     "verified": false,
     "demo_safe": true
   },
+  "ksr": {
+    "id": "ksr",
+    "arabic": "ك س ر",
+    "transliteration": "k-s-r",
+    "meaning": "breaking",
+    "description": "This root carries meanings related to breaking, fractures, fractions, and smashing.",
+    "word_ids": [
+      "kasara",
+      "yaksiru",
+      "kaasir",
+      "maksuur",
+      "kasr",
+      "kusuur",
+      "kassara",
+      "taksiir"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
   "ktb": {
     "id": "ktb",
     "arabic": "ك ت ب",
@@ -584,6 +641,25 @@
       "malaabis",
       "iltabasa",
       "multabis"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "lms": {
+    "id": "lms",
+    "arabic": "ل م س",
+    "transliteration": "l-m-s",
+    "meaning": "touching",
+    "description": "This root carries meanings related to touching, the sense of touch, tangible things, and formal requests.",
+    "word_ids": [
+      "lamasa",
+      "yalmisu",
+      "laamis",
+      "malmuus",
+      "lamsa",
+      "iltamasa",
+      "yaltamisu",
+      "iltimaas"
     ],
     "verified": false,
     "demo_safe": true
@@ -907,6 +983,25 @@
       "mat3am",
       "mataa3im",
       "tat3iim"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "tb3": {
+    "id": "tb3",
+    "arabic": "ط ب ع",
+    "transliteration": "ṭ-b-ʿ",
+    "meaning": "printing",
+    "description": "This root carries meanings related to printing, presses, stamps, printed matter, and natural character.",
+    "word_ids": [
+      "taba3a",
+      "yatba3u",
+      "taabi3",
+      "matbuu3",
+      "matba3a",
+      "mataabi3",
+      "tibaa3a",
+      "tab3"
     ],
     "verified": false,
     "demo_safe": true
