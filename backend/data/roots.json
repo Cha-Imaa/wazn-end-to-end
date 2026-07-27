@@ -227,6 +227,25 @@
     "verified": false,
     "demo_safe": true
   },
+  "fqd": {
+    "id": "fqd",
+    "arabic": "ف ق د",
+    "transliteration": "f-q-d",
+    "meaning": "losing",
+    "description": "This root carries meanings related to losing and missing — losing something, what has gone missing, and feeling or checking on an absence.",
+    "word_ids": [
+      "faqada",
+      "yafqidu",
+      "faaqid",
+      "mafquud",
+      "fuqdaan",
+      "iftaqada",
+      "yaftaqidu",
+      "tafaqqada"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
   "fth": {
     "id": "fth",
     "arabic": "ف ت ح",
@@ -569,6 +588,25 @@
     "verified": false,
     "demo_safe": true
   },
+  "qsd": {
+    "id": "qsd",
+    "arabic": "ق ص د",
+    "transliteration": "q-ṣ-d",
+    "meaning": "intending",
+    "description": "This root carries meanings related to intending and aiming — heading toward a goal, what is meant, and the moderation of spending that gives economy its name.",
+    "word_ids": [
+      "qasada",
+      "yaqsidu",
+      "qaasid",
+      "maqsuud",
+      "qasd",
+      "maqsad",
+      "iqtasada",
+      "iqtisaad"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
   "qt3": {
     "id": "qt3",
     "arabic": "ق ط ع",
@@ -622,6 +660,63 @@
       "rassaam",
       "rusuum",
       "maraasim"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "sbr": {
+    "id": "sbr",
+    "arabic": "ص ب ر",
+    "transliteration": "ṣ-b-r",
+    "meaning": "patience",
+    "description": "This root carries meanings related to patience and endurance — bearing hardship, the patient person, and the steadfastness that holds out.",
+    "word_ids": [
+      "sabara",
+      "yasbiru",
+      "saabir",
+      "masbuur",
+      "sabr",
+      "sabbaar",
+      "tasabbara",
+      "tasabbur"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "shghl": {
+    "id": "shghl",
+    "arabic": "ش غ ل",
+    "transliteration": "sh-gh-l",
+    "meaning": "occupying",
+    "description": "This root carries meanings related to occupying and busyness — keeping someone busy, being occupied, running machines, and the places where work happens.",
+    "word_ids": [
+      "shaghala",
+      "yashghalu",
+      "shaaghil",
+      "mashghuul",
+      "tashghiil",
+      "mushaghghil",
+      "mashghal",
+      "mashaaghil"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "shhd": {
+    "id": "shhd",
+    "arabic": "ش ه د",
+    "transliteration": "sh-h-d",
+    "meaning": "witnessing",
+    "description": "This root carries meanings related to witnessing and testifying — seeing something happen, the witness who saw it, and the scenes and citations that record it.",
+    "word_ids": [
+      "shahida",
+      "yashhadu",
+      "shaahid",
+      "mashhuud",
+      "mashhad",
+      "mashaahid",
+      "shuhuud",
+      "istishhaad"
     ],
     "verified": false,
     "demo_safe": true
