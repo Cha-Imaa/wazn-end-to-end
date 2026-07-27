@@ -2181,6 +2181,330 @@
     "verified": false,
     "demo_safe": true
   },
+  "3arafa": {
+    "id": "3arafa",
+    "arabic": "عَرَفَ",
+    "normalized": "عرف",
+    "transliteration": "ʿarafa",
+    "meaning": "recognized, was acquainted with",
+    "short_meaning": "recognized",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "3rf",
+    "pattern_id": "fa3ala",
+    "breakdown": {
+      "display": "عَرَفَ",
+      "root_letters": [
+        "ع",
+        "ر",
+        "ف"
+      ],
+      "pattern_letters": [
+        "َ",
+        "َ",
+        "َ"
+      ],
+      "segments": [
+        { "text": "ع", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ف", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "ya3rifu": {
+    "id": "ya3rifu",
+    "arabic": "يَعْرِفُ",
+    "normalized": "يعرف",
+    "transliteration": "yaʿrifu",
+    "meaning": "recognizes",
+    "short_meaning": "recognizes",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "3rf",
+    "pattern_id": "yaf3ilu",
+    "breakdown": {
+      "display": "يَعْرِفُ",
+      "root_letters": [
+        "ع",
+        "ر",
+        "ف"
+      ],
+      "pattern_letters": [
+        "ي",
+        "َ",
+        "ْ",
+        "ِ",
+        "ُ"
+      ],
+      "segments": [
+        { "text": "ي", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ع", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ف", "type": "root" },
+        { "text": "ُ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "3aarif": {
+    "id": "3aarif",
+    "arabic": "عَارِف",
+    "normalized": "عارف",
+    "transliteration": "ʿārif",
+    "meaning": "acquainted, aware",
+    "short_meaning": "acquainted",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "intermediate",
+    "root_id": "3rf",
+    "pattern_id": "faa3il",
+    "breakdown": {
+      "display": "عَارِف",
+      "root_letters": [
+        "ع",
+        "ر",
+        "ف"
+      ],
+      "pattern_letters": [
+        "َ",
+        "ا",
+        "ِ"
+      ],
+      "segments": [
+        { "text": "ع", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ف", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "ma3ruuf": {
+    "id": "ma3ruuf",
+    "arabic": "مَعْرُوف",
+    "normalized": "معروف",
+    "transliteration": "maʿrūf",
+    "meaning": "known, familiar",
+    "short_meaning": "familiar",
+    "word_type": "adjective",
+    "pos": "adjective",
+    "level": "beginner",
+    "root_id": "3rf",
+    "pattern_id": "maf3uul",
+    "breakdown": {
+      "display": "مَعْرُوف",
+      "root_letters": [
+        "ع",
+        "ر",
+        "ف"
+      ],
+      "pattern_letters": [
+        "م",
+        "َ",
+        "ْ",
+        "ُ",
+        "و"
+      ],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ع", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "و", "type": "pattern" },
+        { "text": "ف", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "ta3riif": {
+    "id": "ta3riif",
+    "arabic": "تَعْرِيف",
+    "normalized": "تعريف",
+    "transliteration": "taʿrīf",
+    "meaning": "definition",
+    "short_meaning": "definition",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "3rf",
+    "pattern_id": "taf3iil",
+    "breakdown": {
+      "display": "تَعْرِيف",
+      "root_letters": [
+        "ع",
+        "ر",
+        "ف"
+      ],
+      "pattern_letters": [
+        "ت",
+        "َ",
+        "ْ",
+        "ِ",
+        "ي"
+      ],
+      "segments": [
+        { "text": "ت", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ع", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ي", "type": "pattern" },
+        { "text": "ف", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "i3tarafa": {
+    "id": "i3tarafa",
+    "arabic": "اِعْتَرَفَ",
+    "normalized": "اعترف",
+    "transliteration": "iʿtarafa",
+    "meaning": "confessed, admitted",
+    "short_meaning": "confessed",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "intermediate",
+    "root_id": "3rf",
+    "pattern_id": "ifta3ala",
+    "breakdown": {
+      "display": "اِعْتَرَفَ",
+      "root_letters": [
+        "ع",
+        "ر",
+        "ف"
+      ],
+      "pattern_letters": [
+        "ا",
+        "ِ",
+        "ْ",
+        "ت",
+        "َ",
+        "َ",
+        "َ"
+      ],
+      "segments": [
+        { "text": "ا", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ع", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ت", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ف", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "ya3tarifu": {
+    "id": "ya3tarifu",
+    "arabic": "يَعْتَرِفُ",
+    "normalized": "يعترف",
+    "transliteration": "yaʿtarifu",
+    "meaning": "confesses, admits",
+    "short_meaning": "confesses",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "intermediate",
+    "root_id": "3rf",
+    "pattern_id": "yafta3ilu",
+    "breakdown": {
+      "display": "يَعْتَرِفُ",
+      "root_letters": [
+        "ع",
+        "ر",
+        "ف"
+      ],
+      "pattern_letters": [
+        "ي",
+        "َ",
+        "ْ",
+        "ت",
+        "َ",
+        "ِ",
+        "ُ"
+      ],
+      "segments": [
+        { "text": "ي", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ع", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ت", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ف", "type": "root" },
+        { "text": "ُ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "i3tiraaf": {
+    "id": "i3tiraaf",
+    "arabic": "اِعْتِرَاف",
+    "normalized": "اعتراف",
+    "transliteration": "iʿtirāf",
+    "meaning": "confession, acknowledgment",
+    "short_meaning": "confession",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "intermediate",
+    "root_id": "3rf",
+    "pattern_id": "ifti3aal",
+    "breakdown": {
+      "display": "اِعْتِرَاف",
+      "root_letters": [
+        "ع",
+        "ر",
+        "ف"
+      ],
+      "pattern_letters": [
+        "ا",
+        "ِ",
+        "ْ",
+        "ت",
+        "ِ",
+        "َ",
+        "ا"
+      ],
+      "segments": [
+        { "text": "ا", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ع", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ت", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ر", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ف", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
   "dafa3a": {
     "id": "dafa3a",
     "arabic": "دَفَعَ",
@@ -4074,6 +4398,324 @@
         { "text": "ِ", "type": "pattern" },
         { "text": "ي", "type": "pattern" },
         { "text": "ل", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "hafiza": {
+    "id": "hafiza",
+    "arabic": "حَفِظَ",
+    "normalized": "حفظ",
+    "transliteration": "ḥafiẓa",
+    "meaning": "memorized, learned by heart",
+    "short_meaning": "memorized",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "hfz",
+    "pattern_id": "fa3ila",
+    "breakdown": {
+      "display": "حَفِظَ",
+      "root_letters": [
+        "ح",
+        "ف",
+        "ظ"
+      ],
+      "pattern_letters": [
+        "َ",
+        "ِ",
+        "َ"
+      ],
+      "segments": [
+        { "text": "ح", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ف", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ظ", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "yahfazu": {
+    "id": "yahfazu",
+    "arabic": "يَحْفَظُ",
+    "normalized": "يحفظ",
+    "transliteration": "yaḥfaẓu",
+    "meaning": "memorizes",
+    "short_meaning": "memorizes",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "hfz",
+    "pattern_id": "yaf3alu",
+    "breakdown": {
+      "display": "يَحْفَظُ",
+      "root_letters": [
+        "ح",
+        "ف",
+        "ظ"
+      ],
+      "pattern_letters": [
+        "ي",
+        "َ",
+        "ْ",
+        "َ",
+        "ُ"
+      ],
+      "segments": [
+        { "text": "ي", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ح", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ف", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ظ", "type": "root" },
+        { "text": "ُ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "haafiz": {
+    "id": "haafiz",
+    "arabic": "حَافِظ",
+    "normalized": "حافظ",
+    "transliteration": "ḥāfiẓ",
+    "meaning": "keeper, one who knows by heart",
+    "short_meaning": "keeper",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "intermediate",
+    "root_id": "hfz",
+    "pattern_id": "faa3il",
+    "breakdown": {
+      "display": "حَافِظ",
+      "root_letters": [
+        "ح",
+        "ف",
+        "ظ"
+      ],
+      "pattern_letters": [
+        "َ",
+        "ا",
+        "ِ"
+      ],
+      "segments": [
+        { "text": "ح", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ف", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ظ", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "mahfuuz": {
+    "id": "mahfuuz",
+    "arabic": "مَحْفُوظ",
+    "normalized": "محفوظ",
+    "transliteration": "maḥfūẓ",
+    "meaning": "preserved, kept safe",
+    "short_meaning": "preserved",
+    "word_type": "adjective",
+    "pos": "adjective",
+    "level": "beginner",
+    "root_id": "hfz",
+    "pattern_id": "maf3uul",
+    "breakdown": {
+      "display": "مَحْفُوظ",
+      "root_letters": [
+        "ح",
+        "ف",
+        "ظ"
+      ],
+      "pattern_letters": [
+        "م",
+        "َ",
+        "ْ",
+        "ُ",
+        "و"
+      ],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ح", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ف", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "و", "type": "pattern" },
+        { "text": "ظ", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "hifz": {
+    "id": "hifz",
+    "arabic": "حِفْظ",
+    "normalized": "حفظ",
+    "transliteration": "ḥifẓ",
+    "meaning": "memorization, preservation",
+    "short_meaning": "memorization",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "hfz",
+    "pattern_id": "fi3l",
+    "breakdown": {
+      "display": "حِفْظ",
+      "root_letters": [
+        "ح",
+        "ف",
+        "ظ"
+      ],
+      "pattern_letters": [
+        "ِ",
+        "ْ"
+      ],
+      "segments": [
+        { "text": "ح", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ف", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ظ", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "ihtafaza": {
+    "id": "ihtafaza",
+    "arabic": "اِحْتَفَظَ",
+    "normalized": "احتفظ",
+    "transliteration": "iḥtafaẓa",
+    "meaning": "kept, retained",
+    "short_meaning": "kept",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "hfz",
+    "pattern_id": "ifta3ala",
+    "breakdown": {
+      "display": "اِحْتَفَظَ",
+      "root_letters": [
+        "ح",
+        "ف",
+        "ظ"
+      ],
+      "pattern_letters": [
+        "ا",
+        "ِ",
+        "ْ",
+        "ت",
+        "َ",
+        "َ",
+        "َ"
+      ],
+      "segments": [
+        { "text": "ا", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ح", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ت", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ف", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ظ", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "yahtafizu": {
+    "id": "yahtafizu",
+    "arabic": "يَحْتَفِظُ",
+    "normalized": "يحتفظ",
+    "transliteration": "yaḥtafiẓu",
+    "meaning": "keeps, retains",
+    "short_meaning": "keeps",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "intermediate",
+    "root_id": "hfz",
+    "pattern_id": "yafta3ilu",
+    "breakdown": {
+      "display": "يَحْتَفِظُ",
+      "root_letters": [
+        "ح",
+        "ف",
+        "ظ"
+      ],
+      "pattern_letters": [
+        "ي",
+        "َ",
+        "ْ",
+        "ت",
+        "َ",
+        "ِ",
+        "ُ"
+      ],
+      "segments": [
+        { "text": "ي", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ح", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ت", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ف", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ظ", "type": "root" },
+        { "text": "ُ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "ihtifaaz": {
+    "id": "ihtifaaz",
+    "arabic": "اِحْتِفَاظ",
+    "normalized": "احتفاظ",
+    "transliteration": "iḥtifāẓ",
+    "meaning": "retention, safekeeping",
+    "short_meaning": "retention",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "intermediate",
+    "root_id": "hfz",
+    "pattern_id": "ifti3aal",
+    "breakdown": {
+      "display": "اِحْتِفَاظ",
+      "root_letters": [
+        "ح",
+        "ف",
+        "ظ"
+      ],
+      "pattern_letters": [
+        "ا",
+        "ِ",
+        "ْ",
+        "ت",
+        "ِ",
+        "َ",
+        "ا"
+      ],
+      "segments": [
+        { "text": "ا", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ح", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ت", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ف", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ظ", "type": "root" }
       ]
     },
     "verified": false,
@@ -6603,6 +7245,324 @@
     "verified": false,
     "demo_safe": true
   },
+  "naqala": {
+    "id": "naqala",
+    "arabic": "نَقَلَ",
+    "normalized": "نقل",
+    "transliteration": "naqala",
+    "meaning": "transported, conveyed",
+    "short_meaning": "transported",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "nql",
+    "pattern_id": "fa3ala",
+    "breakdown": {
+      "display": "نَقَلَ",
+      "root_letters": [
+        "ن",
+        "ق",
+        "ل"
+      ],
+      "pattern_letters": [
+        "َ",
+        "َ",
+        "َ"
+      ],
+      "segments": [
+        { "text": "ن", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ق", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "yanqulu": {
+    "id": "yanqulu",
+    "arabic": "يَنْقُلُ",
+    "normalized": "ينقل",
+    "transliteration": "yanqulu",
+    "meaning": "transports, conveys",
+    "short_meaning": "transports",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "nql",
+    "pattern_id": "yaf3ulu",
+    "breakdown": {
+      "display": "يَنْقُلُ",
+      "root_letters": [
+        "ن",
+        "ق",
+        "ل"
+      ],
+      "pattern_letters": [
+        "ي",
+        "َ",
+        "ْ",
+        "ُ",
+        "ُ"
+      ],
+      "segments": [
+        { "text": "ي", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ق", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "ُ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "naaqil": {
+    "id": "naaqil",
+    "arabic": "نَاقِل",
+    "normalized": "ناقل",
+    "transliteration": "nāqil",
+    "meaning": "transporter, carrier",
+    "short_meaning": "transporter",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "intermediate",
+    "root_id": "nql",
+    "pattern_id": "faa3il",
+    "breakdown": {
+      "display": "نَاقِل",
+      "root_letters": [
+        "ن",
+        "ق",
+        "ل"
+      ],
+      "pattern_letters": [
+        "َ",
+        "ا",
+        "ِ"
+      ],
+      "segments": [
+        { "text": "ن", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ق", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ل", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "manquul": {
+    "id": "manquul",
+    "arabic": "مَنْقُول",
+    "normalized": "منقول",
+    "transliteration": "manqūl",
+    "meaning": "transferred, movable",
+    "short_meaning": "transferred",
+    "word_type": "adjective",
+    "pos": "adjective",
+    "level": "intermediate",
+    "root_id": "nql",
+    "pattern_id": "maf3uul",
+    "breakdown": {
+      "display": "مَنْقُول",
+      "root_letters": [
+        "ن",
+        "ق",
+        "ل"
+      ],
+      "pattern_letters": [
+        "م",
+        "َ",
+        "ْ",
+        "ُ",
+        "و"
+      ],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ق", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "و", "type": "pattern" },
+        { "text": "ل", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "naql": {
+    "id": "naql",
+    "arabic": "نَقْل",
+    "normalized": "نقل",
+    "transliteration": "naql",
+    "meaning": "transport, transportation",
+    "short_meaning": "transport",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "nql",
+    "pattern_id": "fa3l",
+    "breakdown": {
+      "display": "نَقْل",
+      "root_letters": [
+        "ن",
+        "ق",
+        "ل"
+      ],
+      "pattern_letters": [
+        "َ",
+        "ْ"
+      ],
+      "segments": [
+        { "text": "ن", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ق", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ل", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "intaqala": {
+    "id": "intaqala",
+    "arabic": "اِنْتَقَلَ",
+    "normalized": "انتقل",
+    "transliteration": "intaqala",
+    "meaning": "moved, relocated",
+    "short_meaning": "moved",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "nql",
+    "pattern_id": "ifta3ala",
+    "breakdown": {
+      "display": "اِنْتَقَلَ",
+      "root_letters": [
+        "ن",
+        "ق",
+        "ل"
+      ],
+      "pattern_letters": [
+        "ا",
+        "ِ",
+        "ْ",
+        "ت",
+        "َ",
+        "َ",
+        "َ"
+      ],
+      "segments": [
+        { "text": "ا", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ت", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ق", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "intiqaal": {
+    "id": "intiqaal",
+    "arabic": "اِنْتِقَال",
+    "normalized": "انتقال",
+    "transliteration": "intiqāl",
+    "meaning": "transfer, relocation",
+    "short_meaning": "transfer",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "intermediate",
+    "root_id": "nql",
+    "pattern_id": "ifti3aal",
+    "breakdown": {
+      "display": "اِنْتِقَال",
+      "root_letters": [
+        "ن",
+        "ق",
+        "ل"
+      ],
+      "pattern_letters": [
+        "ا",
+        "ِ",
+        "ْ",
+        "ت",
+        "ِ",
+        "َ",
+        "ا"
+      ],
+      "segments": [
+        { "text": "ا", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ت", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ق", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ل", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "mutanaqqil": {
+    "id": "mutanaqqil",
+    "arabic": "مُتَنَقِّل",
+    "normalized": "متنقل",
+    "transliteration": "mutanaqqil",
+    "meaning": "mobile, itinerant",
+    "short_meaning": "mobile",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "intermediate",
+    "root_id": "nql",
+    "pattern_id": "mutafa33il",
+    "breakdown": {
+      "display": "مُتَنَقِّل",
+      "root_letters": [
+        "ن",
+        "ق",
+        "ل"
+      ],
+      "pattern_letters": [
+        "م",
+        "ُ",
+        "ت",
+        "َ",
+        "َ",
+        "ّ",
+        "ِ"
+      ],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "ت", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ق", "type": "root" },
+        { "text": "ّ", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ل", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
   "nashara": {
     "id": "nashara",
     "arabic": "نَشَرَ",
@@ -8441,6 +9401,310 @@
     "verified": false,
     "demo_safe": true
   },
+  "sakana": {
+    "id": "sakana",
+    "arabic": "سَكَنَ",
+    "normalized": "سكن",
+    "transliteration": "sakana",
+    "meaning": "lived, resided",
+    "short_meaning": "lived",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "skn",
+    "pattern_id": "fa3ala",
+    "breakdown": {
+      "display": "سَكَنَ",
+      "root_letters": [
+        "س",
+        "ك",
+        "ن"
+      ],
+      "pattern_letters": [
+        "َ",
+        "َ",
+        "َ"
+      ],
+      "segments": [
+        { "text": "س", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ك", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "yaskunu": {
+    "id": "yaskunu",
+    "arabic": "يَسْكُنُ",
+    "normalized": "يسكن",
+    "transliteration": "yaskunu",
+    "meaning": "lives, resides",
+    "short_meaning": "lives",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "skn",
+    "pattern_id": "yaf3ulu",
+    "breakdown": {
+      "display": "يَسْكُنُ",
+      "root_letters": [
+        "س",
+        "ك",
+        "ن"
+      ],
+      "pattern_letters": [
+        "ي",
+        "َ",
+        "ْ",
+        "ُ",
+        "ُ"
+      ],
+      "segments": [
+        { "text": "ي", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ك", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "ُ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "saakin": {
+    "id": "saakin",
+    "arabic": "سَاكِن",
+    "normalized": "ساكن",
+    "transliteration": "sākin",
+    "meaning": "resident, dweller",
+    "short_meaning": "resident",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "skn",
+    "pattern_id": "faa3il",
+    "breakdown": {
+      "display": "سَاكِن",
+      "root_letters": [
+        "س",
+        "ك",
+        "ن"
+      ],
+      "pattern_letters": [
+        "َ",
+        "ا",
+        "ِ"
+      ],
+      "segments": [
+        { "text": "س", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ك", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ن", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "maskuun": {
+    "id": "maskuun",
+    "arabic": "مَسْكُون",
+    "normalized": "مسكون",
+    "transliteration": "maskūn",
+    "meaning": "inhabited",
+    "short_meaning": "inhabited",
+    "word_type": "adjective",
+    "pos": "adjective",
+    "level": "intermediate",
+    "root_id": "skn",
+    "pattern_id": "maf3uul",
+    "breakdown": {
+      "display": "مَسْكُون",
+      "root_letters": [
+        "س",
+        "ك",
+        "ن"
+      ],
+      "pattern_letters": [
+        "م",
+        "َ",
+        "ْ",
+        "ُ",
+        "و"
+      ],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ك", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "و", "type": "pattern" },
+        { "text": "ن", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "maskan": {
+    "id": "maskan",
+    "arabic": "مَسْكَن",
+    "normalized": "مسكن",
+    "transliteration": "maskan",
+    "meaning": "residence, home",
+    "short_meaning": "residence",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "skn",
+    "pattern_id": "maf3al",
+    "breakdown": {
+      "display": "مَسْكَن",
+      "root_letters": [
+        "س",
+        "ك",
+        "ن"
+      ],
+      "pattern_letters": [
+        "م",
+        "َ",
+        "ْ",
+        "َ"
+      ],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ك", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ن", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "sukkaan": {
+    "id": "sukkaan",
+    "arabic": "سُكَّان",
+    "normalized": "سكان",
+    "transliteration": "sukkān",
+    "meaning": "residents, population",
+    "short_meaning": "residents",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "skn",
+    "pattern_id": "fu33aal",
+    "breakdown": {
+      "display": "سُكَّان",
+      "root_letters": [
+        "س",
+        "ك",
+        "ن"
+      ],
+      "pattern_letters": [
+        "ُ",
+        "ّ",
+        "َ",
+        "ا"
+      ],
+      "segments": [
+        { "text": "س", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "ك", "type": "root" },
+        { "text": "ّ", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ن", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "sukuun": {
+    "id": "sukuun",
+    "arabic": "سُكُون",
+    "normalized": "سكون",
+    "transliteration": "sukūn",
+    "meaning": "stillness, calm",
+    "short_meaning": "stillness",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "intermediate",
+    "root_id": "skn",
+    "pattern_id": "fu3uul",
+    "breakdown": {
+      "display": "سُكُون",
+      "root_letters": [
+        "س",
+        "ك",
+        "ن"
+      ],
+      "pattern_letters": [
+        "ُ",
+        "ُ",
+        "و"
+      ],
+      "segments": [
+        { "text": "س", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "ك", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "و", "type": "pattern" },
+        { "text": "ن", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "musakkin": {
+    "id": "musakkin",
+    "arabic": "مُسَكِّن",
+    "normalized": "مسكن",
+    "transliteration": "musakkin",
+    "meaning": "painkiller, sedative",
+    "short_meaning": "painkiller",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "intermediate",
+    "root_id": "skn",
+    "pattern_id": "mufa33il",
+    "breakdown": {
+      "display": "مُسَكِّن",
+      "root_letters": [
+        "س",
+        "ك",
+        "ن"
+      ],
+      "pattern_letters": [
+        "م",
+        "ُ",
+        "َ",
+        "ّ",
+        "ِ"
+      ],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ك", "type": "root" },
+        { "text": "ّ", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ن", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
   "sana3a": {
     "id": "sana3a",
     "arabic": "صَنَعَ",
@@ -9360,6 +10624,310 @@
         { "text": "ب", "type": "root" },
         { "text": "ِ", "type": "pattern" },
         { "text": "خ", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "talaba": {
+    "id": "talaba",
+    "arabic": "طَلَبَ",
+    "normalized": "طلب",
+    "transliteration": "ṭalaba",
+    "meaning": "requested",
+    "short_meaning": "requested",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "tlb",
+    "pattern_id": "fa3ala",
+    "breakdown": {
+      "display": "طَلَبَ",
+      "root_letters": [
+        "ط",
+        "ل",
+        "ب"
+      ],
+      "pattern_letters": [
+        "َ",
+        "َ",
+        "َ"
+      ],
+      "segments": [
+        { "text": "ط", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ب", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "yatlubu": {
+    "id": "yatlubu",
+    "arabic": "يَطْلُبُ",
+    "normalized": "يطلب",
+    "transliteration": "yaṭlubu",
+    "meaning": "requests",
+    "short_meaning": "requests",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "tlb",
+    "pattern_id": "yaf3ulu",
+    "breakdown": {
+      "display": "يَطْلُبُ",
+      "root_letters": [
+        "ط",
+        "ل",
+        "ب"
+      ],
+      "pattern_letters": [
+        "ي",
+        "َ",
+        "ْ",
+        "ُ",
+        "ُ"
+      ],
+      "segments": [
+        { "text": "ي", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ط", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "ب", "type": "root" },
+        { "text": "ُ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "taalib": {
+    "id": "taalib",
+    "arabic": "طَالِب",
+    "normalized": "طالب",
+    "transliteration": "ṭālib",
+    "meaning": "student, seeker",
+    "short_meaning": "student",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "tlb",
+    "pattern_id": "faa3il",
+    "breakdown": {
+      "display": "طَالِب",
+      "root_letters": [
+        "ط",
+        "ل",
+        "ب"
+      ],
+      "pattern_letters": [
+        "َ",
+        "ا",
+        "ِ"
+      ],
+      "segments": [
+        { "text": "ط", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ب", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "matluub": {
+    "id": "matluub",
+    "arabic": "مَطْلُوب",
+    "normalized": "مطلوب",
+    "transliteration": "maṭlūb",
+    "meaning": "wanted, required",
+    "short_meaning": "wanted",
+    "word_type": "adjective",
+    "pos": "adjective",
+    "level": "beginner",
+    "root_id": "tlb",
+    "pattern_id": "maf3uul",
+    "breakdown": {
+      "display": "مَطْلُوب",
+      "root_letters": [
+        "ط",
+        "ل",
+        "ب"
+      ],
+      "pattern_letters": [
+        "م",
+        "َ",
+        "ْ",
+        "ُ",
+        "و"
+      ],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ط", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "و", "type": "pattern" },
+        { "text": "ب", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "talab": {
+    "id": "talab",
+    "arabic": "طَلَب",
+    "normalized": "طلب",
+    "transliteration": "ṭalab",
+    "meaning": "request, demand",
+    "short_meaning": "request",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "tlb",
+    "pattern_id": "fa3al",
+    "breakdown": {
+      "display": "طَلَب",
+      "root_letters": [
+        "ط",
+        "ل",
+        "ب"
+      ],
+      "pattern_letters": [
+        "َ",
+        "َ"
+      ],
+      "segments": [
+        { "text": "ط", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ب", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "tullaab": {
+    "id": "tullaab",
+    "arabic": "طُلَّاب",
+    "normalized": "طلاب",
+    "transliteration": "ṭullāb",
+    "meaning": "students",
+    "short_meaning": "students",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "tlb",
+    "pattern_id": "fu33aal",
+    "breakdown": {
+      "display": "طُلَّاب",
+      "root_letters": [
+        "ط",
+        "ل",
+        "ب"
+      ],
+      "pattern_letters": [
+        "ُ",
+        "ّ",
+        "َ",
+        "ا"
+      ],
+      "segments": [
+        { "text": "ط", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "ّ", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ب", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "matlab": {
+    "id": "matlab",
+    "arabic": "مَطْلَب",
+    "normalized": "مطلب",
+    "transliteration": "maṭlab",
+    "meaning": "demand, claim",
+    "short_meaning": "demand",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "intermediate",
+    "root_id": "tlb",
+    "pattern_id": "maf3al",
+    "breakdown": {
+      "display": "مَطْلَب",
+      "root_letters": [
+        "ط",
+        "ل",
+        "ب"
+      ],
+      "pattern_letters": [
+        "م",
+        "َ",
+        "ْ",
+        "َ"
+      ],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ط", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ب", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "tatallaba": {
+    "id": "tatallaba",
+    "arabic": "تَطَلَّبَ",
+    "normalized": "تطلب",
+    "transliteration": "taṭallaba",
+    "meaning": "required, called for",
+    "short_meaning": "required",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "intermediate",
+    "root_id": "tlb",
+    "pattern_id": "tafa33ala",
+    "breakdown": {
+      "display": "تَطَلَّبَ",
+      "root_letters": [
+        "ط",
+        "ل",
+        "ب"
+      ],
+      "pattern_letters": [
+        "ت",
+        "َ",
+        "َ",
+        "ّ",
+        "َ",
+        "َ"
+      ],
+      "segments": [
+        { "text": "ت", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ط", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ل", "type": "root" },
+        { "text": "ّ", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ب", "type": "root" },
+        { "text": "َ", "type": "pattern" }
       ]
     },
     "verified": false,

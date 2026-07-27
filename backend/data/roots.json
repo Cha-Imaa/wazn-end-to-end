@@ -132,6 +132,25 @@
     "verified": false,
     "demo_safe": true
   },
+  "3rf": {
+    "id": "3rf",
+    "arabic": "ع ر ف",
+    "transliteration": "ʿ-r-f",
+    "meaning": "knowing",
+    "description": "This root carries meanings related to knowing and recognizing — being acquainted with something, defining it, and acknowledging or confessing what one knows.",
+    "word_ids": [
+      "3arafa",
+      "ya3rifu",
+      "3aarif",
+      "ma3ruuf",
+      "ta3riif",
+      "i3tarafa",
+      "ya3tarifu",
+      "i3tiraaf"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
   "df3": {
     "id": "df3",
     "arabic": "د ف ع",
@@ -242,6 +261,25 @@
       "maghsal",
       "maghaasil",
       "taghsiil"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "hfz": {
+    "id": "hfz",
+    "arabic": "ح ف ظ",
+    "transliteration": "ḥ-f-ẓ",
+    "meaning": "preserving",
+    "description": "This root carries meanings related to preserving and memorizing — keeping something safe, learning it by heart, and holding on to what matters.",
+    "word_ids": [
+      "hafiza",
+      "yahfazu",
+      "haafiz",
+      "mahfuuz",
+      "hifz",
+      "ihtafaza",
+      "yahtafizu",
+      "ihtifaaz"
     ],
     "verified": false,
     "demo_safe": true
@@ -398,6 +436,25 @@
     "verified": false,
     "demo_safe": true
   },
+  "nql": {
+    "id": "nql",
+    "arabic": "ن ق ل",
+    "transliteration": "n-q-l",
+    "meaning": "moving",
+    "description": "This root carries meanings related to moving and transporting — carrying something from one place to another, relocating, and the transfer itself.",
+    "word_ids": [
+      "naqala",
+      "yanqulu",
+      "naaqil",
+      "manquul",
+      "naql",
+      "intaqala",
+      "intiqaal",
+      "mutanaqqil"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
   "nshr": {
     "id": "nshr",
     "arabic": "ن ش ر",
@@ -512,6 +569,25 @@
     "verified": false,
     "demo_safe": true
   },
+  "skn": {
+    "id": "skn",
+    "arabic": "س ك ن",
+    "transliteration": "s-k-n",
+    "meaning": "dwelling",
+    "description": "This root carries meanings related to dwelling and stillness — living somewhere, the place one lives in, the people who live there, and calm itself.",
+    "word_ids": [
+      "sakana",
+      "yaskunu",
+      "saakin",
+      "maskuun",
+      "maskan",
+      "sukkaan",
+      "sukuun",
+      "musakkin"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
   "sn3": {
     "id": "sn3",
     "arabic": "ص ن ع",
@@ -565,6 +641,25 @@
       "tabbaakh",
       "tabkha",
       "mataabikh"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "tlb": {
+    "id": "tlb",
+    "arabic": "ط ل ب",
+    "transliteration": "ṭ-l-b",
+    "meaning": "requesting",
+    "description": "This root carries meanings related to requesting, seeking and demanding — asking for something, the one who seeks knowledge (a student), and what is being sought.",
+    "word_ids": [
+      "talaba",
+      "yatlubu",
+      "taalib",
+      "matluub",
+      "talab",
+      "tullaab",
+      "matlab",
+      "tatallaba"
     ],
     "verified": false,
     "demo_safe": true
