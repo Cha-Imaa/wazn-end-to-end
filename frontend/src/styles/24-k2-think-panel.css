@@ -44,8 +44,8 @@
 }
 
 .k2-think-mark {
-  width: 52px;
-  height: 52px;
+  width: 66px;
+  height: 66px;
   object-fit: contain;
   flex-shrink: 0;
   color: var(--color-green-primary);
@@ -72,7 +72,9 @@
   font-size: 13px;
   line-height: 1.35;
   color: rgba(37, 89, 74, 0.72);
-  max-width: 300px;
+  /* Narrow enough that the subtitle breaks before "every" instead of running
+     under the branch flourish. */
+  max-width: 175px;
 }
 
 .k2-think-header-branch {

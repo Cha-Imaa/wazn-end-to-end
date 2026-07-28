@@ -7,9 +7,10 @@ import { getK2ThinkSample } from "../../data/k2ThinkSample.js";
 import AgentFlowItem from "./AgentFlowItem.jsx";
 import ScoreGauge from "./ScoreGauge.jsx";
 import GuardrailChecklist from "./GuardrailChecklist.jsx";
-import { StarRating, LeafSprig, BulbIcon } from "./icons.jsx";
+import { StarRating, LeafSprig } from "./icons.jsx";
 
 const HEADER_BRANCH = "/assets/k2/header-branch.png";
+const K2_MARK = "/assets/k2/k2-mark.png";
 
 function SectionLabel({ children }) {
   return (
@@ -31,7 +32,7 @@ export default function K2ThinkPanel({ k2Think, word = "" }) {
   return (
     <section className="k2-think-panel" aria-label="Insights">
       <header className="k2-think-header">
-        <BulbIcon className="k2-think-mark" />
+        <img className="k2-think-mark" src={K2_MARK} alt="" aria-hidden="true" />
         <div className="k2-think-heading">
           <h2 className="k2-think-title">Insights</h2>
           <p className="k2-think-subtitle">{data.subtitle}</p>
