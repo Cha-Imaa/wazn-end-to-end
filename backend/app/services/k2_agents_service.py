@@ -96,12 +96,15 @@ class AgentSpec:
     flag_env_name: str
     prompt_version_dir: str
 
-    # Per-agent thinking budget, or None for the server default. The quiz agent
-    # needs a bound: at default effort it looped in reasoning until it consumed
-    # any completion cap and returned empty content on some words (§1.3).
-    # "medium" completes reliably (~2.5k reasoning tokens) and still leaves a
-    # real trace for the Insights tab. Guardrail/evaluation reason heavily by
-    # design and already complete, so they keep the default.
+    # Per-agent thinking budget, or None for the server default. Quiz and
+    # guardrail need a bound: at default effort K2 loops in self-checking on
+    # some inputs until it consumes the whole completion budget as reasoning
+    # (empty content), or emits malformed check objects (§1.3). Measured for
+    # the guardrail across 8 roots on 2026-07-29: default validated 6/11 at
+    # ~16k reasoning tokens / ~13s median; "medium" validated 11/11 at ~2.5k
+    # tokens / ~4s, and still caught every injected error in the poisoned
+    # runs. Evaluation reasons heavily by design and completes, so it keeps
+    # the default.
     reasoning_effort: str | None = None
 
     def system_prompt_path(self) -> Path:
@@ -141,7 +144,10 @@ AGENT_SPECS: dict[str, AgentSpec] = {
         step=5,
         flag_attribute="enable_k2_guardrail_review",
         flag_env_name="ENABLE_K2_GUARDRAIL_REVIEW",
-        prompt_version_dir="guardrail_agent/v4_combined",
+        # v5 scopes quiz grounding checks to content presented as true —
+        # v4 flagged legitimate out-of-family distractors on 6 of 8 words.
+        prompt_version_dir="guardrail_agent/v5_combined",
+        reasoning_effort="medium",
     ),
     AGENT_EVALUATION: AgentSpec(
         id=AGENT_EVALUATION,

@@ -1,0 +1,6 @@
+Input JSON:
+
+{llm_input}
+
+Run all 12 checks per the checklists — 6 tutor_ checks, then 6 quiz_ checks.
+Return the JSON verdict only.
