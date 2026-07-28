@@ -34,6 +34,7 @@ lab tunes against.
 """
 
 import json
+import random
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable
@@ -54,6 +55,10 @@ from app.prompt_lab.shared.validators.explanation_validator import (
 )
 from app.prompt_lab.shared.validators.guardrail_validator import (
     validate_guardrail_output,
+)
+from app.prompt_lab.shared.validators.common_validator import (
+    extract_arabic_runs,
+    normalize_arabic,
 )
 from app.prompt_lab.shared.validators.quiz_validator import validate_quiz_output
 
@@ -90,6 +95,14 @@ class AgentSpec:
     flag_env_name: str
     prompt_version_dir: str
 
+    # Per-agent thinking budget, or None for the server default. The quiz agent
+    # needs a bound: at default effort it looped in reasoning until it consumed
+    # any completion cap and returned empty content on some words (§1.3).
+    # "medium" completes reliably (~2.5k reasoning tokens) and still leaves a
+    # real trace for the Insights tab. Guardrail/evaluation reason heavily by
+    # design and already complete, so they keep the default.
+    reasoning_effort: str | None = None
+
     def system_prompt_path(self) -> Path:
         return PROMPT_LAB_DIR / self.prompt_version_dir / "system.txt"
 
@@ -97,7 +110,7 @@ class AgentSpec:
         return PROMPT_LAB_DIR / self.prompt_version_dir / "user.txt"
 
 
-# `explanation_agent/v3_basic` and `quiz_agent/v2_tree_quiz` are the versions the
+# `explanation_agent/v3_basic` and `quiz_agent/v3_tree_quiz` are the versions the
 # lab last ran. Guardrail and evaluation point at new directories: the released
 # ones could not work on a request path — `evaluation_agent/v1_rubric/user.txt`
 # has no {llm_input} placeholder, so that agent scored a literal "<...>"
@@ -118,7 +131,8 @@ AGENT_SPECS: dict[str, AgentSpec] = {
         step=4,
         flag_attribute="enable_k2_quiz",
         flag_env_name="ENABLE_K2_QUIZ",
-        prompt_version_dir="quiz_agent/v2_tree_quiz",
+        prompt_version_dir="quiz_agent/v3_tree_quiz",
+        reasoning_effort="medium",
     ),
     AGENT_GUARDRAIL: AgentSpec(
         id=AGENT_GUARDRAIL,
@@ -342,14 +356,20 @@ def _run_quiz(
 
     packet = build_quiz_evidence_from_state(state)
 
-    return _call_and_validate(
+    result = _call_and_validate(
         spec=spec,
         packet=packet,
         word=word,
         settings=settings,
         validate=_validate_via_validation_result(validate_quiz_output),
         fallback_output={"quiz": state.get("quiz", [])},
+        repair=lambda output: redistribute_answer_positions(output, seed=word),
     )
+
+    if result.get("engine_status") == ENGINE_STATUS_K2_LIVE:
+        _canonicalize_quiz_arabic(result.get("output"), packet)
+
+    return result
 
 
 def _run_guardrail(
@@ -427,6 +447,7 @@ def _call_and_validate(
     settings: Settings,
     validate: Callable[[dict[str, Any], str, dict[str, Any] | None], tuple[bool, list[str]]],
     fallback_output: Any,
+    repair: Callable[[dict[str, Any] | None], None] | None = None,
 ) -> dict[str, Any]:
     try:
         system_prompt = spec.system_prompt_path().read_text(encoding="utf-8")
@@ -444,12 +465,26 @@ def _call_and_validate(
             user_prompt=user_prompt,
             settings=settings,
             timeout_seconds=settings.k2_insights_timeout_seconds,
+            max_tokens=(
+                settings.k2_max_completion_tokens
+                if settings.k2_max_completion_tokens > 0
+                else None
+            ),
+            reasoning_effort=spec.reasoning_effort,
         )
     except K2ClientError as error:
         return _fallback(spec, fallback_output, str(error))
 
     answer_content = response.get("answer_content") or ""
     parsed_output = response.get("parsed_output")
+
+    if repair is not None:
+        # Mechanical fixes applied before validation — only for defects that are
+        # safe to correct in code (e.g. answer-position distribution). The
+        # validated content is the repaired content, so answer_content must be
+        # re-serialized to keep the two in sync for string-based validators.
+        repair(parsed_output)
+        answer_content = json.dumps(parsed_output, ensure_ascii=False)
 
     passed, violations = validate(packet, answer_content, parsed_output)
 
@@ -605,6 +640,149 @@ def _quiz_output_for_review(
         return {"quiz": output["quiz"]}
 
     return {"quiz": deterministic_quiz}
+
+
+def redistribute_answer_positions(output: Any, seed: str) -> None:
+    """
+    Repair correct-answer clustering in place, seeded so it is reproducible.
+
+    The validator rejects a quiz whose correct answer sits in the same slot
+    more than twice — a presentational rule K2 satisfies unreliably (observed:
+    'b' three times out of five). Slot assignment carries no content, so it is
+    repaired in code rather than costing the learner a whole live quiz: the
+    correct choice is swapped into a target slot, and choice_feedback follows
+    its text. Question text never references choice letters (the prompt's
+    feedback style contrasts contents, not letters), so swapping is safe.
+
+    Only runs when the distribution is actually violated.
+    """
+    if not isinstance(output, dict) or not isinstance(output.get("quiz"), list):
+        return
+
+    quiz = [q for q in output["quiz"] if isinstance(q, dict)]
+
+    answer_ids = [q.get("answer_id") for q in quiz]
+
+    if not any(answer_ids.count(letter) > 2 for letter in ("a", "b", "c", "d")):
+        return
+
+    rng = random.Random(seed)
+
+    letters = ["a", "b", "c", "d"]
+    targets = letters[:]
+    rng.shuffle(targets)
+    # Four distinct slots plus extras drawn one per remaining question keeps
+    # every letter's count at 2 or below for the 5-question quiz.
+    while len(targets) < len(quiz):
+        targets.append(rng.choice(letters))
+
+    for question, target in zip(quiz, targets):
+        current = question.get("answer_id")
+        choices = question.get("choices")
+        feedback = question.get("choice_feedback")
+
+        if current == target or current not in letters or target not in letters:
+            continue
+        if not isinstance(choices, list) or not isinstance(feedback, dict):
+            continue
+
+        by_id = {
+            choice.get("id"): choice
+            for choice in choices
+            if isinstance(choice, dict)
+        }
+        if current not in by_id or target not in by_id:
+            continue
+
+        by_id[current]["text"], by_id[target]["text"] = (
+            by_id[target]["text"],
+            by_id[current]["text"],
+        )
+        feedback[current], feedback[target] = (
+            feedback.get(target),
+            feedback.get(current),
+        )
+        question["answer_id"] = target
+
+
+def _arabic_comparison_key(text: str) -> str:
+    """Match the validator's grounding key: tashkeel-, spacing-insensitive."""
+    return normalize_arabic(text).replace(" ", "")
+
+
+def _canonicalize_quiz_arabic(
+    output: Any,
+    packet: dict[str, Any],
+) -> None:
+    """
+    Rewrite Arabic in the quiz to the KB's exact vocalized form, in place.
+
+    The grounding check is tashkeel- and spacing-insensitive (§1.4), so K2 may
+    pass validation with فاعِل where the KB has فَاعِل, or در س for the root
+    د ر س. The learner must see the curated form, never the model's near-miss —
+    the KB stays the only source of Arabic spelling on screen. Choice texts are
+    replaced whole; prose fields have each Arabic run replaced individually.
+    """
+    if not isinstance(output, dict) or not isinstance(output.get("quiz"), list):
+        return
+
+    llm_input = packet.get("llm_input", packet)
+
+    canonical_by_key: dict[str, str] = {}
+
+    def register(value: Any) -> None:
+        if isinstance(value, str) and value.strip():
+            canonical_by_key.setdefault(
+                _arabic_comparison_key(value), value.strip()
+            )
+
+    root = llm_input.get("root")
+    if isinstance(root, dict):
+        register(root.get("arabic"))
+
+    leaves = llm_input.get("leaves")
+    if isinstance(leaves, list):
+        for leaf in leaves:
+            if not isinstance(leaf, dict):
+                continue
+            register(leaf.get("arabic"))
+            pattern = leaf.get("pattern")
+            if isinstance(pattern, dict):
+                register(pattern.get("arabic"))
+
+    def canonicalize_prose(text: Any) -> Any:
+        if not isinstance(text, str):
+            return text
+        for run in extract_arabic_runs(text):
+            canonical = canonical_by_key.get(_arabic_comparison_key(run))
+            if canonical and canonical != run:
+                text = text.replace(run, canonical)
+        return text
+
+    for question in output["quiz"]:
+        if not isinstance(question, dict):
+            continue
+
+        for field_name in ("question", "correct_feedback", "wrong_feedback", "explanation"):
+            question[field_name] = canonicalize_prose(question.get(field_name))
+
+        choice_feedback = question.get("choice_feedback")
+        if isinstance(choice_feedback, dict):
+            for choice_id, feedback in choice_feedback.items():
+                choice_feedback[choice_id] = canonicalize_prose(feedback)
+
+        choices = question.get("choices")
+        if not isinstance(choices, list):
+            continue
+        for choice in choices:
+            if not isinstance(choice, dict):
+                continue
+            text = choice.get("text")
+            if not isinstance(text, str):
+                continue
+            canonical = canonical_by_key.get(_arabic_comparison_key(text))
+            if canonical and canonical != text:
+                choice["text"] = canonical
 
 
 def _upgraded_quiz(quiz_result: dict[str, Any]) -> list[dict[str, Any]] | None:
