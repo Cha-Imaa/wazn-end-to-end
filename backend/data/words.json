@@ -10987,6 +10987,324 @@
     "verified": false,
     "demo_safe": true
   },
+  "mana3a": {
+    "id": "mana3a",
+    "arabic": "مَنَعَ",
+    "normalized": "منع",
+    "transliteration": "manaʿa",
+    "meaning": "prevented",
+    "short_meaning": "prevented",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "mn3",
+    "pattern_id": "fa3ala",
+    "breakdown": {
+      "display": "مَنَعَ",
+      "root_letters": [
+        "م",
+        "ن",
+        "ع"
+      ],
+      "pattern_letters": [
+        "َ",
+        "َ",
+        "َ"
+      ],
+      "segments": [
+        { "text": "م", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ع", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "yamna3u": {
+    "id": "yamna3u",
+    "arabic": "يَمْنَعُ",
+    "normalized": "يمنع",
+    "transliteration": "yamnaʿu",
+    "meaning": "prevents",
+    "short_meaning": "prevents",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "mn3",
+    "pattern_id": "yaf3alu",
+    "breakdown": {
+      "display": "يَمْنَعُ",
+      "root_letters": [
+        "م",
+        "ن",
+        "ع"
+      ],
+      "pattern_letters": [
+        "ي",
+        "َ",
+        "ْ",
+        "َ",
+        "ُ"
+      ],
+      "segments": [
+        { "text": "ي", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ع", "type": "root" },
+        { "text": "ُ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "maani3": {
+    "id": "maani3",
+    "arabic": "مَانِع",
+    "normalized": "مانع",
+    "transliteration": "māniʿ",
+    "meaning": "obstacle",
+    "short_meaning": "obstacle",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "mn3",
+    "pattern_id": "faa3il",
+    "breakdown": {
+      "display": "مَانِع",
+      "root_letters": [
+        "م",
+        "ن",
+        "ع"
+      ],
+      "pattern_letters": [
+        "َ",
+        "ا",
+        "ِ"
+      ],
+      "segments": [
+        { "text": "م", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ع", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "mamnuu3": {
+    "id": "mamnuu3",
+    "arabic": "مَمْنُوع",
+    "normalized": "ممنوع",
+    "transliteration": "mamnūʿ",
+    "meaning": "prohibited",
+    "short_meaning": "prohibited",
+    "word_type": "adjective",
+    "pos": "adjective",
+    "level": "beginner",
+    "root_id": "mn3",
+    "pattern_id": "maf3uul",
+    "breakdown": {
+      "display": "مَمْنُوع",
+      "root_letters": [
+        "م",
+        "ن",
+        "ع"
+      ],
+      "pattern_letters": [
+        "م",
+        "َ",
+        "ْ",
+        "ُ",
+        "و"
+      ],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "و", "type": "pattern" },
+        { "text": "ع", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "man3": {
+    "id": "man3",
+    "arabic": "مَنْع",
+    "normalized": "منع",
+    "transliteration": "manʿ",
+    "meaning": "ban",
+    "short_meaning": "ban",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "mn3",
+    "pattern_id": "fa3l",
+    "breakdown": {
+      "display": "مَنْع",
+      "root_letters": [
+        "م",
+        "ن",
+        "ع"
+      ],
+      "pattern_letters": [
+        "َ",
+        "ْ"
+      ],
+      "segments": [
+        { "text": "م", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ع", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "imtana3a": {
+    "id": "imtana3a",
+    "arabic": "اِمْتَنَعَ",
+    "normalized": "امتنع",
+    "transliteration": "imtanaʿa",
+    "meaning": "abstained",
+    "short_meaning": "abstained",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "intermediate",
+    "root_id": "mn3",
+    "pattern_id": "ifta3ala",
+    "breakdown": {
+      "display": "اِمْتَنَعَ",
+      "root_letters": [
+        "م",
+        "ن",
+        "ع"
+      ],
+      "pattern_letters": [
+        "ا",
+        "ِ",
+        "ْ",
+        "ت",
+        "َ",
+        "َ",
+        "َ"
+      ],
+      "segments": [
+        { "text": "ا", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ت", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ع", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "yamtani3u": {
+    "id": "yamtani3u",
+    "arabic": "يَمْتَنِعُ",
+    "normalized": "يمتنع",
+    "transliteration": "yamtaniʿu",
+    "meaning": "abstains",
+    "short_meaning": "abstains",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "intermediate",
+    "root_id": "mn3",
+    "pattern_id": "yafta3ilu",
+    "breakdown": {
+      "display": "يَمْتَنِعُ",
+      "root_letters": [
+        "م",
+        "ن",
+        "ع"
+      ],
+      "pattern_letters": [
+        "ي",
+        "َ",
+        "ْ",
+        "ت",
+        "َ",
+        "ِ",
+        "ُ"
+      ],
+      "segments": [
+        { "text": "ي", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ت", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ع", "type": "root" },
+        { "text": "ُ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "imtinaa3": {
+    "id": "imtinaa3",
+    "arabic": "اِمْتِنَاع",
+    "normalized": "امتناع",
+    "transliteration": "imtināʿ",
+    "meaning": "abstention",
+    "short_meaning": "abstention",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "intermediate",
+    "root_id": "mn3",
+    "pattern_id": "ifti3aal",
+    "breakdown": {
+      "display": "اِمْتِنَاع",
+      "root_letters": [
+        "م",
+        "ن",
+        "ع"
+      ],
+      "pattern_letters": [
+        "ا",
+        "ِ",
+        "ْ",
+        "ت",
+        "ِ",
+        "َ",
+        "ا"
+      ],
+      "segments": [
+        { "text": "ا", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "ت", "type": "pattern" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ن", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "ع", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
   "naqala": {
     "id": "naqala",
     "arabic": "نَقَلَ",
@@ -12858,6 +13176,308 @@
         { "text": "َ", "type": "pattern" },
         { "text": "ا", "type": "pattern" },
         { "text": "د", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "qasama": {
+    "id": "qasama",
+    "arabic": "قَسَمَ",
+    "normalized": "قسم",
+    "transliteration": "qasama",
+    "meaning": "divided",
+    "short_meaning": "divided",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "qsm",
+    "pattern_id": "fa3ala",
+    "breakdown": {
+      "display": "قَسَمَ",
+      "root_letters": [
+        "ق",
+        "س",
+        "م"
+      ],
+      "pattern_letters": [
+        "َ",
+        "َ",
+        "َ"
+      ],
+      "segments": [
+        { "text": "ق", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "yaqsimu": {
+    "id": "yaqsimu",
+    "arabic": "يَقْسِمُ",
+    "normalized": "يقسم",
+    "transliteration": "yaqsimu",
+    "meaning": "divides",
+    "short_meaning": "divides",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "beginner",
+    "root_id": "qsm",
+    "pattern_id": "yaf3ilu",
+    "breakdown": {
+      "display": "يَقْسِمُ",
+      "root_letters": [
+        "ق",
+        "س",
+        "م"
+      ],
+      "pattern_letters": [
+        "ي",
+        "َ",
+        "ْ",
+        "ِ",
+        "ُ"
+      ],
+      "segments": [
+        { "text": "ي", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ق", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "ُ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "qaasim": {
+    "id": "qaasim",
+    "arabic": "قَاسِم",
+    "normalized": "قاسم",
+    "transliteration": "qāsim",
+    "meaning": "divisor (mathematics)",
+    "short_meaning": "divisor",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "intermediate",
+    "root_id": "qsm",
+    "pattern_id": "faa3il",
+    "breakdown": {
+      "display": "قَاسِم",
+      "root_letters": [
+        "ق",
+        "س",
+        "م"
+      ],
+      "pattern_letters": [
+        "َ",
+        "ا",
+        "ِ"
+      ],
+      "segments": [
+        { "text": "ق", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ا", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "م", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "maqsuum": {
+    "id": "maqsuum",
+    "arabic": "مَقْسُوم",
+    "normalized": "مقسوم",
+    "transliteration": "maqsūm",
+    "meaning": "dividend (mathematics)",
+    "short_meaning": "dividend",
+    "word_type": "adjective",
+    "pos": "adjective",
+    "level": "intermediate",
+    "root_id": "qsm",
+    "pattern_id": "maf3uul",
+    "breakdown": {
+      "display": "مَقْسُوم",
+      "root_letters": [
+        "ق",
+        "س",
+        "م"
+      ],
+      "pattern_letters": [
+        "م",
+        "َ",
+        "ْ",
+        "ُ",
+        "و"
+      ],
+      "segments": [
+        { "text": "م", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ق", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "ُ", "type": "pattern" },
+        { "text": "و", "type": "pattern" },
+        { "text": "م", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "qism": {
+    "id": "qism",
+    "arabic": "قِسْم",
+    "normalized": "قسم",
+    "transliteration": "qism",
+    "meaning": "section, department",
+    "short_meaning": "section",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "qsm",
+    "pattern_id": "fi3l",
+    "breakdown": {
+      "display": "قِسْم",
+      "root_letters": [
+        "ق",
+        "س",
+        "م"
+      ],
+      "pattern_letters": [
+        "ِ",
+        "ْ"
+      ],
+      "segments": [
+        { "text": "ق", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "م", "type": "root" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "qisma": {
+    "id": "qisma",
+    "arabic": "قِسْمَة",
+    "normalized": "قسمه",
+    "transliteration": "qisma",
+    "meaning": "division",
+    "short_meaning": "division",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "beginner",
+    "root_id": "qsm",
+    "pattern_id": "fi3la",
+    "breakdown": {
+      "display": "قِسْمَة",
+      "root_letters": [
+        "ق",
+        "س",
+        "م"
+      ],
+      "pattern_letters": [
+        "ِ",
+        "ْ",
+        "َ",
+        "ة"
+      ],
+      "segments": [
+        { "text": "ق", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ة", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "qassama": {
+    "id": "qassama",
+    "arabic": "قَسَّمَ",
+    "normalized": "قسم",
+    "transliteration": "qassama",
+    "meaning": "split up, partitioned",
+    "short_meaning": "split",
+    "word_type": "verb",
+    "pos": "verb",
+    "level": "intermediate",
+    "root_id": "qsm",
+    "pattern_id": "fa33ala",
+    "breakdown": {
+      "display": "قَسَّمَ",
+      "root_letters": [
+        "ق",
+        "س",
+        "م"
+      ],
+      "pattern_letters": [
+        "َ",
+        "ّ",
+        "َ",
+        "َ"
+      ],
+      "segments": [
+        { "text": "ق", "type": "root" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "ّ", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "م", "type": "root" },
+        { "text": "َ", "type": "pattern" }
+      ]
+    },
+    "verified": false,
+    "demo_safe": true
+  },
+  "taqsiim": {
+    "id": "taqsiim",
+    "arabic": "تَقْسِيم",
+    "normalized": "تقسيم",
+    "transliteration": "taqsīm",
+    "meaning": "splitting, partitioning",
+    "short_meaning": "splitting",
+    "word_type": "noun",
+    "pos": "noun",
+    "level": "intermediate",
+    "root_id": "qsm",
+    "pattern_id": "taf3iil",
+    "breakdown": {
+      "display": "تَقْسِيم",
+      "root_letters": [
+        "ق",
+        "س",
+        "م"
+      ],
+      "pattern_letters": [
+        "ت",
+        "َ",
+        "ْ",
+        "ِ",
+        "ي"
+      ],
+      "segments": [
+        { "text": "ت", "type": "pattern" },
+        { "text": "َ", "type": "pattern" },
+        { "text": "ق", "type": "root" },
+        { "text": "ْ", "type": "pattern" },
+        { "text": "س", "type": "root" },
+        { "text": "ِ", "type": "pattern" },
+        { "text": "ي", "type": "pattern" },
+        { "text": "م", "type": "root" }
       ]
     },
     "verified": false,

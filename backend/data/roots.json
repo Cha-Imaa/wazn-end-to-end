@@ -664,6 +664,25 @@
     "verified": false,
     "demo_safe": true
   },
+  "mn3": {
+    "id": "mn3",
+    "arabic": "م ن ع",
+    "transliteration": "m-n-ʿ",
+    "meaning": "preventing",
+    "description": "This root carries meanings related to preventing, banning, obstacles, and abstention.",
+    "word_ids": [
+      "mana3a",
+      "yamna3u",
+      "maani3",
+      "mamnuu3",
+      "man3",
+      "imtana3a",
+      "yamtani3u",
+      "imtinaa3"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
   "nql": {
     "id": "nql",
     "arabic": "ن ق ل",
@@ -774,6 +793,25 @@
       "maqsad",
       "iqtasada",
       "iqtisaad"
+    ],
+    "verified": false,
+    "demo_safe": true
+  },
+  "qsm": {
+    "id": "qsm",
+    "arabic": "ق س م",
+    "transliteration": "q-s-m",
+    "meaning": "dividing",
+    "description": "This root carries meanings related to dividing, sections, portions, and splitting.",
+    "word_ids": [
+      "qasama",
+      "yaqsimu",
+      "qaasim",
+      "maqsuum",
+      "qism",
+      "qisma",
+      "qassama",
+      "taqsiim"
     ],
     "verified": false,
     "demo_safe": true
