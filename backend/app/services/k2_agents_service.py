@@ -62,7 +62,10 @@ from app.prompt_lab.shared.validators.common_validator import (
     extract_arabic_runs,
     normalize_arabic,
 )
-from app.prompt_lab.shared.validators.quiz_validator import validate_quiz_output
+from app.prompt_lab.shared.validators.quiz_validator import (
+    derive_correct_choice_id,
+    validate_quiz_output,
+)
 
 
 PROMPT_LAB_DIR = Path(__file__).resolve().parents[1] / "prompt_lab"
@@ -399,6 +402,12 @@ def _run_quiz(
 
     packet = build_quiz_evidence_from_state(state)
 
+    def repair(output: dict[str, Any] | None) -> None:
+        # Answer keys first — redistribution then moves the *right* text
+        # around, and the distribution is judged on the repaired answers.
+        repair_answer_ids(output, packet.get("llm_input", {}))
+        redistribute_answer_positions(output, seed=word)
+
     result = _call_and_validate(
         spec=spec,
         packet=packet,
@@ -406,7 +415,7 @@ def _run_quiz(
         settings=settings,
         validate=_validate_via_validation_result(validate_quiz_output),
         fallback_output={"quiz": state.get("quiz", [])},
-        repair=lambda output: redistribute_answer_positions(output, seed=word),
+        repair=repair,
     )
 
     if result.get("engine_status") == ENGINE_STATUS_K2_LIVE:
@@ -686,6 +695,33 @@ def _quiz_output_for_review(
         return {"quiz": output["quiz"]}
 
     return {"quiz": deterministic_quiz}
+
+
+def repair_answer_ids(output: Any, evidence: dict[str, Any]) -> None:
+    """
+    Point each answer_id at the evidence-derived correct choice, in place.
+
+    K2 sometimes emits an answer key that contradicts its own choice_feedback
+    (observed live on زَرَعَ: 3 of 5 answers wrong while every choice was
+    grounded, so validation passed). The correct choice is a KB fact the
+    validator can derive (`derive_correct_choice_id`); when it derives one,
+    the key is repaired rather than costing the learner the whole live quiz.
+    Feedback needs no rewrite: choice_feedback is keyed per choice and
+    correct_feedback states the fact, not the letter. Underivable questions
+    are left alone — the validator skips them too, and the live guardrail
+    remains the reviewer of last resort.
+    """
+    if not isinstance(output, dict) or not isinstance(output.get("quiz"), list):
+        return
+
+    for question in output["quiz"]:
+        if not isinstance(question, dict):
+            continue
+
+        derived = derive_correct_choice_id(question, evidence)
+
+        if derived is not None and derived != question.get("answer_id"):
+            question["answer_id"] = derived
 
 
 def redistribute_answer_positions(output: Any, seed: str) -> None:

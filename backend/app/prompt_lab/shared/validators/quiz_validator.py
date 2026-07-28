@@ -70,6 +70,8 @@
 #    every choice must be a real leaf word from the input
 # 22. wrong_feedback should start with:
 #    "Not quite"
+# 23. answer_id must point at the evidence-derived correct choice
+#    whenever that choice is unambiguously derivable
 
 from typing import Any
 
@@ -77,6 +79,7 @@ from app.prompt_lab.shared.validators.common_validator import (
     ValidationResult,
     add_arabic_value,
     check_no_unknown_arabic,
+    extract_arabic_runs,
     get_llm_input,
     normalize_arabic,
     parse_json_output,
@@ -135,6 +138,7 @@ def validate_quiz_output(
     13. no invented Arabic
     14. type-specific grounded choices
     15. wrong_feedback starts with "Not quite"
+    16. answer_id matches the evidence-derived correct choice when derivable
     """
 
     result = parse_json_output(raw_output)
@@ -201,6 +205,12 @@ def validate_quiz_output(
             question,
             label,
             evidence_sets,
+            result,
+        )
+        _validate_answer_correctness(
+            question,
+            label,
+            evidence,
             result,
         )
 
@@ -487,6 +497,168 @@ def _validate_type_specific_grounding(
                 result.add(
                     f"{label}: pattern_application choices must be real leaf words: '{text}'"
                 )
+
+
+def _build_quiz_lookup(
+    evidence: dict[str, Any],
+) -> tuple[str, dict[str, dict[str, Any]], dict[str, dict[str, Any]], dict[str, list[dict[str, Any]]]]:
+    """Comparison-key indexes over the quiz evidence: root key, leaf by key,
+    pattern by key, and leaves grouped by their pattern's key."""
+    root = evidence.get("root") or {}
+    leaves = evidence.get("leaves") or []
+
+    root_key = _comparison_key(root.get("arabic") or "") if isinstance(root, dict) else ""
+    leaf_by_key: dict[str, dict[str, Any]] = {}
+    pattern_by_key: dict[str, dict[str, Any]] = {}
+    leaves_by_pattern_key: dict[str, list[dict[str, Any]]] = {}
+
+    if isinstance(leaves, list):
+        for leaf in leaves:
+            if not isinstance(leaf, dict):
+                continue
+            leaf_key = _comparison_key(leaf.get("arabic") or "")
+            if leaf_key:
+                leaf_by_key[leaf_key] = leaf
+            pattern = leaf.get("pattern") or {}
+            if isinstance(pattern, dict):
+                pattern_key = _comparison_key(pattern.get("arabic") or "")
+                if pattern_key:
+                    pattern_by_key[pattern_key] = pattern
+                    leaves_by_pattern_key.setdefault(pattern_key, []).append(leaf)
+
+    return root_key, leaf_by_key, pattern_by_key, leaves_by_pattern_key
+
+
+def derive_correct_choice_id(
+    question: dict[str, Any],
+    evidence: dict[str, Any],
+) -> str | None:
+    """
+    Compute the correct choice id from the evidence, or None when it cannot
+    be derived unambiguously.
+
+    Grounding alone lets a wrong answer key through: every choice can be a
+    real pattern / word / meaning while `answer_id` points at the wrong one —
+    observed live on a زَرَعَ quiz where 3 of 5 answers contradicted K2's own
+    choice_feedback. For every question type the correct choice is a KB fact:
+
+    - root_meaning:           the root's meaning
+    - leaf_meaning:           the meaning of the leaf named in the stem
+    - meaning_to_leaf:        the leaf whose meaning the stem quotes
+    - pattern_recognition:    the pattern of the leaf named in the stem
+    - pattern_application:    the leaf carrying the pattern named in the stem
+    - pattern_meaning_effect: the meaning_effect of the pattern in the stem
+
+    Conservative on purpose: any ambiguity (no reference found, two references,
+    two leaves sharing the pattern, two choices matching) returns None rather
+    than guessing.
+    """
+    question_type = question.get("type")
+    question_text = question.get("question") or ""
+    choices = question.get("choices") or []
+
+    if not isinstance(question_text, str) or not isinstance(choices, list):
+        return None
+
+    root_key, leaf_by_key, pattern_by_key, leaves_by_pattern_key = _build_quiz_lookup(
+        evidence
+    )
+
+    run_keys = list(
+        dict.fromkeys(
+            _comparison_key(run) for run in extract_arabic_runs(question_text)
+        )
+    )
+
+    def unique_choice_matching(target_text: Any) -> str | None:
+        if not isinstance(target_text, str) or not target_text.strip():
+            return None
+        target_variants = _key_variants(target_text)
+        hits = [
+            choice.get("id")
+            for choice in choices
+            if isinstance(choice, dict)
+            and isinstance(choice.get("text"), str)
+            and (_key_variants(choice["text"]) & target_variants)
+        ]
+        return hits[0] if len(hits) == 1 else None
+
+    def unique_reference(candidates: list[str]) -> str | None:
+        # A stem often cites the root alongside its target ("... زَارِع, from
+        # the root ز ر ع"); drop the root citation before requiring uniqueness.
+        if len(candidates) > 1:
+            candidates = [key for key in candidates if key != root_key]
+        return candidates[0] if len(candidates) == 1 else None
+
+    if question_type == "root_meaning":
+        root = evidence.get("root") or {}
+        meaning = root.get("meaning") if isinstance(root, dict) else None
+        return unique_choice_matching(meaning)
+
+    if question_type == "leaf_meaning":
+        reference = unique_reference([key for key in run_keys if key in leaf_by_key])
+        if reference is None:
+            return None
+        return unique_choice_matching(leaf_by_key[reference].get("meaning"))
+
+    if question_type == "meaning_to_leaf":
+        question_key = _comparison_key(question_text)
+        hits = []
+        for choice in choices:
+            if not isinstance(choice, dict):
+                continue
+            leaf = leaf_by_key.get(_comparison_key(choice.get("text") or ""))
+            if not isinstance(leaf, dict):
+                continue
+            meaning_key = _comparison_key(leaf.get("meaning") or "")
+            if meaning_key and meaning_key in question_key:
+                hits.append(choice.get("id"))
+        return hits[0] if len(hits) == 1 else None
+
+    if question_type == "pattern_recognition":
+        reference = unique_reference([key for key in run_keys if key in leaf_by_key])
+        if reference is None:
+            return None
+        pattern = leaf_by_key[reference].get("pattern") or {}
+        if not isinstance(pattern, dict):
+            return None
+        return unique_choice_matching(pattern.get("arabic"))
+
+    if question_type == "pattern_application":
+        reference = unique_reference(
+            [key for key in run_keys if key in pattern_by_key and key != root_key]
+        )
+        if reference is None:
+            return None
+        pattern_leaves = leaves_by_pattern_key.get(reference, [])
+        if len(pattern_leaves) != 1:
+            return None
+        return unique_choice_matching(pattern_leaves[0].get("arabic"))
+
+    if question_type == "pattern_meaning_effect":
+        reference = unique_reference(
+            [key for key in run_keys if key in pattern_by_key and key != root_key]
+        )
+        if reference is None:
+            return None
+        return unique_choice_matching(pattern_by_key[reference].get("meaning_effect"))
+
+    return None
+
+
+def _validate_answer_correctness(
+    question: dict[str, Any],
+    label: str,
+    evidence: dict[str, Any],
+    result: ValidationResult,
+) -> None:
+    derived = derive_correct_choice_id(question, evidence)
+
+    if derived is not None and derived != question.get("answer_id"):
+        result.add(
+            f"{label}.answer_id: evidence says the correct choice is"
+            f" '{derived}', got '{question.get('answer_id')}'"
+        )
 
 
 def _get_correct_choice_text(question: dict[str, Any]) -> str:
