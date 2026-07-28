@@ -13,22 +13,33 @@ STATUS_FOUND = "found"
 STATUS_NOT_FOUND = "not_found"
 
 
-def run_wazn_pipeline(query: str) -> dict[str, Any]:
+def run_pipeline_components(query: str) -> dict[str, Any]:
+    """
+    Run the deterministic stages once and return their raw outputs.
+
+    /api/analyze shapes its response from these, and /api/insights builds the
+    agent evidence state from the same run — so the insights path never re-runs
+    lookup, morphology, tree, leaf details, or quiz to get at their outputs.
+
+    Returns `{"found": False, ...}` with `reason` / `message` when the word does
+    not resolve, `{"found": True, ...}` with every stage output otherwise.
+    """
     lookup_result = run_lookup_module(query)
 
     pipeline_trace = lookup_result.get("pipeline_trace", {})
 
     if not lookup_result.get("found"):
-        return build_not_found_response(
-            query=lookup_result.get("query", query),
-            normalized_query=lookup_result.get("normalized_query", ""),
-            reason=lookup_result.get("reason", "word_not_found"),
-            message=lookup_result.get(
+        return {
+            "found": False,
+            "query": lookup_result.get("query", query),
+            "normalized_query": lookup_result.get("normalized_query", ""),
+            "reason": lookup_result.get("reason", "word_not_found"),
+            "message": lookup_result.get(
                 "message",
                 "Word not found in the knowledge base.",
             ),
-            pipeline_trace=pipeline_trace,
-        )
+            "pipeline_trace": pipeline_trace,
+        }
 
     normalized_query = lookup_result["normalized_query"]
     selected_word_id = lookup_result["selected_word_id"]
@@ -59,13 +70,14 @@ def run_wazn_pipeline(query: str) -> dict[str, Any]:
     selected_leaf = leaf_details.get(selected_word_id)
 
     if not selected_leaf:
-        return build_not_found_response(
-            query=query,
-            normalized_query=normalized_query,
-            reason="missing_selected_leaf_detail",
-            message="Selected word is missing leaf detail data.",
-            pipeline_trace=pipeline_trace,
-        )
+        return {
+            "found": False,
+            "query": query,
+            "normalized_query": normalized_query,
+            "reason": "missing_selected_leaf_detail",
+            "message": "Selected word is missing leaf detail data.",
+            "pipeline_trace": pipeline_trace,
+        }
 
     quiz = build_quiz_for_word(
         selected_word=selected_word,
@@ -78,20 +90,53 @@ def run_wazn_pipeline(query: str) -> dict[str, Any]:
         quiz=quiz,
     )
 
+    return {
+        "found": True,
+        "query": query,
+        "normalized_query": normalized_query,
+        "selected_word_id": selected_word_id,
+        "selected_word": selected_word,
+        "root": root,
+        "pattern": pattern,
+        "family_words": lookup_result.get("family_words", []),
+        "same_pattern_words": lookup_result.get("same_pattern_words", []),
+        "morphology_result": morphology_result,
+        "tree": tree,
+        "leaf_details": leaf_details,
+        "selected_leaf": selected_leaf,
+        "quiz": quiz,
+        "pipeline_trace": pipeline_trace,
+    }
+
+
+def run_wazn_pipeline(query: str) -> dict[str, Any]:
+    components = run_pipeline_components(query)
+
+    if not components["found"]:
+        return build_not_found_response(
+            query=components["query"],
+            normalized_query=components["normalized_query"],
+            reason=components["reason"],
+            message=components["message"],
+            pipeline_trace=components["pipeline_trace"],
+        )
+
+    root = components["root"]
+
     k2_think = build_k2_think(
-        selected_word=selected_word,
+        selected_word=components["selected_word"],
         root=root,
-        pattern=pattern,
-        quiz=quiz,
-        pipeline_trace=pipeline_trace,
-        selected_leaf=selected_leaf,
+        pattern=components["pattern"],
+        quiz=components["quiz"],
+        pipeline_trace=components["pipeline_trace"],
+        selected_leaf=components["selected_leaf"],
     )
 
     return {
         "status": STATUS_FOUND,
-        "query": query,
-        "normalized_query": normalized_query,
-        "selected_word_id": selected_word_id,
+        "query": components["query"],
+        "normalized_query": components["normalized_query"],
+        "selected_word_id": components["selected_word_id"],
         "root": {
             "id": root.get("id"),
             "arabic": root.get("arabic"),
@@ -99,13 +144,13 @@ def run_wazn_pipeline(query: str) -> dict[str, Any]:
             "meaning": root.get("meaning"),
             "description": root.get("description"),
         },
-        "tree": tree,
-        "leaf_details": leaf_details,
-        "selected_leaf": selected_leaf,
-        "quiz": quiz,
+        "tree": components["tree"],
+        "leaf_details": components["leaf_details"],
+        "selected_leaf": components["selected_leaf"],
+        "quiz": components["quiz"],
         "k2_think": k2_think,
         "source": DETERMINISTIC_SOURCE,
-        "pipeline_trace": pipeline_trace,
+        "pipeline_trace": components["pipeline_trace"],
     }
 
 
