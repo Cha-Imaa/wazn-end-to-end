@@ -24,6 +24,16 @@ K2_MODEL = os.getenv(
 )
 K2_TIMEOUT_SECONDS = int(os.getenv("K2_TIMEOUT_SECONDS", "30"))
 
+# Same default as Settings.k2_max_completion_tokens, so a prompt judged in the
+# lab sees the same completion budget the request path grants it. Set to 0 to
+# omit the field and take the server default.
+K2_MAX_COMPLETION_TOKENS = int(os.getenv("K2_MAX_COMPLETION_TOKENS", "32000"))
+
+# "low" / "medium" / "high", or empty to take the server default. The request
+# path sets this per agent (see k2_agents_service.AgentSpec.reasoning_effort);
+# set it here to judge a prompt at the effort the agent will actually run at.
+K2_REASONING_EFFORT = os.getenv("K2_REASONING_EFFORT", "").strip()
+
 
 def load_text_file(file_path: str) -> str:
     path = Path(file_path)
@@ -85,6 +95,12 @@ def call_k2(
         "messages": messages,
         "stream": False,
     }
+
+    if K2_MAX_COMPLETION_TOKENS > 0:
+        payload["max_tokens"] = K2_MAX_COMPLETION_TOKENS
+
+    if K2_REASONING_EFFORT:
+        payload["reasoning_effort"] = K2_REASONING_EFFORT
 
     request = urllib.request.Request(
         url=K2_BASE_URL,

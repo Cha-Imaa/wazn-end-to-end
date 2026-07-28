@@ -67,6 +67,13 @@ class Settings:
     # sequential budget the same document assumes elsewhere.
     k2_insights_timeout_seconds: int
 
+    # Completion cap (reasoning + answer) for /api/insights calls. The server's
+    # own default proved too small for the quiz agent: it spent the whole budget
+    # reasoning and returned empty content on some words (§1.3). 32k clears the
+    # heaviest observed reasoning (guardrail, 17-20k tokens) plus a full quiz
+    # JSON with room to spare. 0 or negative disables the field entirely.
+    k2_max_completion_tokens: int
+
 
 def get_settings() -> Settings:
     return Settings(
@@ -114,5 +121,9 @@ def get_settings() -> Settings:
         k2_insights_timeout_seconds=_get_int_env(
             "K2_INSIGHTS_TIMEOUT_SECONDS",
             default=45,
+        ),
+        k2_max_completion_tokens=_get_int_env(
+            "K2_MAX_COMPLETION_TOKENS",
+            default=32000,
         ),
     )

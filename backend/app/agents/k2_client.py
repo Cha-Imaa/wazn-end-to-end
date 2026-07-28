@@ -15,6 +15,8 @@ def call_k2_json(
     user_prompt: str,
     settings: Settings | None = None,
     timeout_seconds: int | None = None,
+    max_tokens: int | None = None,
+    reasoning_effort: str | None = None,
 ) -> dict[str, Any]:
     """
     Call K2 and return its reasoning, answer, and parsed JSON output.
@@ -22,6 +24,21 @@ def call_k2_json(
     `timeout_seconds` overrides `settings.k2_timeout_seconds` for this call. The
     insights path passes the tighter `k2_insights_timeout_seconds` so four
     sequential agents cannot add up to a 2-minute request.
+
+    `max_tokens` bounds the completion (reasoning + answer combined on this
+    endpoint). Without it the server applies its own default cap, and an agent
+    that reasons heavily — the quiz agent asks for 5 questions with per-choice
+    feedback — can spend the whole budget on reasoning and return an empty
+    `content`, which surfaces here as "message content is empty". None omits
+    the field and keeps the server default.
+
+    `reasoning_effort` ("low" / "medium" / "high") bounds the *thinking*, which
+    max_tokens alone cannot: measured live on مدرسة (2026-07-29), the default
+    effort looped in self-checking until it consumed all 32k completion tokens
+    as reasoning and returned finish_reason=length with empty content, while
+    "low" finished in 471 reasoning tokens and "medium" in ~2.5k, both with a
+    complete answer. `/no_think` is silently ignored by this endpoint and
+    `chat_template_kwargs` is rejected with HTTP 400. None omits the field.
     """
     active_settings = settings or get_settings()
 
@@ -49,6 +66,12 @@ def call_k2_json(
         "temperature": 0.2,
         "stream": False,
     }
+
+    if max_tokens is not None:
+        payload["max_tokens"] = max_tokens
+
+    if reasoning_effort is not None:
+        payload["reasoning_effort"] = reasoning_effort
 
     request = urllib.request.Request(
         url=active_settings.k2_base_url,
