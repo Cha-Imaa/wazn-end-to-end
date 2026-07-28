@@ -393,9 +393,25 @@ def _comparison_key(text: str) -> str:
     return normalize_arabic(text).replace(" ", "").casefold()
 
 
+def _key_variants(text: str) -> set[str]:
+    """
+    The comparison key plus a singular/plural-tolerant variant.
+
+    'traders' where the evidence says 'trader' (observed live on تجارة) is an
+    English inflection, not an ungrounded meaning. Arabic never ends in 's',
+    so the extra variant only ever affects English strings.
+    """
+    key = _comparison_key(text)
+    variants = {key}
+    if key.endswith("s"):
+        variants.add(key[:-1])
+    return variants
+
+
 def _is_grounded_in(text: str, evidence_set: set[str]) -> bool:
     """
-    Membership check insensitive to tashkeel, spacing, and (English) case.
+    Membership check insensitive to tashkeel, spacing, (English) case, and a
+    trailing English plural 's'.
 
     §1.4 requires stripping tashkeel before comparison. Without this, a model
     emitting فاعِل where the KB has فَاعِل — the same pattern, one fatha short —
@@ -406,9 +422,9 @@ def _is_grounded_in(text: str, evidence_set: set[str]) -> bool:
     if text in evidence_set:
         return True
 
-    key = _comparison_key(text)
+    text_variants = _key_variants(text)
 
-    return any(key == _comparison_key(item) for item in evidence_set)
+    return any(text_variants & _key_variants(item) for item in evidence_set)
 
 
 def _validate_type_specific_grounding(
