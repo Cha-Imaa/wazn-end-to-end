@@ -224,8 +224,14 @@ def build_explanation_evidence_from_state(state: dict[str, Any]) -> dict[str, An
             "arabic": state["root"].get("arabic"),
             "meaning": state["root"].get("meaning"),
         },
+        # name and meaning_effect are the KB's hand-curated statements of what
+        # the pattern does. Without them the model guesses the function from the
+        # pattern shape alone — observed live: فَعَل described as "points to the
+        # person who does the action" (that is فَاعِل's job).
         "pattern": {
             "arabic": pattern.get("arabic") if pattern else None,
+            "name": pattern.get("name") if pattern else None,
+            "meaning_effect": pattern.get("meaning_effect") if pattern else None,
         },
         "same_pattern_cards": [
             {
@@ -258,7 +264,7 @@ def build_explanation_evidence_from_state(state: dict[str, Any]) -> dict[str, An
 
     return {
         "agent": "k2_explanation_agent",
-        "prompt_lab_packet_version": "explanation_v4_minimal_pattern_input",
+        "prompt_lab_packet_version": "explanation_v5_grounded_pattern_input",
         "llm_input": llm_input,
         "review_context": review_context,
     }
