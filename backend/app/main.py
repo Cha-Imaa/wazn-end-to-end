@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.data_loader import kb
 from app.services.analyze_service import analyze_word
+from app.services.insights_service import build_insights_response, build_pipeline_state
+from app.services.k2_agents_service import prewarm_insights
 
 
 app = FastAPI(
@@ -30,6 +32,12 @@ app.add_middleware(
 def startup_event() -> None:
     kb.load()
 
+    # No-op unless ENABLE_K2_INSIGHTS_PREWARM is set — it runs four sequential
+    # K2 calls per word before the app serves traffic, which is the point.
+    outcomes = prewarm_insights(state_builder=build_pipeline_state)
+    if outcomes:
+        print(f"[insights prewarm] {outcomes}")
+
 
 @app.get("/ping")
 def ping():
@@ -39,6 +47,11 @@ def ping():
 @app.get("/api/analyze")
 def analyze(word: str = Query(..., min_length=1)):
     return analyze_word(word)
+
+
+@app.get("/api/insights")
+def insights(word: str = Query(..., min_length=1)):
+    return build_insights_response(word)
 
 # @app.get("/debug/patterns")
 # def debug_patterns():
