@@ -7,11 +7,11 @@ from app.prompt_lab.shared.validators.quiz_validator import validate_quiz_output
 WORD = "عَالِم"
 
 AGENT_NAME = "quiz_agent"
-PROMPT_VERSION = "v2_tree_quiz"
+PROMPT_VERSION = "v3_tree_quiz"
 
-SYSTEM_PROMPT_PATH = "app/prompt_lab/quiz_agent/v2_tree_quiz/system.txt"
-USER_PROMPT_PATH = "app/prompt_lab/quiz_agent/v2_tree_quiz/user.txt"
-OUTPUT_DIR = "app/prompt_lab/quiz_agent/v2_tree_quiz/outputs"
+SYSTEM_PROMPT_PATH = "app/prompt_lab/quiz_agent/v3_tree_quiz/system.txt"
+USER_PROMPT_PATH = "app/prompt_lab/quiz_agent/v3_tree_quiz/user.txt"
+OUTPUT_DIR = "app/prompt_lab/quiz_agent/v3_tree_quiz/outputs"
 
 
 def main() -> None:
