@@ -78,6 +78,7 @@ from app.prompt_lab.shared.validators.common_validator import (
     add_arabic_value,
     check_no_unknown_arabic,
     get_llm_input,
+    normalize_arabic,
     parse_json_output,
     require_exact_keys,
     require_non_empty_string,
@@ -387,6 +388,29 @@ def _validate_no_invented_arabic(
             )
 
 
+def _comparison_key(text: str) -> str:
+    """Tashkeel-, spacing-, and case-insensitive form for grounding comparison."""
+    return normalize_arabic(text).replace(" ", "").casefold()
+
+
+def _is_grounded_in(text: str, evidence_set: set[str]) -> bool:
+    """
+    Membership check insensitive to tashkeel, spacing, and (English) case.
+
+    §1.4 requires stripping tashkeel before comparison. Without this, a model
+    emitting فاعِل where the KB has فَاعِل — the same pattern, one fatha short —
+    rejected entire otherwise-valid quizzes (observed live on تجارة). Likewise
+    "Often expresses..." vs the evidence's "often expresses..." (observed live
+    on نظر) is capitalization, not an ungrounded meaning.
+    """
+    if text in evidence_set:
+        return True
+
+    key = _comparison_key(text)
+
+    return any(key == _comparison_key(item) for item in evidence_set)
+
+
 def _validate_type_specific_grounding(
     question: dict[str, Any],
     label: str,
@@ -408,42 +432,42 @@ def _validate_type_specific_grounding(
     if question_type == "root_meaning":
         correct_choice_text = _get_correct_choice_text(question)
 
-        if correct_choice_text not in evidence_sets["root_meanings"]:
+        if not _is_grounded_in(correct_choice_text, evidence_sets["root_meanings"]):
             result.add(
                 f"{label}: root_meaning correct answer must come from root meanings: '{correct_choice_text}'"
             )
 
     elif question_type == "leaf_meaning":
         for text in choice_texts:
-            if text not in evidence_sets["leaf_meanings"]:
+            if not _is_grounded_in(text, evidence_sets["leaf_meanings"]):
                 result.add(
                     f"{label}: leaf_meaning choices must come from leaf meanings: '{text}'"
                 )
 
     elif question_type == "meaning_to_leaf":
         for text in choice_texts:
-            if text not in evidence_sets["leaf_words"]:
+            if not _is_grounded_in(text, evidence_sets["leaf_words"]):
                 result.add(
                     f"{label}: meaning_to_leaf choices must be real leaf words: '{text}'"
                 )
 
     elif question_type == "pattern_recognition":
         for text in choice_texts:
-            if text not in evidence_sets["patterns"]:
+            if not _is_grounded_in(text, evidence_sets["patterns"]):
                 result.add(
                     f"{label}: pattern_recognition choices must be real patterns: '{text}'"
                 )
 
     elif question_type == "pattern_meaning_effect":
         for text in choice_texts:
-            if text not in evidence_sets["pattern_meaning_effects"]:
+            if not _is_grounded_in(text, evidence_sets["pattern_meaning_effects"]):
                 result.add(
                     f"{label}: pattern_meaning_effect choices must come from pattern meaning_effect values: '{text}'"
                 )
 
     elif question_type == "pattern_application":
         for text in choice_texts:
-            if text not in evidence_sets["leaf_words"]:
+            if not _is_grounded_in(text, evidence_sets["leaf_words"]):
                 result.add(
                     f"{label}: pattern_application choices must be real leaf words: '{text}'"
                 )

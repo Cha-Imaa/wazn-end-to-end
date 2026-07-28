@@ -136,13 +136,15 @@ def check_no_unknown_arabic(
     spaced-letter root notation (e.g. "ع ل م").
     """
 
+    # Spaces are also dropped: root notation is spaced ("د ر س"), and a model
+    # mis-spacing a copy ("در س") is a typography slip, not invented Arabic.
     normalized_allowed = {
-        normalize_arabic(item) for item in allowed_arabic if item
+        normalize_arabic(item).replace(" ", "") for item in allowed_arabic if item
     }
     normalized_allowed = {item for item in normalized_allowed if item}
 
     for run in extract_arabic_runs(text):
-        normalized_run = normalize_arabic(run)
+        normalized_run = normalize_arabic(run).replace(" ", "")
 
         if not normalized_run:
             continue
