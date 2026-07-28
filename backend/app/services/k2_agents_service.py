@@ -33,6 +33,7 @@ evidence builders and validators are shared deliberately (§1.4 requires reusing
 lab tunes against.
 """
 
+import copy
 import json
 import random
 from dataclasses import dataclass
@@ -166,6 +167,15 @@ _QUIZ_TYPE_TO_CATEGORY = {
 
 _INSIGHTS_CACHE: dict[str, dict[str, Any]] = {}
 
+# The tree quiz's evidence is the root plus its 8 leaves — identical for every
+# word in a family — and its questions span the whole tree, so one live quiz per
+# root is correct, not a loss. Keyed by root_id so searching مدرسة then دَرَسَ
+# costs one K2 call, not two. Only k2_live results are stored: a fallback's
+# output is the word-specific deterministic quiz and its error belongs to the
+# call that failed. (Explanation stays word-keyed — it genuinely differs per
+# word — via _INSIGHTS_CACHE above.)
+_QUIZ_CACHE_BY_ROOT: dict[str, dict[str, Any]] = {}
+
 
 def build_insights(
     state: dict[str, Any],
@@ -198,7 +208,7 @@ def build_insights(
     deterministic_quiz = state.get("quiz", [])
 
     explanation_result = _run_explanation(state, word, active_settings)
-    quiz_result = _run_quiz(state, word, active_settings)
+    quiz_result = _run_quiz(state, word, active_settings, use_cache=use_cache)
 
     # Guardrail and evaluation review whatever the first two actually produced,
     # live output or deterministic fallback, so their verdicts describe what the
@@ -266,6 +276,7 @@ def _not_found_insights(state: dict[str, Any]) -> dict[str, Any]:
 
 def clear_insights_cache() -> None:
     _INSIGHTS_CACHE.clear()
+    _QUIZ_CACHE_BY_ROOT.clear()
 
 
 def insights_cache_size() -> int:
@@ -348,11 +359,19 @@ def _run_quiz(
     state: dict[str, Any],
     word: str,
     settings: Settings,
+    use_cache: bool = True,
 ) -> dict[str, Any]:
     spec = AGENT_SPECS[AGENT_QUIZ]
 
     if not getattr(settings, spec.flag_attribute):
         return _skipped(spec)
+
+    root_id = (state.get("root") or {}).get("id")
+
+    if use_cache and root_id and root_id in _QUIZ_CACHE_BY_ROOT:
+        # Deep copy: the result is embedded in per-word insights that are
+        # themselves cached, so two words must never share mutable structures.
+        return copy.deepcopy(_QUIZ_CACHE_BY_ROOT[root_id])
 
     packet = build_quiz_evidence_from_state(state)
 
@@ -368,6 +387,9 @@ def _run_quiz(
 
     if result.get("engine_status") == ENGINE_STATUS_K2_LIVE:
         _canonicalize_quiz_arabic(result.get("output"), packet)
+
+        if use_cache and root_id:
+            _QUIZ_CACHE_BY_ROOT[root_id] = copy.deepcopy(result)
 
     return result
 
