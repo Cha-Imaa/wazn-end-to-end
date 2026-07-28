@@ -1,4 +1,7 @@
-import { fetchLearningResultFromBackend } from "../api/learningApi.js";
+import {
+  fetchInsightsFromBackend,
+  fetchLearningResultFromBackend,
+} from "../api/learningApi.js";
 import { normalizeArabic } from "../utils/normalizeArabic.js";
 
 export const LEARNING_DATA_SOURCE = {
@@ -41,6 +44,23 @@ function createLearningError(error) {
     name: error?.name || "LearningDataError",
     details: error?.details || {},
   };
+}
+
+export async function resolveInsightsResult(rawWord) {
+  const query = rawWord.trim();
+
+  if (!query) {
+    return null;
+  }
+
+  try {
+    return await fetchInsightsFromBackend(query);
+  } catch (error) {
+    // Insights are enrichment only — the deterministic view already rendered,
+    // so a failed fetch is silent and the caller just keeps what it has.
+    console.error("Backend insights fetch failed.", error);
+    return null;
+  }
 }
 
 export async function resolveSearchResult(rawWord) {

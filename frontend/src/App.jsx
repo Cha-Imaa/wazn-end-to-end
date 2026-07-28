@@ -2,7 +2,10 @@ import { useRef, useState } from "react";
 import AppShell from "./components/AppShell.jsx";
 import LandingPage from "./components/LandingPage.jsx";
 import LearningInterface from "./components/LearningInterface.jsx";
-import { resolveSearchResult } from "./services/learningDataService.js";
+import {
+  resolveInsightsResult,
+  resolveSearchResult,
+} from "./services/learningDataService.js";
 
 export default function App() {
   const [view, setView] = useState("landing");
@@ -16,6 +19,10 @@ export default function App() {
   const [isSearching, setIsSearching] = useState(false);
 
   const inputRef = useRef(null);
+
+  // Increments on every search so a slow /api/insights response for an earlier
+  // word can never overwrite the result of a later one.
+  const searchSeqRef = useRef(0);
 
   function resetSelectedNode() {
     setSelectedNode(null);
@@ -45,12 +52,49 @@ export default function App() {
 
     setIsSearching(true);
 
+    const searchSeq = ++searchSeqRef.current;
+
     try {
       const result = await resolveSearchResult(cleaned);
       showLearningResult(result, cleaned);
+
+      if (result.status === "found") {
+        // Deliberately not awaited: /api/analyze renders immediately and the
+        // K2 enrichment (live Insights + upgraded quiz) swaps in on arrival.
+        enrichWithInsights(cleaned, searchSeq);
+      }
     } finally {
       setIsSearching(false);
     }
+  }
+
+  async function enrichWithInsights(word, searchSeq) {
+    const insights = await resolveInsightsResult(word);
+
+    if (
+      !insights ||
+      insights.status !== "found" ||
+      searchSeq !== searchSeqRef.current
+    ) {
+      return;
+    }
+
+    setLearningResult((previous) => {
+      if (!previous || previous.selected_word_id !== insights.selected_word_id) {
+        return previous;
+      }
+
+      const upgradedQuiz =
+        Array.isArray(insights.quiz) && insights.quiz.length > 0
+          ? insights.quiz
+          : previous.quiz;
+
+      return {
+        ...previous,
+        k2_think: insights.k2_think || previous.k2_think,
+        quiz: upgradedQuiz,
+      };
+    });
   }
 
   function handleStaticExampleSearch(example) {

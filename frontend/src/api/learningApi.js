@@ -30,17 +30,15 @@ async function parseJsonResponse(response) {
   }
 }
 
-export async function fetchLearningResultFromBackend(query) {
-  const encodedWord = encodeURIComponent(query);
-
-  const response = await fetch(buildApiUrl(`/api/analyze?word=${encodedWord}`), {
+async function fetchBackendJson(path, errorMessage) {
+  const response = await fetch(buildApiUrl(path), {
     method: "GET",
   });
 
   const payload = await parseJsonResponse(response);
 
   if (!response.ok) {
-    throw new LearningApiError("Failed to fetch learning result.", {
+    throw new LearningApiError(errorMessage, {
       reason: "http_error",
       status: response.status,
       statusText: response.statusText,
@@ -49,4 +47,22 @@ export async function fetchLearningResultFromBackend(query) {
   }
 
   return payload;
+}
+
+export async function fetchLearningResultFromBackend(query) {
+  const encodedWord = encodeURIComponent(query);
+
+  return fetchBackendJson(
+    `/api/analyze?word=${encodedWord}`,
+    "Failed to fetch learning result."
+  );
+}
+
+export async function fetchInsightsFromBackend(query) {
+  const encodedWord = encodeURIComponent(query);
+
+  return fetchBackendJson(
+    `/api/insights?word=${encodedWord}`,
+    "Failed to fetch insights."
+  );
 }

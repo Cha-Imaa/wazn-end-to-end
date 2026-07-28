@@ -317,7 +317,13 @@ export default function LearningInterface({
             )}
 
             {!isNotFound && companionTab === "quiz" && (
-              <WordQuiz key={searchedWord} questions={activeQuizQuestions} />
+              <WordQuiz
+                // Keyed on question source too: when the K2-upgraded quiz
+                // replaces the templates mid-session, the quiz must remount —
+                // its per-question state is seeded in a useState initializer.
+                key={`${searchedWord}:${activeQuizQuestions[0]?.source || "template"}`}
+                questions={activeQuizQuestions}
+              />
             )}
 
             {!isNotFound && companionTab === "k2think" && (
