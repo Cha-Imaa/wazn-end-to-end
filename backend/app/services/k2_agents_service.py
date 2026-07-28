@@ -36,6 +36,7 @@ lab tunes against.
 import copy
 import json
 import random
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable
@@ -96,10 +97,11 @@ class AgentSpec:
     flag_env_name: str
     prompt_version_dir: str
 
-    # Per-agent thinking budget, or None for the server default. Quiz and
-    # guardrail need a bound: at default effort K2 loops in self-checking on
-    # some inputs until it consumes the whole completion budget as reasoning
-    # (empty content), or emits malformed check objects (§1.3). Measured for
+    # Per-agent thinking budget, or None for the server default. Quiz,
+    # guardrail, and explanation need a bound: at default effort K2 loops in
+    # self-checking on some inputs until it consumes the whole completion
+    # budget as reasoning (empty content), or emits malformed check objects
+    # (§1.3). Measured for
     # the guardrail across 8 roots on 2026-07-29: default validated 6/11 at
     # ~16k reasoning tokens / ~13s median; "medium" validated 11/11 at ~2.5k
     # tokens / ~4s, and still caught every injected error in the poisoned
@@ -127,7 +129,14 @@ AGENT_SPECS: dict[str, AgentSpec] = {
         step=3,
         flag_attribute="enable_k2_explanation",
         flag_env_name="ENABLE_K2_EXPLANATION",
-        prompt_version_dir="explanation_agent/v3_basic",
+        # v4 grounds the pattern-function claim in the KB's name /
+        # meaning_effect — v3 guessed it from the pattern shape (فَعَل was
+        # described as "points to the person who does the action"). Medium
+        # effort for the same reason as quiz/guardrail: at default effort,
+        # 2 of 16 audited calls spent the whole budget reasoning and
+        # returned empty content.
+        prompt_version_dir="explanation_agent/v4_grounded_pattern",
+        reasoning_effort="medium",
     ),
     AGENT_QUIZ: AgentSpec(
         id=AGENT_QUIZ,
@@ -351,7 +360,7 @@ def _run_explanation(
 
     packet = build_explanation_evidence_from_state(state)
 
-    return _call_and_validate(
+    result = _call_and_validate(
         spec=spec,
         packet=packet,
         word=word,
@@ -359,6 +368,15 @@ def _run_explanation(
         validate=_validate_via_validation_result(validate_explanation_output),
         fallback_output=_deterministic_explanation(state),
     )
+
+    if result.get("engine_status") == ENGINE_STATUS_K2_LIVE:
+        _canonicalize_explanation_arabic(result.get("output"), packet)
+        llm_input = packet.get("llm_input", {})
+        root = llm_input.get("root") if isinstance(llm_input, dict) else None
+        if isinstance(root, dict):
+            _repair_root_citations(result.get("output"), root.get("arabic"))
+
+    return result
 
 
 def _run_quiz(
@@ -738,6 +756,104 @@ def _arabic_comparison_key(text: str) -> str:
     return normalize_arabic(text).replace(" ", "")
 
 
+def _register_canonical(canonical_by_key: dict[str, str], value: Any) -> None:
+    if isinstance(value, str) and value.strip():
+        canonical_by_key.setdefault(_arabic_comparison_key(value), value.strip())
+
+
+def _canonicalize_prose(text: Any, canonical_by_key: dict[str, str]) -> Any:
+    """Replace each Arabic run with the KB's exact form, or leave it alone."""
+    if not isinstance(text, str):
+        return text
+    for run in extract_arabic_runs(text):
+        canonical = canonical_by_key.get(_arabic_comparison_key(run))
+        if canonical and canonical != run:
+            text = text.replace(run, canonical)
+    return text
+
+
+# An Arabic run directly following the English word "root" (optionally "root
+# letters", or with a colon) — the only context where citing the full word
+# instead of the spaced letters is a teaching error worth repairing.
+_ROOT_CITATION_RE = re.compile(
+    r"(root(?:\s+letters)?[\s:]+)"
+    r"([؀-ۿ][؀-ۿ\s]*[؀-ۿ]|[؀-ۿ])",
+    re.IGNORECASE,
+)
+
+
+def _repair_root_citations(output: Any, root_arabic: Any) -> None:
+    """
+    Rewrite "the root زَرَعَ" to "the root ز ر ع", in place.
+
+    The prompt asks for the spaced letters, but on bare Form-I verbs — where
+    the word *is* the vocalized root — K2 keeps citing the full word (observed
+    live on زَرَعَ and كَتَبَ, and flagged by the live guardrail as "Root
+    Arabic mismatched"). Canonicalization cannot fix it: the word and the root
+    share a comparison key, so the map cannot tell them apart. The English
+    word "root" immediately before the run is what disambiguates.
+    """
+    if not isinstance(output, dict) or not isinstance(root_arabic, str):
+        return
+    if not root_arabic.strip():
+        return
+
+    root_key = _arabic_comparison_key(root_arabic)
+
+    def fix(match: re.Match) -> str:
+        run = match.group(2)
+        if _arabic_comparison_key(run) == root_key and run != root_arabic:
+            return match.group(1) + root_arabic
+        return match.group(0)
+
+    for field_name in (
+        "explanation",
+        "pattern_explanation",
+        "same_pattern_explanation",
+    ):
+        value = output.get(field_name)
+        if isinstance(value, str):
+            output[field_name] = _ROOT_CITATION_RE.sub(fix, value)
+
+
+def _canonicalize_explanation_arabic(
+    output: Any,
+    packet: dict[str, Any],
+) -> None:
+    """
+    Rewrite Arabic in explanation prose to the KB's exact vocalized form, in
+    place — the same rule as the quiz (§1.4): validation is tashkeel- and
+    spacing-insensitive, but the learner must never see the model's
+    under-vocalized near-miss (observed live: حَكم for the card حَكَمَ).
+    """
+    if not isinstance(output, dict):
+        return
+
+    llm_input = packet.get("llm_input", packet)
+
+    canonical_by_key: dict[str, str] = {}
+
+    for key in ("selected_word", "root", "pattern"):
+        source = llm_input.get(key)
+        if isinstance(source, dict):
+            _register_canonical(canonical_by_key, source.get("arabic"))
+
+    cards = llm_input.get("same_pattern_cards")
+    if isinstance(cards, list):
+        for card in cards:
+            if isinstance(card, dict):
+                _register_canonical(canonical_by_key, card.get("arabic"))
+
+    for field_name in (
+        "explanation",
+        "pattern_explanation",
+        "same_pattern_explanation",
+    ):
+        output[field_name] = _canonicalize_prose(
+            output.get(field_name), canonical_by_key
+        )
+
+
 def _canonicalize_quiz_arabic(
     output: Any,
     packet: dict[str, Any],
@@ -758,46 +874,35 @@ def _canonicalize_quiz_arabic(
 
     canonical_by_key: dict[str, str] = {}
 
-    def register(value: Any) -> None:
-        if isinstance(value, str) and value.strip():
-            canonical_by_key.setdefault(
-                _arabic_comparison_key(value), value.strip()
-            )
-
     root = llm_input.get("root")
     if isinstance(root, dict):
-        register(root.get("arabic"))
+        _register_canonical(canonical_by_key, root.get("arabic"))
 
     leaves = llm_input.get("leaves")
     if isinstance(leaves, list):
         for leaf in leaves:
             if not isinstance(leaf, dict):
                 continue
-            register(leaf.get("arabic"))
+            _register_canonical(canonical_by_key, leaf.get("arabic"))
             pattern = leaf.get("pattern")
             if isinstance(pattern, dict):
-                register(pattern.get("arabic"))
-
-    def canonicalize_prose(text: Any) -> Any:
-        if not isinstance(text, str):
-            return text
-        for run in extract_arabic_runs(text):
-            canonical = canonical_by_key.get(_arabic_comparison_key(run))
-            if canonical and canonical != run:
-                text = text.replace(run, canonical)
-        return text
+                _register_canonical(canonical_by_key, pattern.get("arabic"))
 
     for question in output["quiz"]:
         if not isinstance(question, dict):
             continue
 
         for field_name in ("question", "correct_feedback", "wrong_feedback", "explanation"):
-            question[field_name] = canonicalize_prose(question.get(field_name))
+            question[field_name] = _canonicalize_prose(
+                question.get(field_name), canonical_by_key
+            )
 
         choice_feedback = question.get("choice_feedback")
         if isinstance(choice_feedback, dict):
             for choice_id, feedback in choice_feedback.items():
-                choice_feedback[choice_id] = canonicalize_prose(feedback)
+                choice_feedback[choice_id] = _canonicalize_prose(
+                    feedback, canonical_by_key
+                )
 
         choices = question.get("choices")
         if not isinstance(choices, list):
