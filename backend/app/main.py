@@ -23,6 +23,10 @@ app.add_middleware(
         "http://127.0.0.1:5173",
         "https://wazn-theta.vercel.app",
     ],
+    # Vercel gives every preview deploy its own generated subdomain, so a branch
+    # preview is blocked by the fixed list above and looks like a dead backend.
+    # Scoped to this project's previews — not a wildcard.
+    allow_origin_regex=r"https://wazn-theta-[a-z0-9-]+\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
