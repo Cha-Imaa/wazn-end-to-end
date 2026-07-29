@@ -6,7 +6,7 @@
     "name": "basic past-tense verb pattern (i-type)",
     "short_explanation": "a basic verb pattern often used for states or actions",
     "meaning_effect": "often expresses the basic action or state connected to the root",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "yaf3alu": {
@@ -16,7 +16,7 @@
     "name": "present-tense verb pattern (a-type)",
     "short_explanation": "a present-tense verb pattern for ongoing or repeated action",
     "meaning_effect": "often expresses doing the root action now or generally",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "fa33ala": {
@@ -26,7 +26,7 @@
     "name": "intensive verb pattern",
     "short_explanation": "a verb pattern that often adds causing or intensifying",
     "meaning_effect": "often means making someone or something do the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "fi3l": {
@@ -36,7 +36,7 @@
     "name": "abstract noun pattern",
     "short_explanation": "a short noun pattern for core concepts",
     "meaning_effect": "often forms an abstract noun connected to the root",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "faa3il": {
@@ -46,7 +46,7 @@
     "name": "active participle pattern (Form I)",
     "short_explanation": "a pattern for the doer of an action",
     "meaning_effect": "often means the person or thing doing the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "maf3uul": {
@@ -56,7 +56,7 @@
     "name": "passive participle pattern",
     "short_explanation": "a pattern for something affected by an action",
     "meaning_effect": "often means the thing receiving or having the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "taf3iil": {
@@ -66,7 +66,7 @@
     "name": "verbal noun pattern (Form II)",
     "short_explanation": "a noun pattern often linked to Form II verbs",
     "meaning_effect": "often names the process of causing or doing the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "mufa33il": {
@@ -76,7 +76,7 @@
     "name": "active participle pattern (Form II)",
     "short_explanation": "a pattern for the doer of a Form II action",
     "meaning_effect": "often means someone who causes or brings about the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "fa3ala": {
@@ -86,7 +86,7 @@
     "name": "basic past-tense verb pattern (a-type)",
     "short_explanation": "a basic verb pattern often used for the core action of a root",
     "meaning_effect": "often expresses the basic action connected to the root meaning",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "yaf3ulu": {
@@ -96,7 +96,7 @@
     "name": "present-tense verb pattern (u-type)",
     "short_explanation": "a present-tense verb pattern for ongoing or repeated action",
     "meaning_effect": "often expresses doing the root action now or generally",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "fa3l": {
@@ -106,7 +106,7 @@
     "name": "simple noun pattern",
     "short_explanation": "a short noun pattern often used for simple concepts",
     "meaning_effect": "often forms a compact noun connected to the root",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "fa3al": {
@@ -116,7 +116,7 @@
     "name": "plain noun pattern",
     "short_explanation": "a short noun pattern for the thing or faculty itself",
     "meaning_effect": "often names the thing, faculty, or result of the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "fi3aala": {
@@ -126,7 +126,7 @@
     "name": "activity noun pattern",
     "short_explanation": "a noun pattern often used for activities or practices",
     "meaning_effect": "often names an activity related to the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "maf3ala": {
@@ -136,7 +136,7 @@
     "name": "place noun pattern",
     "short_explanation": "a noun pattern often used for places",
     "meaning_effect": "often means a place connected to the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "if3al": {
@@ -146,7 +146,7 @@
     "name": "imperative verb pattern",
     "short_explanation": "a command pattern for asking someone to do an action",
     "meaning_effect": "often expresses a direct command using the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "fu3laan": {
@@ -156,7 +156,7 @@
     "name": "collective noun pattern",
     "short_explanation": "a noun pattern often used for abstract or collective nouns",
     "meaning_effect": "often names the result or the whole body of the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "fu33aal": {
@@ -166,7 +166,7 @@
     "name": "plural noun pattern",
     "short_explanation": "a plural pattern often used for groups of people",
     "meaning_effect": "often means multiple people doing the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "fa33aala": {
@@ -176,7 +176,7 @@
     "name": "tool noun pattern",
     "short_explanation": "a noun pattern often used for tools or devices",
     "meaning_effect": "often means a tool connected to the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "ifti3aal": {
@@ -186,7 +186,7 @@
     "name": "verbal noun pattern (Form VIII)",
     "short_explanation": "a noun pattern often linked to Form VIII verbs",
     "meaning_effect": "often names a process or activity connected to the root",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "mustaf3il": {
@@ -196,7 +196,7 @@
     "name": "active participle pattern (Form X)",
     "short_explanation": "a pattern for the doer of a Form X action",
     "meaning_effect": "often means someone actively seeking or doing the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "fa3la": {
@@ -206,7 +206,7 @@
     "name": "single-instance noun pattern",
     "short_explanation": "a noun pattern often used for one instance of an action",
     "meaning_effect": "often means one act or instance connected to the root",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "maf3al": {
@@ -216,7 +216,7 @@
     "name": "place or result noun pattern",
     "short_explanation": "a noun pattern often used for places, results, or views",
     "meaning_effect": "often forms a noun connected to where or how the root action appears",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "ifta3ala": {
@@ -226,7 +226,7 @@
     "name": "Form VIII past-tense verb pattern",
     "short_explanation": "a verb pattern often used for actions involving effort, interaction, or involvement",
     "meaning_effect": "often expresses engaging in the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "yafta3ilu": {
@@ -236,7 +236,7 @@
     "name": "Form VIII present-tense verb pattern",
     "short_explanation": "a present-tense pattern for ongoing Form VIII actions",
     "meaning_effect": "often expresses currently or generally engaging in the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "mufta3il": {
@@ -246,7 +246,7 @@
     "name": "active participle pattern (Form VIII)",
     "short_explanation": "a pattern for the doer of a Form VIII action",
     "meaning_effect": "often means someone actively engaging in the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "fi3aalii": {
@@ -256,7 +256,7 @@
     "name": "relational adjective pattern",
     "short_explanation": "an adjective pattern often used to describe relation to a noun or field",
     "meaning_effect": "often means related to the root concept",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "yaf3ilu": {
@@ -266,7 +266,7 @@
     "name": "present-tense verb pattern (i-type)",
     "short_explanation": "a present-tense verb pattern for ongoing or repeated action",
     "meaning_effect": "often expresses doing the root action now or generally",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "fa33aal": {
@@ -276,7 +276,7 @@
     "name": "profession noun pattern",
     "short_explanation": "a noun pattern for someone who does the root action as a job",
     "meaning_effect": "often means a person who does the root action habitually",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "mif3aal": {
@@ -286,7 +286,7 @@
     "name": "instrument noun pattern",
     "short_explanation": "a noun pattern for the tool that performs the action",
     "meaning_effect": "often means an instrument used for the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "istif3aal": {
@@ -296,7 +296,7 @@
     "name": "verbal noun pattern (Form X)",
     "short_explanation": "a noun pattern often linked to Form X verbs",
     "meaning_effect": "often names seeking or asking for the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "fi3aal": {
@@ -306,7 +306,7 @@
     "name": "concrete noun pattern",
     "short_explanation": "a very common noun pattern for everyday things",
     "meaning_effect": "often names a concrete thing connected to the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "fa3aal": {
@@ -316,7 +316,7 @@
     "name": "substance noun pattern",
     "short_explanation": "a noun pattern often used for substances and states",
     "meaning_effect": "often names a substance or condition linked to the root",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "fu3uul": {
@@ -326,7 +326,7 @@
     "name": "verbal noun pattern (movement)",
     "short_explanation": "a noun pattern common for verbs of motion and change",
     "meaning_effect": "often names the act of the root action happening",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "fi3la": {
@@ -336,7 +336,7 @@
     "name": "unit noun pattern",
     "short_explanation": "a noun pattern for a single unit or a way of doing something",
     "meaning_effect": "often names one piece or one manner of the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "mafaa3il": {
@@ -346,7 +346,7 @@
     "name": "broken plural pattern (places)",
     "short_explanation": "the plural pattern for place nouns like مَفْعَل and مَفْعَلَة",
     "meaning_effect": "often means many of the places connected to the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "tafa33ala": {
@@ -356,7 +356,7 @@
     "name": "Form V past-tense verb pattern",
     "short_explanation": "a verb pattern for doing something to or for oneself",
     "meaning_effect": "often expresses gradually taking on the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "yatafa33alu": {
@@ -366,7 +366,7 @@
     "name": "Form V present-tense verb pattern",
     "short_explanation": "a present-tense pattern for ongoing Form V actions",
     "meaning_effect": "often expresses currently taking on the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "tafa33ul": {
@@ -376,7 +376,7 @@
     "name": "verbal noun pattern (Form V)",
     "short_explanation": "a noun pattern often linked to Form V verbs",
     "meaning_effect": "often names the process of taking on the root action",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   },
   "mutafa33il": {
@@ -386,7 +386,7 @@
     "name": "active participle pattern (Form V)",
     "short_explanation": "a pattern for the doer of a Form V action",
     "meaning_effect": "often means someone taking on the root action themselves",
-    "verified": false,
+    "verified": true,
     "demo_safe": true
   }
 }
