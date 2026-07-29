@@ -21,17 +21,26 @@ from app.prompt_lab.shared.validators.evaluation_validator import (
 
 WORD = "تَعْلِيم"
 
-EXPLANATION_SYSTEM_PROMPT_PATH = "app/prompt_lab/explanation_agent/v3_basic/system.txt"
-EXPLANATION_USER_PROMPT_PATH = "app/prompt_lab/explanation_agent/v3_basic/user.txt"
+# The versions the request path serves (k2_agents_service.AGENT_SPECS). The lab
+# must run the same ones, or a revision is judged against output the app no
+# longer produces: this runner pointed at explanation v3_basic, quiz
+# v2_tree_quiz, and evaluation v1_rubric — whose user.txt has no {llm_input}
+# placeholder, so every run scored a literal "<...>" skeleton (§1.1).
+EXPLANATION_SYSTEM_PROMPT_PATH = (
+    "app/prompt_lab/explanation_agent/v4_grounded_pattern/system.txt"
+)
+EXPLANATION_USER_PROMPT_PATH = (
+    "app/prompt_lab/explanation_agent/v4_grounded_pattern/user.txt"
+)
 
-QUIZ_SYSTEM_PROMPT_PATH = "app/prompt_lab/quiz_agent/v2_tree_quiz/system.txt"
-QUIZ_USER_PROMPT_PATH = "app/prompt_lab/quiz_agent/v2_tree_quiz/user.txt"
+QUIZ_SYSTEM_PROMPT_PATH = "app/prompt_lab/quiz_agent/v3_tree_quiz/system.txt"
+QUIZ_USER_PROMPT_PATH = "app/prompt_lab/quiz_agent/v3_tree_quiz/user.txt"
 
 EVALUATION_AGENT_NAME = "evaluation_agent"
-EVALUATION_PROMPT_VERSION = "v1_scoring"
-EVALUATION_SYSTEM_PROMPT_PATH = "app/prompt_lab/evaluation_agent/v1_rubric/system.txt"
-EVALUATION_USER_PROMPT_PATH = "app/prompt_lab/evaluation_agent/v1_rubric/user.txt"
-EVALUATION_OUTPUT_DIR = "app/prompt_lab/evaluation_agent/v1_rubric/outputs"
+EVALUATION_PROMPT_VERSION = "v2_scoring"
+EVALUATION_SYSTEM_PROMPT_PATH = "app/prompt_lab/evaluation_agent/v2_scoring/system.txt"
+EVALUATION_USER_PROMPT_PATH = "app/prompt_lab/evaluation_agent/v2_scoring/user.txt"
+EVALUATION_OUTPUT_DIR = "app/prompt_lab/evaluation_agent/v2_scoring/outputs"
 
 
 def main() -> None:
@@ -59,7 +68,10 @@ def main() -> None:
 
     evidence_packet = {
         "agent": "evaluation_agent",
-        "prompt_lab_packet_version": "evaluation_v1_scoring",
+        # v2 carries the selected word's pattern and states each same-pattern
+        # card's shared pattern, so `same_pattern_explanation`'s central claim
+        # is checkable rather than a deduction (§1.3).
+        "prompt_lab_packet_version": "evaluation_v2_scoring_carded_pattern",
         "llm_input": evaluation_input,
         "review_context": {
             "word": WORD,
