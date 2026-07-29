@@ -589,6 +589,7 @@ def build_combined_evaluation_input_from_state(
     require_found_state(state)
 
     selected_leaf = state["selected_leaf"] or {}
+    pattern = compact_pattern(state.get("pattern"))
 
     same_pattern_cards = selected_leaf.get("same_pattern_words", [])
     if not isinstance(same_pattern_cards, list):
@@ -641,10 +642,26 @@ def build_combined_evaluation_input_from_state(
                 "arabic": state["selected_word"].get("arabic"),
                 "meaning": state["selected_word"].get("meaning"),
             },
+            "pattern": {
+                "arabic": pattern.get("arabic") if pattern else None,
+                "name": pattern.get("name") if pattern else None,
+                "meaning_effect": pattern.get("meaning_effect") if pattern else None,
+            },
+            # Each card carries the pattern it shares with the selected word.
+            # `get_same_pattern_words` draws them from `kb.words_by_pattern`, so
+            # the shared pattern is a KB fact — but the packet used to omit it,
+            # which made `same_pattern_explanation`'s central claim ("words such
+            # as شَغَلَ, حَمَلَ, كَتَبَ use the same pattern") unverifiable from
+            # the evidence. The evaluation agent was right to deduct for it:
+            # measured 2026-07-29, groundedness 6 on مدرسة and قَرَأَ, both
+            # citing an "ungrounded claim about the same-pattern cards".
             "same_pattern_cards": [
                 {
                     "arabic": item.get("arabic"),
                     "meaning": item.get("meaning"),
+                    "pattern": {
+                        "arabic": pattern.get("arabic") if pattern else None,
+                    },
                 }
                 for item in same_pattern_cards
                 if isinstance(item, dict)
