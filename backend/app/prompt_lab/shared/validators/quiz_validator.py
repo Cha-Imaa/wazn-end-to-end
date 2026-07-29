@@ -72,9 +72,14 @@
 #    "Not quite"
 # 23. answer_id must point at the evidence-derived correct choice
 #    whenever that choice is unambiguously derivable
+# 24. Feedback prose must not assert a checkable falsehood:
+#    a word's pattern, a pattern's word class, or a word's meaning
 
 from typing import Any
 
+from app.prompt_lab.shared.validators.quiz_claim_checker import (
+    feedback_claim_violations,
+)
 from app.prompt_lab.shared.validators.common_validator import (
     ValidationResult,
     add_arabic_value,
@@ -139,6 +144,7 @@ def validate_quiz_output(
     14. type-specific grounded choices
     15. wrong_feedback starts with "Not quite"
     16. answer_id matches the evidence-derived correct choice when derivable
+    17. feedback prose asserts nothing the evidence contradicts
     """
 
     result = parse_json_output(raw_output)
@@ -208,6 +214,12 @@ def validate_quiz_output(
             result,
         )
         _validate_answer_correctness(
+            question,
+            label,
+            evidence,
+            result,
+        )
+        _validate_feedback_claims(
             question,
             label,
             evidence,
@@ -659,6 +671,24 @@ def _validate_answer_correctness(
             f"{label}.answer_id: evidence says the correct choice is"
             f" '{derived}', got '{question.get('answer_id')}'"
         )
+
+
+def _validate_feedback_claims(
+    question: dict[str, Any],
+    label: str,
+    evidence: dict[str, Any],
+    result: ValidationResult,
+) -> None:
+    """
+    Reject prose that asserts something the evidence contradicts.
+
+    Grounding and `derive_correct_choice_id` both pass a distractor explained
+    with a false sentence — observed live on قَاسِم, where a correctly keyed,
+    fully grounded quiz called فَعَلَ a noun pattern and gave قَسَمَ another
+    word's meaning. See `quiz_claim_checker` for what is and is not checked.
+    """
+    for violation in feedback_claim_violations(question, evidence):
+        result.add(f"{label}.{violation}")
 
 
 def _get_correct_choice_text(question: dict[str, Any]) -> str:
