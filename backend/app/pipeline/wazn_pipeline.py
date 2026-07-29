@@ -1,7 +1,11 @@
 from typing import Any
 
 from app.modules.lookup_module import run_lookup_module
-from app.modules.morphology_reasoning_module import run_morphology_reasoning_module
+from app.modules.morphology_reasoning_module import (
+    build_morphology_output,
+    empty_morphology_output,
+    run_morphology_reasoning_module,
+)
 from app.services.k2_think_service import build_k2_think
 from app.services.leaf_details_service import build_leaf_details_for_tree
 from app.services.quiz_service import build_quiz_for_word
@@ -144,6 +148,11 @@ def run_wazn_pipeline(query: str) -> dict[str, Any]:
             "meaning": root.get("meaning"),
             "description": root.get("description"),
         },
+        # The morphology module's own output, not just its trace. `breakdown`
+        # stays the tree's and k2_think's source for root letters; this adds the
+        # `reasoning_summary` — a written account of how root and pattern
+        # combine — which was computed on every request and then discarded.
+        "morphology": build_morphology_output(components["morphology_result"]),
         "tree": components["tree"],
         "leaf_details": components["leaf_details"],
         "selected_leaf": components["selected_leaf"],
@@ -185,6 +194,9 @@ def build_not_found_response(
         "normalized_query": normalized_query,
         "selected_word_id": None,
         "root": None,
+        # Shaped, not absent — a client reading `morphology.root_letters` must
+        # not have to special-case not_found.
+        "morphology": empty_morphology_output(),
         "tree": {
             "trunk": None,
             "leaves": [],

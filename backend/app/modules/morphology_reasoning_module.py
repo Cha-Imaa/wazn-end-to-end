@@ -48,6 +48,27 @@ def run_morphology_reasoning_module(
     }
 
 
+def build_morphology_output(morphology_result: dict[str, Any]) -> dict[str, Any]:
+    """
+    The module's three learner-facing outputs, without the trace.
+
+    Every consumer wants the same three keys and nothing else: /api/analyze
+    surfaces them under a top-level `morphology`, and the agent evidence state
+    carries them under the same name. Defined once here so the shape cannot
+    drift between the request path and the prompt lab.
+    """
+    return {
+        "root_letters": morphology_result.get("root_letters", []),
+        "pattern_letters": morphology_result.get("pattern_letters", []),
+        "reasoning_summary": morphology_result.get("reasoning_summary", ""),
+    }
+
+
+def empty_morphology_output() -> dict[str, Any]:
+    """The same three keys, for a word that did not resolve — never `None`."""
+    return build_morphology_output({})
+
+
 def get_breakdown_segments(selected_word: dict[str, Any]) -> list[dict[str, Any]]:
     breakdown = selected_word.get("breakdown", {})
 

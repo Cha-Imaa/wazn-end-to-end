@@ -23,6 +23,7 @@ Top-level `quiz` is the K2-upgraded quiz or None; None means "keep the quiz
 from typing import Any
 
 from app.core.config import Settings, get_settings
+from app.modules.morphology_reasoning_module import build_morphology_output
 from app.pipeline.wazn_pipeline import run_pipeline_components
 from app.prompt_lab.shared.evidence_builder import build_state_from_components
 from app.services.k2_agents_service import (
@@ -85,11 +86,7 @@ def build_pipeline_state(word: str) -> dict[str, Any]:
         leaf_details=components["leaf_details"],
         selected_leaf=components["selected_leaf"],
         quiz=components["quiz"],
-        morphology={
-            "root_letters": morphology_result.get("root_letters", []),
-            "pattern_letters": morphology_result.get("pattern_letters", []),
-            "reasoning_summary": morphology_result.get("reasoning_summary", ""),
-        },
+        morphology=build_morphology_output(morphology_result),
         family_words=components["family_words"],
         same_pattern_words=components["same_pattern_words"],
         pipeline_trace=components["pipeline_trace"],

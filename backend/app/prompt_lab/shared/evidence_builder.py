@@ -1,7 +1,10 @@
 from typing import Any
 
 from app.modules.lookup_module import run_lookup_module
-from app.modules.morphology_reasoning_module import run_morphology_reasoning_module
+from app.modules.morphology_reasoning_module import (
+    build_morphology_output,
+    run_morphology_reasoning_module,
+)
 from app.services.leaf_details_service import build_leaf_details_for_tree
 from app.services.quiz_service import build_quiz_for_word
 from app.services.tree_service import build_tree_response
@@ -65,11 +68,7 @@ def build_base_state(word: str) -> dict[str, Any]:
         leaf_details=leaf_details,
         selected_leaf=selected_leaf,
         quiz=quiz,
-        morphology={
-            "root_letters": morphology_result.get("root_letters", []),
-            "pattern_letters": morphology_result.get("pattern_letters", []),
-            "reasoning_summary": morphology_result.get("reasoning_summary", ""),
-        },
+        morphology=build_morphology_output(morphology_result),
         family_words=lookup_result.get("family_words", []),
         same_pattern_words=lookup_result.get("same_pattern_words", []),
         pipeline_trace=pipeline_trace,
