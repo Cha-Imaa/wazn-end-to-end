@@ -177,6 +177,42 @@ def replace_arabic_runs(text: str, replace: Callable[[str], str]) -> str:
     return _ARABIC_RUN.sub(lambda match: replace(match.group(0)), text)
 
 
+def grounding_key(text: str) -> str:
+    """
+    The form grounding comparisons run on: tashkeel stripped, spaces dropped.
+
+    Spaces are dropped because root notation is spaced ("د ر س") and a model
+    mis-spacing a copy ("در س") is a typography slip, not invented Arabic.
+    """
+    return normalize_arabic(text).replace(" ", "")
+
+
+def grounding_keys(allowed_arabic: set[str]) -> set[str]:
+    """Pre-computed grounding keys for an allowed-Arabic set.
+
+    Callers that check many fields against one large allowed set (the
+    deterministic guardrail stage checks a whole quiz against every KB form)
+    compute this once instead of paying the normalization per field.
+    """
+    keys = {grounding_key(item) for item in allowed_arabic if item}
+    return {key for key in keys if key}
+
+
+def is_grounded_key(normalized_run: str, allowed_keys: set[str]) -> bool:
+    """
+    Whether a run's grounding key is covered by an allowed set's keys.
+
+    Matching is intentionally loose — run inside an allowed item, or an
+    allowed item inside the run — to avoid false failures from prefixes
+    (e.g. ال) or partial quotes. The single definition of "grounded";
+    `check_no_unknown_arabic` and the pre-normalized callers both use it.
+    """
+    return any(
+        normalized_run in allowed_item or allowed_item in normalized_run
+        for allowed_item in allowed_keys
+    )
+
+
 def check_no_unknown_arabic(
     text: str,
     allowed_arabic: set[str],
@@ -193,26 +229,28 @@ def check_no_unknown_arabic(
     This helps avoid false failures from prefixes, diacritics, or
     spaced-letter root notation (e.g. "ع ل م").
     """
+    check_no_unknown_arabic_keys(text, grounding_keys(allowed_arabic), field_name, result)
 
-    # Spaces are also dropped: root notation is spaced ("د ر س"), and a model
-    # mis-spacing a copy ("در س") is a typography slip, not invented Arabic.
-    normalized_allowed = {
-        normalize_arabic(item).replace(" ", "") for item in allowed_arabic if item
-    }
-    normalized_allowed = {item for item in normalized_allowed if item}
 
+def check_no_unknown_arabic_keys(
+    text: str,
+    allowed_keys: set[str],
+    field_name: str,
+    result: ValidationResult,
+) -> None:
+    """`check_no_unknown_arabic` against an already-key-normalized allowed set."""
     for run in extract_arabic_runs(text):
-        normalized_run = normalize_arabic(run).replace(" ", "")
+        normalized_run = grounding_key(run)
 
         if not normalized_run:
             continue
 
-        is_allowed = any(
-            normalized_run in allowed_item or allowed_item in normalized_run
-            for allowed_item in normalized_allowed
-        )
+        # Exact-form membership first: it is the common case and O(1), and an
+        # exact match trivially satisfies the loose containment rule below.
+        if normalized_run in allowed_keys:
+            continue
 
-        if not is_allowed:
+        if not is_grounded_key(normalized_run, allowed_keys):
             result.add(
                 f"{field_name}: contains Arabic text not present in input evidence: '{run}'"
             )
