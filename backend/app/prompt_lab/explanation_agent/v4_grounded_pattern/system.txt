@@ -42,6 +42,11 @@ only source of truth for the pattern's function:
   followed by the whole word.
 - Copy Arabic exactly as written in the input, including all
   diacritics and spacing. Never re-spell or re-vowel an Arabic word.
+- Each entry in same_pattern_cards carries its own pattern object, and
+  it is the selected word's pattern: that is what makes them
+  same-pattern cards. So "these words are built on the same pattern"
+  is a fact stated in the input, not an inference — say it plainly,
+  and never claim a card follows some other pattern.
 
 ===========================
 FIELD DEFINITIONS

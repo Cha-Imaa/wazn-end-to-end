@@ -232,10 +232,17 @@ def build_explanation_evidence_from_state(state: dict[str, Any]) -> dict[str, An
             "name": pattern.get("name") if pattern else None,
             "meaning_effect": pattern.get("meaning_effect") if pattern else None,
         },
+        # Each card states the pattern it shares with the selected word — the
+        # same fix the evaluation packet took. Without it the prose the agent is
+        # asked to write ("words such as شَغَلَ, حَمَلَ, كَتَبَ use the same
+        # pattern") makes a claim its own evidence cannot support.
         "same_pattern_cards": [
             {
                 "arabic": item.get("arabic"),
                 "meaning": item.get("meaning"),
+                "pattern": {
+                    "arabic": pattern.get("arabic") if pattern else None,
+                },
             }
             for item in same_pattern_words
             if isinstance(item, dict)
@@ -263,7 +270,7 @@ def build_explanation_evidence_from_state(state: dict[str, Any]) -> dict[str, An
 
     return {
         "agent": "k2_explanation_agent",
-        "prompt_lab_packet_version": "explanation_v5_grounded_pattern_input",
+        "prompt_lab_packet_version": "explanation_v6_card_pattern",
         "llm_input": llm_input,
         "review_context": review_context,
     }
@@ -425,13 +432,27 @@ def build_combined_guardrail_input_from_state(
                 "arabic": state["selected_word"].get("arabic"),
                 "meaning": state["selected_word"].get("meaning"),
             },
+            # name and meaning_effect so a check on the tutor's pattern-function
+            # claim has the KB's own statement to compare against, rather than
+            # only the pattern's letters.
             "pattern": {
                 "arabic": pattern.get("arabic") if pattern else None,
+                "name": pattern.get("name") if pattern else None,
+                "meaning_effect": pattern.get("meaning_effect") if pattern else None,
             },
+            # Each card states the pattern it shares with the selected word, for
+            # the reason documented on the evaluation packet: the cards come from
+            # `kb.words_by_pattern`, so the shared pattern is a KB fact, and
+            # omitting it left `same_pattern_explanation`'s central claim
+            # unverifiable from the evidence — a latent false positive here, and
+            # a measured deduction there.
             "same_pattern_cards": [
                 {
                     "arabic": item.get("arabic"),
                     "meaning": item.get("meaning"),
+                    "pattern": {
+                        "arabic": pattern.get("arabic") if pattern else None,
+                    },
                 }
                 for item in same_pattern_cards
                 if isinstance(item, dict)

@@ -85,8 +85,8 @@ You will receive a JSON user message shaped as:
     "root": { "arabic", "meaning" },
     "leaves": [ { "arabic", "meaning", "pattern": { "arabic", "meaning_effect" } } ],
     "selected_word": { "arabic", "meaning" },
-    "pattern": { "arabic" },
-    "same_pattern_cards": [ { "arabic", "meaning" } ]
+    "pattern": { "arabic", "name", "meaning_effect" },
+    "same_pattern_cards": [ { "arabic", "meaning", "pattern": { "arabic" } } ]
   },
   "tutor_output": {
     "explanation", "pattern_explanation", "same_pattern_explanation"
@@ -102,6 +102,16 @@ quiz_output. `evidence.selected_word`, `evidence.pattern`, and
 selected word (same_pattern_cards will typically be a subset of
 leaves). Treat the union of leaves + selected_word + same_pattern_cards
 + root as the full set of grounded Arabic content for both checklists.
+
+Two things the evidence states that you must not treat as unsupported.
+Each same_pattern_card carries its own pattern object, and it holds the
+selected word's pattern — that is what makes it a same-pattern card —
+so "these words share the selected word's pattern" is grounded, and
+only a claim naming a *different* pattern for a card is a finding. And
+`evidence.pattern.name` / `meaning_effect` are the app's verified
+statement of what the pattern does, so a tutor claim that restates
+them is grounded; judge a pattern-function claim against those two
+fields, not against the pattern's letters.
 
 =====================================================
 CHECKLIST A — tutor_output (exactly 6 checks, name prefix "tutor_")
