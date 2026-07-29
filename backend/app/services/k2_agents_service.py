@@ -100,16 +100,13 @@ class AgentSpec:
     flag_env_name: str
     prompt_version_dir: str
 
-    # Per-agent thinking budget, or None for the server default. Quiz,
-    # guardrail, and explanation need a bound: at default effort K2 loops in
-    # self-checking on some inputs until it consumes the whole completion
-    # budget as reasoning (empty content), or emits malformed check objects
-    # (§1.3). Measured for
-    # the guardrail across 8 roots on 2026-07-29: default validated 6/11 at
-    # ~16k reasoning tokens / ~13s median; "medium" validated 11/11 at ~2.5k
-    # tokens / ~4s, and still caught every injected error in the poisoned
-    # runs. Evaluation reasons heavily by design and completes, so it keeps
-    # the default.
+    # Per-agent thinking budget, or None for the server default. All four
+    # agents need a bound: at default effort K2 loops in self-checking on some
+    # inputs until it consumes the whole completion budget as reasoning (empty
+    # content), or emits malformed objects (§1.3). Measured for the guardrail
+    # across 8 roots on 2026-07-29: default validated 6/11 at ~16k reasoning
+    # tokens / ~13s median; "medium" validated 11/11 at ~2.5k tokens / ~4s, and
+    # still caught every injected error in the poisoned runs.
     reasoning_effort: str | None = None
 
     def system_prompt_path(self) -> Path:
@@ -168,6 +165,18 @@ AGENT_SPECS: dict[str, AgentSpec] = {
         flag_attribute="enable_k2_evaluation",
         flag_env_name="ENABLE_K2_EVALUATION",
         prompt_version_dir="evaluation_agent/v2_scoring",
+        # Same disease as the other three, plus a scoring defect of its own.
+        # Measured across 8 roots on 2026-07-29 reviewing deterministic tutor +
+        # quiz content: at default effort 7/8 validated (مدرسة spent its whole
+        # budget reasoning and returned empty content) at ~9k reasoning tokens /
+        # ~8s median, and the scores showed exactly the central-tendency bias
+        # the prompt's calibration section warns against — clarity never left
+        # 4-7, and quiz_quality fell to 3 on content the guardrail passes with
+        # zero flags. At medium: 8/8 validated, ~1.2k tokens, ~2.9s, scores
+        # spread 7-10 and word-specific. Calibration still discriminates —
+        # injecting a wrong meaning into the tutor explanation pulled
+        # groundedness from 10 to 3-5 and overall to 5-6 on 3/3 words.
+        reasoning_effort="medium",
     ),
 }
 
