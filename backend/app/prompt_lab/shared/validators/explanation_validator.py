@@ -30,6 +30,9 @@
 
 from typing import Any
 
+from app.prompt_lab.shared.validators.explanation_claim_checker import (
+    card_claim_violations,
+)
 from app.prompt_lab.shared.validators.common_validator import (
     ValidationResult,
     add_arabic_value,
@@ -140,6 +143,19 @@ def validate_explanation_output(
         "same_pattern_explanation",
         result,
     )
+
+    # What the prose *asserts* about the cards, not just which tokens it
+    # reuses — the مَحْصَلَة-called-a-place defect passed every check above.
+    # See `explanation_claim_checker` for what is and is not judged.
+    for violation in card_claim_violations(
+        {
+            "explanation": explanation,
+            "pattern_explanation": pattern_explanation,
+            "same_pattern_explanation": same_pattern_explanation,
+        },
+        evidence,
+    ):
+        result.add(violation)
 
     same_pattern_cards = evidence.get("same_pattern_cards", [])
 
