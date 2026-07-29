@@ -4,3 +4,57 @@ services:
     runtime: python
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /ping
+    envVars:
+      # The code uses `X | None` unions, so 3.10 is the floor. Render's default
+      # image tracks a newer Python than this repo has been run against; pin it.
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+
+      # Secret. `sync: false` means Render prompts for it instead of reading a
+      # value from this file — the key has never been committed and must not be.
+      # Without it every agent falls back and the Insights tab is deterministic.
+      - key: K2_API_KEY
+        sync: false
+
+      - key: K2_BASE_URL
+        value: https://api.k2think.ai/v1/chat/completions
+      - key: K2_MODEL
+        value: MBZUAI-IFM/K2-Think-v2
+
+      # The four agents served on /api/insights. All four are live and validated
+      # at medium reasoning effort; a flag left unset here reads False and the
+      # agent reports `skipped`, which is why they are stated explicitly.
+      - key: ENABLE_K2_EXPLANATION
+        value: "true"
+      - key: ENABLE_K2_QUIZ
+        value: "true"
+      - key: ENABLE_K2_GUARDRAIL_REVIEW
+        value: "true"
+      - key: ENABLE_K2_EVALUATION
+        value: "true"
+
+      # Off deliberately: pre-warm fires four sequential K2 calls per demo word
+      # before the app serves traffic, which would push the first boot past
+      # Render's health-check window.
+      - key: ENABLE_K2_INSIGHTS_PREWARM
+        value: "false"
+
+      # Keeps the labelled demo sample on /api/analyze for the demo walkthrough.
+      # /api/insights never serves it. Setting this false reports those blocks
+      # as `skipped` instead.
+      - key: ENABLE_K2_THINK_DEMO
+        value: "true"
+
+      # Per-call ceiling for /api/insights. Measured worst case ~25s per agent;
+      # the full four-agent chain runs 15-16s at medium effort.
+      - key: K2_INSIGHTS_TIMEOUT_SECONDS
+        value: "45"
+      # Completion cap (reasoning + answer). Clears the heaviest observed
+      # reasoning plus a full quiz JSON.
+      - key: K2_MAX_COMPLETION_TOKENS
+        value: "32000"
+      # Prompt-lab timeout only — the lab does not run in production, but the
+      # setting is read at import time.
+      - key: K2_TIMEOUT_SECONDS
+        value: "30"
