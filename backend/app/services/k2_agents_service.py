@@ -383,9 +383,12 @@ def _run_explanation(
         if isinstance(root, dict):
             _repair_root_citations(output, root.get("arabic"))
 
+        canonical_by_key = _explanation_canonical_map(packet)
+
         return _canonicalize_checked(
             output,
-            lambda value: _canonicalize_explanation_arabic(value, packet),
+            lambda value: _canonicalize_explanation_arabic(value, canonical_by_key),
+            _kb_forms(canonical_by_key),
         )
 
     return _call_and_validate(
@@ -426,9 +429,12 @@ def _run_quiz(
         redistribute_answer_positions(output, seed=word)
 
     def postprocess(output: dict[str, Any] | None) -> list[str]:
+        canonical_by_key = _quiz_canonical_map(packet)
+
         return _canonicalize_checked(
             output,
-            lambda value: _canonicalize_quiz_arabic(value, packet),
+            lambda value: _canonicalize_quiz_arabic(value, canonical_by_key),
+            _kb_forms(canonical_by_key),
         )
 
     result = _call_and_validate(
@@ -860,6 +866,30 @@ def _canonical_key(text: str) -> str:
     return f"{bucket}:{normalized.replace(' ', '')}"
 
 
+def _arabic_run_sequence(value: Any) -> list[str]:
+    """
+    Every Arabic run reachable in `value`, verbatim, in the same order
+    `_arabic_key_sequence` walks. Paired with that sequence it says not only
+    which KB items the output refers to, but exactly how each one was spelled.
+    """
+    if isinstance(value, str):
+        return list(extract_arabic_runs(value))
+
+    if isinstance(value, dict):
+        runs: list[str] = []
+        for name in sorted(value, key=str):
+            runs.extend(_arabic_run_sequence(value[name]))
+        return runs
+
+    if isinstance(value, list):
+        runs = []
+        for item in value:
+            runs.extend(_arabic_run_sequence(item))
+        return runs
+
+    return []
+
+
 def _arabic_key_sequence(value: Any) -> list[str]:
     """
     Every Arabic run reachable in `value`, as canonical keys, in a stable order.
@@ -889,47 +919,89 @@ def _arabic_key_sequence(value: Any) -> list[str]:
 def _canonicalize_checked(
     output: Any,
     canonicalize: Callable[[Any], None],
+    kb_forms: set[str],
 ) -> list[str]:
     """
     Run a canonicalization pass and prove it preserved the output's content.
 
-    The contract: canonicalization may only change *how* a KB item is spelled —
-    tashkeel, and spacing within its bucket. It may never change which item a
-    run refers to, nor add, drop, or reorder runs. That is exactly what
-    `_canonical_key` already encodes, so the check is the key sequence before
-    versus after.
+    The contract has two halves:
 
-    This exists because the pass had no contract over it at all and demonstrably
-    broke one (§1.3): on غَفَرَ it rewrote a quiz's correct answer into the bare
-    root, and grounding, `derive_correct_choice_id` and the evaluation agent all
-    passed the result. Bucketing fixed that specific collision; this makes the
-    property being relied on explicit and checked on every call, rather than
-    trusting the next edit to preserve it.
+    1. The pass may not change which item a run refers to, nor add, drop, or
+       reorder runs — the `_canonical_key` sequence before versus after.
+    2. A run that is *already* one of the KB's exact forms may not be rewritten
+       at all. There is nothing to canonicalize about a form the KB already
+       spells that way, so any such rewrite is the pass mistaking one item for
+       another.
+
+    The second half exists because the first cannot see the collision that
+    matters most: `_canonical_key` strips tashkeel, and within a single root's
+    evidence that is not injective. Measured over the KB: on **35 of 58 roots**
+    two words share the stripped key (دَرَسَ / دَرْس, عَلِمَ / عَلَّمَ / عِلْم)
+    and on 35 two patterns do (فَعَلَ / فَعْل). So the replacement map held one
+    arbitrary member per collision and rewrote the others into it — turning a
+    correct word into a different, also-correct-looking KB word, in prose and in
+    choice text, with the key-sequence check passing because both spellings fold
+    to the same key. `_register_canonical` now declines ambiguous keys, and this
+    is the check that would have caught it.
 
     Returns violations — empty when the pass was content-preserving.
     """
-    before = _arabic_key_sequence(output)
+    before_keys = _arabic_key_sequence(output)
+    before_runs = _arabic_run_sequence(output)
 
     canonicalize(output)
 
-    after = _arabic_key_sequence(output)
+    after_keys = _arabic_key_sequence(output)
+    after_runs = _arabic_run_sequence(output)
 
-    if before == after:
-        return []
+    if before_keys != after_keys:
+        return [
+            "canonicalization changed the output's Arabic content: "
+            f"{len(before_keys)} run(s) referring to {sorted(set(before_keys))} became "
+            f"{len(after_keys)} referring to {sorted(set(after_keys))}"
+        ]
 
     return [
-        "canonicalization changed the output's Arabic content: "
-        f"{len(before)} run(s) referring to {sorted(set(before))} became "
-        f"{len(after)} referring to {sorted(set(after))}"
+        f"canonicalization rewrote '{before}', which the knowledge base already"
+        f" spells that way, into '{after}'"
+        for before, after in zip(before_runs, after_runs)
+        if before != after and before.strip() in kb_forms
     ]
 
 
-def _register_canonical(canonical_by_key: dict[str, str], value: Any) -> None:
+def _register_canonical(
+    canonical_by_key: dict[str, set[str]],
+    value: Any,
+) -> None:
     if isinstance(value, str) and value.strip():
-        canonical_by_key.setdefault(_canonical_key(value), value.strip())
+        canonical_by_key.setdefault(_canonical_key(value), set()).add(value.strip())
 
 
-def _canonicalize_prose(text: Any, canonical_by_key: dict[str, str]) -> Any:
+def _canonical_form(canonical_by_key: dict[str, set[str]], run: str) -> str:
+    """
+    The KB spelling for `run`, or `run` unchanged when there isn't exactly one.
+
+    Ambiguity is the important case, not an edge case: a root's evidence
+    routinely contains two items whose only difference is tashkeel (35 of 58
+    roots — دَرَسَ / دَرْس, the patterns فَعَلَ / فَعْل), and the key this map
+    is built on strips tashkeel. When two KB forms answer to one key there is no
+    way to tell which one the model meant, so the run is left as written: a
+    learner seeing an under-vocalized near-miss is a cosmetic failure, and a
+    learner shown a *different word from the same family* is the corruption
+    §1.3 is about.
+    """
+    forms = canonical_by_key.get(_canonical_key(run))
+
+    if not forms or len(forms) != 1:
+        return run
+
+    return next(iter(forms))
+
+
+def _canonicalize_prose(
+    text: Any,
+    canonical_by_key: dict[str, set[str]],
+) -> Any:
     """
     Replace each Arabic run with the KB's exact form, or leave it alone.
 
@@ -944,7 +1016,7 @@ def _canonicalize_prose(text: Any, canonical_by_key: dict[str, str]) -> Any:
 
     return replace_arabic_runs(
         text,
-        lambda run: canonical_by_key.get(_canonical_key(run), run),
+        lambda run: _canonical_form(canonical_by_key, run),
     )
 
 
@@ -992,22 +1064,11 @@ def _repair_root_citations(output: Any, root_arabic: Any) -> None:
             output[field_name] = _ROOT_CITATION_RE.sub(fix, value)
 
 
-def _canonicalize_explanation_arabic(
-    output: Any,
-    packet: dict[str, Any],
-) -> None:
-    """
-    Rewrite Arabic in explanation prose to the KB's exact vocalized form, in
-    place — the same rule as the quiz (§1.4): validation is tashkeel- and
-    spacing-insensitive, but the learner must never see the model's
-    under-vocalized near-miss (observed live: حَكم for the card حَكَمَ).
-    """
-    if not isinstance(output, dict):
-        return
-
+def _explanation_canonical_map(packet: dict[str, Any]) -> dict[str, set[str]]:
+    """Canonical key → the KB form(s) answering to it, for explanation prose."""
     llm_input = packet.get("llm_input", packet)
 
-    canonical_by_key: dict[str, str] = {}
+    canonical_by_key: dict[str, set[str]] = {}
 
     for key in ("selected_word", "root", "pattern"):
         source = llm_input.get(key)
@@ -1020,6 +1081,22 @@ def _canonicalize_explanation_arabic(
             if isinstance(card, dict):
                 _register_canonical(canonical_by_key, card.get("arabic"))
 
+    return canonical_by_key
+
+
+def _canonicalize_explanation_arabic(
+    output: Any,
+    canonical_by_key: dict[str, set[str]],
+) -> None:
+    """
+    Rewrite Arabic in explanation prose to the KB's exact vocalized form, in
+    place — the same rule as the quiz (§1.4): validation is tashkeel- and
+    spacing-insensitive, but the learner must never see the model's
+    under-vocalized near-miss (observed live: حَكم for the card حَكَمَ).
+    """
+    if not isinstance(output, dict):
+        return
+
     for field_name in (
         "explanation",
         "pattern_explanation",
@@ -1030,25 +1107,11 @@ def _canonicalize_explanation_arabic(
         )
 
 
-def _canonicalize_quiz_arabic(
-    output: Any,
-    packet: dict[str, Any],
-) -> None:
-    """
-    Rewrite Arabic in the quiz to the KB's exact vocalized form, in place.
-
-    The grounding check is tashkeel- and spacing-insensitive (§1.4), so K2 may
-    pass validation with فاعِل where the KB has فَاعِل, or در س for the root
-    د ر س. The learner must see the curated form, never the model's near-miss —
-    the KB stays the only source of Arabic spelling on screen. Choice texts are
-    replaced whole; prose fields have each Arabic run replaced individually.
-    """
-    if not isinstance(output, dict) or not isinstance(output.get("quiz"), list):
-        return
-
+def _quiz_canonical_map(packet: dict[str, Any]) -> dict[str, set[str]]:
+    """Canonical key → the KB form(s) answering to it, for quiz content."""
     llm_input = packet.get("llm_input", packet)
 
-    canonical_by_key: dict[str, str] = {}
+    canonical_by_key: dict[str, set[str]] = {}
 
     root = llm_input.get("root")
     if isinstance(root, dict):
@@ -1063,6 +1126,29 @@ def _canonicalize_quiz_arabic(
             pattern = leaf.get("pattern")
             if isinstance(pattern, dict):
                 _register_canonical(canonical_by_key, pattern.get("arabic"))
+
+    return canonical_by_key
+
+
+def _kb_forms(canonical_by_key: dict[str, set[str]]) -> set[str]:
+    return {form for forms in canonical_by_key.values() for form in forms}
+
+
+def _canonicalize_quiz_arabic(
+    output: Any,
+    canonical_by_key: dict[str, set[str]],
+) -> None:
+    """
+    Rewrite Arabic in the quiz to the KB's exact vocalized form, in place.
+
+    The grounding check is tashkeel- and spacing-insensitive (§1.4), so K2 may
+    pass validation with فاعِل where the KB has فَاعِل, or در س for the root
+    د ر س. The learner must see the curated form, never the model's near-miss —
+    the KB stays the only source of Arabic spelling on screen. Choice texts are
+    replaced whole; prose fields have each Arabic run replaced individually.
+    """
+    if not isinstance(output, dict) or not isinstance(output.get("quiz"), list):
+        return
 
     for question in output["quiz"]:
         if not isinstance(question, dict):
@@ -1089,9 +1175,7 @@ def _canonicalize_quiz_arabic(
             text = choice.get("text")
             if not isinstance(text, str):
                 continue
-            canonical = canonical_by_key.get(_canonical_key(text))
-            if canonical and canonical != text:
-                choice["text"] = canonical
+            choice["text"] = _canonical_form(canonical_by_key, text)
 
 
 def _upgraded_quiz(quiz_result: dict[str, Any]) -> list[dict[str, Any]] | None:
