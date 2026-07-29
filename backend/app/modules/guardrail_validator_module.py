@@ -111,25 +111,32 @@ def _check_verified_words(
     root: dict[str, Any],
 ) -> tuple[str, str, ValidationResult]:
     """
-    Every word shown resolves to a knowledge-base entry by id.
+    Every entry shown carries `verified: true` in the knowledge base.
 
-    This asserts provenance (the family came out of the KB, not thin air), not
-    the per-entry `verified` flag — what that flag should mean across 464 words
-    is the open §1.7 decision, and reading it before it is set anywhere would
-    turn this check into a permanent fail. When that lands, this is the check
-    that starts reading `word.get("verified")`.
+    What the flag asserts (§1.7 decision, 2026-07-30): the entry passed the
+    structural invariants — ids resolve, root letters spell the root, 8 words
+    per root, grounding fields present. `scripts/stamp_verified.py` is the one
+    thing that sets it, so a new KB entry stays unverified (and fails here)
+    until the invariants have actually been checked over it.
     """
     result = ValidationResult(passed=True)
 
+    def require_verified(entry: dict[str, Any] | None, what: str, entry_id: Any) -> None:
+        if not entry:
+            result.add(f"verified_words: {what} '{entry_id}' not in KB")
+        elif entry.get("verified") is not True:
+            result.add(f"verified_words: {what} '{entry_id}' is not verified")
+
     selected_id = selected_word.get("id")
-    if not selected_id or not kb.get_word(selected_id):
-        result.add(f"verified_words: selected word id '{selected_id}' not in KB")
+    require_verified(kb.get_word(selected_id) if selected_id else None, "selected word", selected_id)
+
+    require_verified(kb.roots.get(root.get("id")), "root", root.get("id"))
 
     for word in kb.words_by_root.get(root.get("id"), []):
-        if not word.get("id") or not kb.get_word(word["id"]):
-            result.add(
-                f"verified_words: family word id '{word.get('id')}' not in KB"
-            )
+        require_verified(word, "family word", word.get("id"))
+        pattern_id = word.get("pattern_id")
+        if pattern_id:
+            require_verified(kb.get_pattern(pattern_id), "pattern", pattern_id)
 
     return ("verified_words", "Only verified words used", result)
 
