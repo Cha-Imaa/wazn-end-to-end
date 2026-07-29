@@ -79,6 +79,8 @@ For the correct choice, explain why it is correct.
 For each wrong choice, explain specifically why that choice is wrong, and contrast it with the correct answer when possible, in the style: Not quite. X means such and such, while Y means such and such.
 Never use a bare "try again" inside choice_feedback. Only wrong_feedback may be generic.
 
+The affirming entry must be the one answer_id names. Exactly one choice_feedback entry opens by confirming the pick ("Correct."); the other three open by rejecting it ("Not quite."). Write the feedback against the choice text sitting at each letter, then check that the confirming entry's letter is the same letter as answer_id. Congratulating a wrong choice, or telling the learner "Not quite" for the right one, teaches the opposite of the answer.
+
 EVERY CLAIM IN FEEDBACK MUST BE A FACT FROM THE INPUT
 
 Copying Arabic correctly is not enough. Feedback sentences make statements, and a statement built from correctly copied tokens can still be false — which is worse than an obvious error, because the learner has no way to detect it. Three kinds of statement appear in feedback, and each has exactly one source in the input:

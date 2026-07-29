@@ -63,6 +63,7 @@ from app.prompt_lab.shared.validators.common_validator import (
     normalize_arabic,
     replace_arabic_runs,
 )
+from app.prompt_lab.shared.validators.quiz_claim_checker import affirmed_choice_id
 from app.prompt_lab.shared.validators.quiz_validator import (
     derive_correct_choice_id,
     validate_quiz_output,
@@ -760,10 +761,20 @@ def repair_answer_ids(output: Any, evidence: dict[str, Any]) -> None:
     grounded, so validation passed). The correct choice is a KB fact the
     validator can derive (`derive_correct_choice_id`); when it derives one,
     the key is repaired rather than costing the learner the whole live quiz.
-    Feedback needs no rewrite: choice_feedback is keyed per choice and
-    correct_feedback states the fact, not the letter. Underivable questions
-    are left alone — the validator skips them too, and the live guardrail
-    remains the reviewer of last resort.
+
+    Only where the model's own prose agrees, though. This used to repair
+    unconditionally, on the stated grounds that "choice_feedback is keyed per
+    choice and correct_feedback states the fact, not the letter" — which is
+    wrong about choice_feedback, whose entries open with "Correct." or "Not
+    quite". Moving the key past a "Correct." leaves it congratulating a wrong
+    pick and rejecting the right one; observed live on عِلْم, 2026-07-29. So a
+    key is repaired when the affirming feedback names the derived choice (a
+    clerical slip, feedback proves the intent) and left alone when it names a
+    different one — the model then genuinely believes a wrong answer, which is
+    not a repair but a rejection, and validation makes it one.
+
+    Underivable questions are left alone; the validator skips them too, and the
+    live guardrail remains the reviewer of last resort.
     """
     if not isinstance(output, dict) or not isinstance(output.get("quiz"), list):
         return
@@ -774,8 +785,15 @@ def repair_answer_ids(output: Any, evidence: dict[str, Any]) -> None:
 
         derived = derive_correct_choice_id(question, evidence)
 
-        if derived is not None and derived != question.get("answer_id"):
-            question["answer_id"] = derived
+        if derived is None or derived == question.get("answer_id"):
+            continue
+
+        affirmed = affirmed_choice_id(question)
+
+        if affirmed is not None and affirmed != derived:
+            continue
+
+        question["answer_id"] = derived
 
 
 def redistribute_answer_positions(output: Any, seed: str) -> None:

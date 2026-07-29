@@ -28,8 +28,10 @@ import re
 from typing import Any
 
 from app.prompt_lab.shared.validators.common_validator import (
+    arabic_identity,
     extract_arabic_runs,
     normalize_arabic,
+    unambiguous_by_grounding_key,
 )
 
 # The same run definition `common_validator` uses, as a fragment so claim
@@ -91,6 +93,16 @@ _MEANING_CLAUSE_END_RE = re.compile(
 
 _PROSE_FIELDS = ("question", "correct_feedback", "wrong_feedback", "explanation")
 
+# How a per-choice feedback string opens: affirming the pick, or rejecting it.
+_AFFIRMS_RE = re.compile(
+    r"^\W*(?:correct|right|yes|exactly|that's right|well done)\b",
+    re.IGNORECASE,
+)
+_REJECTS_RE = re.compile(
+    r"^\W*(?:not quite|no\b|nope|incorrect|wrong)\b",
+    re.IGNORECASE,
+)
+
 
 def feedback_claim_violations(
     question: dict[str, Any],
@@ -108,11 +120,78 @@ def feedback_claim_violations(
     if not lookup["leaves"] and not lookup["patterns"]:
         return []
 
-    violations: list[str] = []
+    violations = _check_affirmation_placement(question)
 
     for field_name, text in _prose_fields(question):
         for sentence in _sentences(text):
             violations.extend(_sentence_violations(sentence, field_name, lookup))
+
+    return violations
+
+
+def affirmed_choice_id(question: dict[str, Any]) -> str | None:
+    """
+    The choice whose feedback affirms it ("Correct. …"), or None.
+
+    Which choice the model itself believes is right, read off prose rather than
+    off `answer_id`. The two disagreeing is the signal that separates a clerical
+    key slip — repairable, because the feedback proves what was meant — from the
+    model actually believing a wrong answer, which nothing should repair.
+    """
+    choice_feedback = question.get("choice_feedback")
+
+    if not isinstance(choice_feedback, dict):
+        return None
+
+    affirmed = [
+        choice_id
+        for choice_id in sorted(choice_feedback, key=str)
+        if isinstance(choice_feedback[choice_id], str)
+        and _AFFIRMS_RE.match(choice_feedback[choice_id])
+    ]
+
+    return affirmed[0] if len(affirmed) == 1 else None
+
+
+def _check_affirmation_placement(question: dict[str, Any]) -> list[str]:
+    """
+    "Correct." must sit on the choice the answer key points at.
+
+    A per-choice feedback string opens by either affirming or rejecting the
+    pick, so the two must agree with `answer_id`. Observed live on عِلْم,
+    2026-07-29: a meaning_to_leaf question keyed correctly at c (مُعَلِّم,
+    "teacher") carried "Correct. مُعَلِّم has the meaning 'teacher'" on choice d,
+    whose text is مَعْلُوم — so a learner picking the right answer is told what
+    a different word means, and one picking d is congratulated. Every token is
+    grounded and the key is right, which is why nothing else sees it.
+
+    Cheap and prose-shape only: it says nothing about whether the sentence is
+    *true*, which is what the checks above are for.
+    """
+    answer_id = question.get("answer_id")
+    choice_feedback = question.get("choice_feedback")
+
+    if not isinstance(choice_feedback, dict) or not isinstance(answer_id, str):
+        return []
+
+    violations: list[str] = []
+
+    for choice_id in sorted(choice_feedback, key=str):
+        feedback = choice_feedback[choice_id]
+
+        if not isinstance(feedback, str) or not feedback.strip():
+            continue
+
+        if choice_id == answer_id and _REJECTS_RE.match(feedback):
+            violations.append(
+                f"choice_feedback.{choice_id}: rejects the choice the answer key"
+                f" points at: \"{_clip(feedback)}\""
+            )
+        elif choice_id != answer_id and _AFFIRMS_RE.match(feedback):
+            violations.append(
+                f"choice_feedback.{choice_id}: affirms a choice that is not the"
+                f" answer ('{answer_id}' is): \"{_clip(feedback)}\""
+            )
 
     return violations
 
@@ -353,21 +432,6 @@ def _word_class_of(pattern: dict[str, Any]) -> str | None:
     return next(iter(found)) if len(found) == 1 else None
 
 
-def _form(text: str) -> str:
-    """
-    Identity of an Arabic run: whitespace removed, **tashkeel kept**.
-
-    Grounding folds tashkeel deliberately (فاعِل is a copy of فَاعِل, not an
-    invention), but identity here cannot: فَعِل, فِعْل, فَعْل and فَعَلَ are
-    four different patterns that all fold to فعل, and within one root's evidence
-    that collision is the common case, not the exception (35 of 58 roots). The
-    first version of this module folded tashkeel and reported two legitimate
-    contrasts — "the effect of the فَعِل pattern, not the فِعْل pattern" — as
-    self-contradictions.
-    """
-    return re.sub(r"\s+", "", text) if isinstance(text, str) else ""
-
-
 def _folded(text: str) -> str:
     """The grounding key: tashkeel- and spacing-insensitive."""
     return normalize_arabic(text).replace(" ", "")
@@ -386,7 +450,7 @@ def _resolve(
     telling which of the family's near-identical items was meant, and an
     unresolved run means the claim about it simply is not judged.
     """
-    form = _form(run)
+    form = arabic_identity(run)
 
     if form in by_form:
         return form
@@ -416,17 +480,6 @@ def _clip(sentence: str, limit: int = 120) -> str:
     return collapsed if len(collapsed) <= limit else collapsed[: limit - 1] + "…"
 
 
-def _unambiguous_folded_index(by_form: dict[str, dict[str, Any]]) -> dict[str, str]:
-    folded: dict[str, set[str]] = {}
-
-    for form in by_form:
-        folded.setdefault(_folded(form), set()).add(form)
-
-    return {
-        key: next(iter(forms)) for key, forms in folded.items() if len(forms) == 1
-    }
-
-
 def _build_lookup(evidence: dict[str, Any]) -> dict[str, Any]:
     """
     Indexes over the quiz evidence, keyed by exact Arabic form.
@@ -451,7 +504,7 @@ def _build_lookup(evidence: dict[str, Any]) -> dict[str, Any]:
             owners_by_meaning.setdefault(key, set()).add(owner_form)
 
     if isinstance(root, dict):
-        root_form = _form(root.get("arabic") or "")
+        root_form = arabic_identity(root.get("arabic") or "")
         if root_form:
             leaf_by_form[root_form] = root
             labels[root_form] = f"the root {root.get('arabic')}"
@@ -462,7 +515,7 @@ def _build_lookup(evidence: dict[str, Any]) -> dict[str, Any]:
             if not isinstance(leaf, dict):
                 continue
 
-            leaf_form = _form(leaf.get("arabic") or "")
+            leaf_form = arabic_identity(leaf.get("arabic") or "")
 
             if leaf_form:
                 leaf_by_form[leaf_form] = leaf
@@ -472,7 +525,7 @@ def _build_lookup(evidence: dict[str, Any]) -> dict[str, Any]:
             pattern = leaf.get("pattern")
 
             if isinstance(pattern, dict):
-                pattern_form = _form(pattern.get("arabic") or "")
+                pattern_form = arabic_identity(pattern.get("arabic") or "")
                 if pattern_form:
                     pattern_by_form[pattern_form] = pattern
                     if leaf_form:
@@ -480,9 +533,9 @@ def _build_lookup(evidence: dict[str, Any]) -> dict[str, Any]:
 
     return {
         "leaves": leaf_by_form,
-        "leaves_folded": _unambiguous_folded_index(leaf_by_form),
+        "leaves_folded": unambiguous_by_grounding_key(leaf_by_form),
         "patterns": pattern_by_form,
-        "patterns_folded": _unambiguous_folded_index(pattern_by_form),
+        "patterns_folded": unambiguous_by_grounding_key(pattern_by_form),
         "pattern_form_by_leaf_form": pattern_form_by_leaf_form,
         "meaning_owner": {
             key: next(iter(owners))
