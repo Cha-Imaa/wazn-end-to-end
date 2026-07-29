@@ -792,9 +792,34 @@ def _arabic_comparison_key(text: str) -> str:
     return normalize_arabic(text).replace(" ", "")
 
 
+def _canonical_key(text: str) -> str:
+    """
+    A canonicalization key that keeps roots and words apart.
+
+    `_arabic_comparison_key` folds spacing, which is right for *grounding* — a
+    root written در س is still the root د ر س — but wrong for choosing a
+    replacement: a root's spaced letters and its bare Form-I verb reduce to the
+    same key on most roots (غ ف ر and غَفَرَ both fold to غفر), so one
+    overwrote the other. Observed live on غَفَرَ 2026-07-29: the root registers
+    first, so a quiz asking which word فَعَلَ forms had its correct answer
+    غَفَرَ rewritten *by this pass* into the bare root غ ف ر — feedback and
+    all — and only the guardrail caught it. The explanation map registers the
+    selected word first and so corrupted the same collision in the opposite
+    direction, rewriting genuine root citations into the full word.
+
+    Bucketing by spacing fixes both: a run with internal spaces can only be
+    replaced by a spaced canonical form (so در س → د ر س still works), and a
+    run without them only by a word form.
+    """
+    normalized = normalize_arabic(text).strip()
+    bucket = "spaced" if " " in normalized else "solid"
+
+    return f"{bucket}:{normalized.replace(' ', '')}"
+
+
 def _register_canonical(canonical_by_key: dict[str, str], value: Any) -> None:
     if isinstance(value, str) and value.strip():
-        canonical_by_key.setdefault(_arabic_comparison_key(value), value.strip())
+        canonical_by_key.setdefault(_canonical_key(value), value.strip())
 
 
 def _canonicalize_prose(text: Any, canonical_by_key: dict[str, str]) -> Any:
@@ -802,7 +827,7 @@ def _canonicalize_prose(text: Any, canonical_by_key: dict[str, str]) -> Any:
     if not isinstance(text, str):
         return text
     for run in extract_arabic_runs(text):
-        canonical = canonical_by_key.get(_arabic_comparison_key(run))
+        canonical = canonical_by_key.get(_canonical_key(run))
         if canonical and canonical != run:
             text = text.replace(run, canonical)
     return text
@@ -949,7 +974,7 @@ def _canonicalize_quiz_arabic(
             text = choice.get("text")
             if not isinstance(text, str):
                 continue
-            canonical = canonical_by_key.get(_arabic_comparison_key(text))
+            canonical = canonical_by_key.get(_canonical_key(text))
             if canonical and canonical != text:
                 choice["text"] = canonical
 
