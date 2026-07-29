@@ -280,8 +280,16 @@ def build_quiz_leaf_input(
     return {
         "arabic": leaf.get("arabic"),
         "meaning": leaf.get("meaning"),
+        # `name` is the KB's statement of what kind of pattern this is
+        # ("abstract noun pattern", "Form VIII past-tense verb pattern"). Added
+        # for the same reason the explanation packet carries it: without it the
+        # model asserts the pattern's function from its shape, and observed live
+        # on قَاسِم it called the verb pattern فَعَلَ "a noun pattern" in
+        # distractor feedback. It is also what lets `quiz_claim_checker` decide
+        # such a claim instead of leaving it to the guardrail, post-serve.
         "pattern": {
             "arabic": pattern.get("arabic"),
+            "name": pattern.get("name"),
             "meaning_effect": pattern.get("meaning_effect"),
         },
     }
@@ -337,7 +345,7 @@ def build_quiz_evidence_from_state(state: dict[str, Any]) -> dict[str, Any]:
 
     return {
         "agent": "tree_level_quiz_agent",
-        "prompt_lab_packet_version": "quiz_v5_evidence_only",
+        "prompt_lab_packet_version": "quiz_v6_pattern_name",
         "llm_input": llm_input,
         "review_context": review_context,
     }

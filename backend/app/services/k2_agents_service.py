@@ -145,7 +145,12 @@ AGENT_SPECS: dict[str, AgentSpec] = {
         step=4,
         flag_attribute="enable_k2_quiz",
         flag_env_name="ENABLE_K2_QUIZ",
-        prompt_version_dir="quiz_agent/v3_tree_quiz",
+        # v4 grounds the claims feedback prose makes: pattern function comes
+        # from the KB's pattern.name, a word's pattern and meaning from its own
+        # entry. v3 said neither, and on قَاسِم produced a fully grounded,
+        # correctly keyed quiz whose distractor feedback called the verb pattern
+        # فَعَلَ "a noun pattern" — caught only by the guardrail, after serving.
+        prompt_version_dir="quiz_agent/v4_grounded_feedback",
         reasoning_effort="medium",
     ),
     AGENT_GUARDRAIL: AgentSpec(
