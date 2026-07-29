@@ -10,7 +10,7 @@
 from dataclasses import dataclass, field
 import json
 import re
-from typing import Any
+from typing import Any, Callable
 
 
 @dataclass
@@ -117,6 +117,23 @@ def extract_arabic_runs(text: str) -> list[str]:
         return []
 
     return [run.strip() for run in _ARABIC_RUN.findall(text) if run.strip()]
+
+
+def replace_arabic_runs(text: str, replace: Callable[[str], str]) -> str:
+    """
+    Rewrite each maximal Arabic run through `replace`, leaving all other text
+    untouched. Returns non-strings unchanged.
+
+    Whole runs only, which is the point: replacing a run by `str.replace` of its
+    text would also rewrite that same sequence where it sits *inside* a longer
+    Arabic word elsewhere in the string. Callers that canonicalize spelling need
+    the run boundaries the grounding check already uses, so the definition of "a
+    run" stays here rather than being restated per caller.
+    """
+    if not isinstance(text, str):
+        return text
+
+    return _ARABIC_RUN.sub(lambda match: replace(match.group(0)), text)
 
 
 def check_no_unknown_arabic(

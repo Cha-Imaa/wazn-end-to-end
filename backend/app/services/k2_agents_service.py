@@ -61,6 +61,7 @@ from app.prompt_lab.shared.validators.guardrail_validator import (
 from app.prompt_lab.shared.validators.common_validator import (
     extract_arabic_runs,
     normalize_arabic,
+    replace_arabic_runs,
 )
 from app.prompt_lab.shared.validators.quiz_validator import (
     derive_correct_choice_id,
@@ -372,23 +373,30 @@ def _run_explanation(
 
     packet = build_explanation_evidence_from_state(state)
 
-    result = _call_and_validate(
+    def postprocess(output: dict[str, Any] | None) -> list[str]:
+        # Root-citation repair first, and deliberately *outside* the
+        # content-preservation check: rewriting "the root زَرَعَ" to "the root
+        # ز ر ع" is an intentional change of which item the run refers to, which
+        # is why validation — running after this — is what checks it.
+        llm_input = packet.get("llm_input", {})
+        root = llm_input.get("root") if isinstance(llm_input, dict) else None
+        if isinstance(root, dict):
+            _repair_root_citations(output, root.get("arabic"))
+
+        return _canonicalize_checked(
+            output,
+            lambda value: _canonicalize_explanation_arabic(value, packet),
+        )
+
+    return _call_and_validate(
         spec=spec,
         packet=packet,
         word=word,
         settings=settings,
         validate=_validate_via_validation_result(validate_explanation_output),
         fallback_output=_deterministic_explanation(state),
+        postprocess=postprocess,
     )
-
-    if result.get("engine_status") == ENGINE_STATUS_K2_LIVE:
-        _canonicalize_explanation_arabic(result.get("output"), packet)
-        llm_input = packet.get("llm_input", {})
-        root = llm_input.get("root") if isinstance(llm_input, dict) else None
-        if isinstance(root, dict):
-            _repair_root_citations(result.get("output"), root.get("arabic"))
-
-    return result
 
 
 def _run_quiz(
@@ -417,6 +425,12 @@ def _run_quiz(
         repair_answer_ids(output, packet.get("llm_input", {}))
         redistribute_answer_positions(output, seed=word)
 
+    def postprocess(output: dict[str, Any] | None) -> list[str]:
+        return _canonicalize_checked(
+            output,
+            lambda value: _canonicalize_quiz_arabic(value, packet),
+        )
+
     result = _call_and_validate(
         spec=spec,
         packet=packet,
@@ -425,13 +439,13 @@ def _run_quiz(
         validate=_validate_via_validation_result(validate_quiz_output),
         fallback_output={"quiz": state.get("quiz", [])},
         repair=repair,
+        postprocess=postprocess,
     )
 
-    if result.get("engine_status") == ENGINE_STATUS_K2_LIVE:
-        _canonicalize_quiz_arabic(result.get("output"), packet)
-
-        if use_cache and root_id:
-            _QUIZ_CACHE_BY_ROOT[root_id] = copy.deepcopy(result)
+    # Cached content is now post-canonicalization *and* post-validation — the
+    # cache can no longer hold a quiz that was never checked in the form served.
+    if result.get("engine_status") == ENGINE_STATUS_K2_LIVE and use_cache and root_id:
+        _QUIZ_CACHE_BY_ROOT[root_id] = copy.deepcopy(result)
 
     return result
 
@@ -512,6 +526,7 @@ def _call_and_validate(
     validate: Callable[[dict[str, Any], str, dict[str, Any] | None], tuple[bool, list[str]]],
     fallback_output: Any,
     repair: Callable[[dict[str, Any] | None], None] | None = None,
+    postprocess: Callable[[dict[str, Any] | None], list[str]] | None = None,
 ) -> dict[str, Any]:
     try:
         system_prompt = spec.system_prompt_path().read_text(encoding="utf-8")
@@ -549,6 +564,25 @@ def _call_and_validate(
         # re-serialized to keep the two in sync for string-based validators.
         repair(parsed_output)
         answer_content = json.dumps(parsed_output, ensure_ascii=False)
+
+    if postprocess is not None:
+        # Spelling passes (canonicalization, root-citation repair) run *here*,
+        # before validation, so validation is the last thing that touches
+        # learner-facing content. They used to run after the result was already
+        # accepted, which left the one code path that rewrites Arabic on screen
+        # with nothing checking its output (§1.3) — and it had already shipped a
+        # false quiz answer that way. Their own content-preservation violations
+        # reject the agent outright: a pass that changed the meaning of what it
+        # was only supposed to re-spell is not something to serve.
+        postprocess_violations = postprocess(parsed_output)
+        answer_content = json.dumps(parsed_output, ensure_ascii=False)
+
+        if postprocess_violations:
+            result = _fallback(spec, fallback_output, "postprocess_failed")
+            result["violations"] = postprocess_violations
+            result["reasoning"] = response.get("reasoning")
+            result["reasoning_tokens"] = response.get("reasoning_tokens")
+            return result
 
     passed, violations = validate(packet, answer_content, parsed_output)
 
@@ -826,20 +860,92 @@ def _canonical_key(text: str) -> str:
     return f"{bucket}:{normalized.replace(' ', '')}"
 
 
+def _arabic_key_sequence(value: Any) -> list[str]:
+    """
+    Every Arabic run reachable in `value`, as canonical keys, in a stable order.
+
+    The fingerprint the canonicalization contract is checked against: which KB
+    items the output's Arabic refers to, and in what order. Dict keys are walked
+    sorted so the sequence does not depend on insertion order.
+    """
+    if isinstance(value, str):
+        return [_canonical_key(run) for run in extract_arabic_runs(value)]
+
+    if isinstance(value, dict):
+        keys: list[str] = []
+        for name in sorted(value, key=str):
+            keys.extend(_arabic_key_sequence(value[name]))
+        return keys
+
+    if isinstance(value, list):
+        keys = []
+        for item in value:
+            keys.extend(_arabic_key_sequence(item))
+        return keys
+
+    return []
+
+
+def _canonicalize_checked(
+    output: Any,
+    canonicalize: Callable[[Any], None],
+) -> list[str]:
+    """
+    Run a canonicalization pass and prove it preserved the output's content.
+
+    The contract: canonicalization may only change *how* a KB item is spelled —
+    tashkeel, and spacing within its bucket. It may never change which item a
+    run refers to, nor add, drop, or reorder runs. That is exactly what
+    `_canonical_key` already encodes, so the check is the key sequence before
+    versus after.
+
+    This exists because the pass had no contract over it at all and demonstrably
+    broke one (§1.3): on غَفَرَ it rewrote a quiz's correct answer into the bare
+    root, and grounding, `derive_correct_choice_id` and the evaluation agent all
+    passed the result. Bucketing fixed that specific collision; this makes the
+    property being relied on explicit and checked on every call, rather than
+    trusting the next edit to preserve it.
+
+    Returns violations — empty when the pass was content-preserving.
+    """
+    before = _arabic_key_sequence(output)
+
+    canonicalize(output)
+
+    after = _arabic_key_sequence(output)
+
+    if before == after:
+        return []
+
+    return [
+        "canonicalization changed the output's Arabic content: "
+        f"{len(before)} run(s) referring to {sorted(set(before))} became "
+        f"{len(after)} referring to {sorted(set(after))}"
+    ]
+
+
 def _register_canonical(canonical_by_key: dict[str, str], value: Any) -> None:
     if isinstance(value, str) and value.strip():
         canonical_by_key.setdefault(_canonical_key(value), value.strip())
 
 
 def _canonicalize_prose(text: Any, canonical_by_key: dict[str, str]) -> Any:
-    """Replace each Arabic run with the KB's exact form, or leave it alone."""
+    """
+    Replace each Arabic run with the KB's exact form, or leave it alone.
+
+    Whole runs only. This used to `str.replace(run, canonical)`, which rewrites
+    the run's letters wherever they occur — including inside a *longer* Arabic
+    word later in the same string, which is a corruption no validator was
+    looking for. `replace_arabic_runs` works on the run boundaries the grounding
+    check itself uses.
+    """
     if not isinstance(text, str):
         return text
-    for run in extract_arabic_runs(text):
-        canonical = canonical_by_key.get(_canonical_key(run))
-        if canonical and canonical != run:
-            text = text.replace(run, canonical)
-    return text
+
+    return replace_arabic_runs(
+        text,
+        lambda run: canonical_by_key.get(_canonical_key(run), run),
+    )
 
 
 # An Arabic run directly following the English word "root" (optionally "root
