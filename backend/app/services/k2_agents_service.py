@@ -133,11 +133,15 @@ AGENT_SPECS: dict[str, AgentSpec] = {
         flag_env_name="ENABLE_K2_EXPLANATION",
         # v4 grounds the pattern-function claim in the KB's name /
         # meaning_effect — v3 guessed it from the pattern shape (فَعَل was
-        # described as "points to the person who does the action"). Medium
-        # effort for the same reason as quiz/guardrail: at default effort,
-        # 2 of 16 audited calls spent the whole budget reasoning and
-        # returned empty content.
-        prompt_version_dir="explanation_agent/v4_grounded_pattern",
+        # described as "points to the person who does the action"). v5 keeps
+        # the meaning_effect's "often" a tendency and forbids asserting the
+        # pattern's category about a specific card whose meaning doesn't state
+        # it — the مَحْصَلَة-called-a-place defect, which v4's own "PATTERN
+        # always points to X" example actively invited. Enforced pre-serve by
+        # explanation_claim_checker. Medium effort for the same reason as
+        # quiz/guardrail: at default effort, 2 of 16 audited calls spent the
+        # whole budget reasoning and returned empty content.
+        prompt_version_dir="explanation_agent/v5_card_claims",
         reasoning_effort="medium",
     ),
     AGENT_QUIZ: AgentSpec(
