@@ -112,6 +112,47 @@ def normalize_arabic(text: str) -> str:
     return re.sub(r"\s+", " ", stripped).strip()
 
 
+def arabic_identity(text: str) -> str:
+    """
+    Which Arabic item a string *is*: whitespace removed, tashkeel kept.
+
+    The counterpart to `normalize_arabic`, and the two must not be confused.
+    Stripping tashkeel is right for grounding — فاعِل is a copy of فَاعِل, not
+    an invention — but it is not an identity, because tashkeel is exactly what
+    separates one knowledge-base item from another. فَعِل, فَعْل, فَعَل and
+    فَعَلَ are four distinct patterns that all normalize to فعل, and inside a
+    single root's evidence such collisions are the common case: 35 of 58 roots
+    hold two words that collide (دَرَسَ / دَرْس, عَلِمَ / عَلَّمَ / عِلْم) and
+    35 hold two patterns.
+
+    Anything that maps evidence *by* Arabic — a canonical-spelling map, an
+    answer-derivation index, a claim checker — must key on this, or two items
+    silently become one and the map answers for the wrong one.
+    """
+    if not isinstance(text, str):
+        return ""
+
+    return re.sub(r"\s+", "", text)
+
+
+def unambiguous_by_grounding_key(identities: Any) -> dict[str, str]:
+    """
+    Grounding key → the single identity holding it, for keys held by exactly one.
+
+    The safe fallback for a run written without full tashkeel: it can be
+    resolved when only one evidence item answers to its stripped form, and must
+    be left unresolved when several do.
+    """
+    grouped: dict[str, set[str]] = {}
+
+    for identity in identities:
+        key = normalize_arabic(identity).replace(" ", "")
+        if key:
+            grouped.setdefault(key, set()).add(identity)
+
+    return {key: next(iter(group)) for key, group in grouped.items() if len(group) == 1}
+
+
 def extract_arabic_runs(text: str) -> list[str]:
     if not isinstance(text, str):
         return []

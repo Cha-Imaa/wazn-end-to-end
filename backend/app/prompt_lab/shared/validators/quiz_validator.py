@@ -83,6 +83,7 @@ from app.prompt_lab.shared.validators.quiz_claim_checker import (
 from app.prompt_lab.shared.validators.common_validator import (
     ValidationResult,
     add_arabic_value,
+    arabic_identity,
     check_no_unknown_arabic,
     extract_arabic_runs,
     get_llm_input,
@@ -90,6 +91,7 @@ from app.prompt_lab.shared.validators.common_validator import (
     parse_json_output,
     require_exact_keys,
     require_non_empty_string,
+    unambiguous_by_grounding_key,
 )
 
 REQUIRED_TOP_LEVEL_KEYS = {"quiz"}
@@ -514,12 +516,22 @@ def _validate_type_specific_grounding(
 def _build_quiz_lookup(
     evidence: dict[str, Any],
 ) -> tuple[str, dict[str, dict[str, Any]], dict[str, dict[str, Any]], dict[str, list[dict[str, Any]]]]:
-    """Comparison-key indexes over the quiz evidence: root key, leaf by key,
-    pattern by key, and leaves grouped by their pattern's key."""
+    """
+    Identity indexes over the quiz evidence: root identity, leaf by identity,
+    pattern by identity, and leaves grouped by their pattern's identity.
+
+    Keyed on `arabic_identity`, which keeps tashkeel — **not** on the grounding
+    key. Keying on the grounding key made this lossy in a way that corrupted
+    answers rather than declining to derive them: on ع ل م its eight leaves
+    collapsed to six entries, عَلِمَ and عَلَّمَ vanishing behind عِلْم, so
+    "What does عَلَّمَ mean?" resolved to عِلْم and `repair_answer_ids` rewrote
+    the *correct* answer key into "knowledge". Observed live 2026-07-29 on عِلْم,
+    flagged by the guardrail after serving. See `arabic_identity`.
+    """
     root = evidence.get("root") or {}
     leaves = evidence.get("leaves") or []
 
-    root_key = _comparison_key(root.get("arabic") or "") if isinstance(root, dict) else ""
+    root_key = arabic_identity(root.get("arabic") or "") if isinstance(root, dict) else ""
     leaf_by_key: dict[str, dict[str, Any]] = {}
     pattern_by_key: dict[str, dict[str, Any]] = {}
     leaves_by_pattern_key: dict[str, list[dict[str, Any]]] = {}
@@ -528,12 +540,12 @@ def _build_quiz_lookup(
         for leaf in leaves:
             if not isinstance(leaf, dict):
                 continue
-            leaf_key = _comparison_key(leaf.get("arabic") or "")
+            leaf_key = arabic_identity(leaf.get("arabic") or "")
             if leaf_key:
                 leaf_by_key[leaf_key] = leaf
             pattern = leaf.get("pattern") or {}
             if isinstance(pattern, dict):
-                pattern_key = _comparison_key(pattern.get("arabic") or "")
+                pattern_key = arabic_identity(pattern.get("arabic") or "")
                 if pattern_key:
                     pattern_by_key[pattern_key] = pattern
                     leaves_by_pattern_key.setdefault(pattern_key, []).append(leaf)
@@ -576,11 +588,23 @@ def derive_correct_choice_id(
         evidence
     )
 
-    run_keys = list(
-        dict.fromkeys(
-            _comparison_key(run) for run in extract_arabic_runs(question_text)
-        )
-    )
+    # Resolve each run in the stem to the evidence item it names: exact spelling
+    # first, and for a run written without full tashkeel the grounding key, but
+    # only where a single item answers to it. An unresolved run simply does not
+    # participate — every branch below requires a unique reference anyway.
+    known_identities = set(leaf_by_key) | set(pattern_by_key)
+    identity_by_grounding_key = unambiguous_by_grounding_key(known_identities)
+
+    run_keys: list[str] = []
+
+    for run in extract_arabic_runs(question_text):
+        identity = arabic_identity(run)
+
+        if identity not in known_identities:
+            identity = identity_by_grounding_key.get(_comparison_key(run), identity)
+
+        if identity not in run_keys:
+            run_keys.append(identity)
 
     def unique_choice_matching(target_text: Any) -> str | None:
         if not isinstance(target_text, str) or not target_text.strip():
@@ -619,7 +643,10 @@ def derive_correct_choice_id(
         for choice in choices:
             if not isinstance(choice, dict):
                 continue
-            leaf = leaf_by_key.get(_comparison_key(choice.get("text") or ""))
+            choice_text = choice.get("text") or ""
+            leaf = leaf_by_key.get(arabic_identity(choice_text)) or leaf_by_key.get(
+                identity_by_grounding_key.get(_comparison_key(choice_text), "")
+            )
             if not isinstance(leaf, dict):
                 continue
             meaning_key = _comparison_key(leaf.get("meaning") or "")
