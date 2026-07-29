@@ -5,12 +5,25 @@ agent exposing a reasoning trace + final output), a quality-evaluation summary,
 and a safety/guardrails checklist.
 
 Nothing here calls an LLM — it stays on the deterministic request path. The
-`lookup` / `morphology` / `quiz` agents are genuinely deterministic (engine
-"deterministic"). The `explanation` / `guardrail` / `evaluation` agents are the
-K2-powered steps (engine "k2"); their `reasoning`/`output` are **mock** but
-word-specific while `enable_k2_think_demo` is true (the default). When the real
-K2 path lands, `build_k2_think` swaps those mock strings for `k2_client`'s real
-`reasoning`/`answer_content` — the frontend contract does not change.
+`lookup` / `morphology` / `quiz` agents are genuinely deterministic. The
+`explanation` / `guardrail` / `evaluation` agents emit **mock** but
+word-specific text while `enable_k2_think_demo` is true (the default). Live K2
+output for those three arrives on GET /api/insights, which reshapes this same
+block (see `insights_service`).
+
+Every agent carries `engine_status`, the single field describing where its
+content came from (§1.5). It replaces the old `engine` + `demo` combination,
+which could not distinguish "deterministic by design" from "a K2 step showing a
+canned sample" — both read as `engine: "k2"` with `demo: true` somewhere else
+in the response. `engine` is still emitted for older clients but nothing should
+branch on it.
+
+    deterministic   real deterministic logic ran; this is its actual output
+    demo_sample     a hand-written sample stands in for a K2 step that has not
+                    run — never to be presented as a live or verified result
+    skipped         the step's ENABLE_K2_* flag is off
+    k2_live         a live validated K2 call (only ever set by /api/insights)
+    fallback        the live call failed; deterministic content is shown
 """
 
 from typing import Any
@@ -22,6 +35,10 @@ DETERMINISTIC_SOURCE = "deterministic"
 K2_ENGINE = "k2"
 DETERMINISTIC_ENGINE = "deterministic"
 K2_MODEL_NAME = "K2-Think-v2"
+
+ENGINE_STATUS_DETERMINISTIC = "deterministic"
+ENGINE_STATUS_DEMO_SAMPLE = "demo_sample"
+ENGINE_STATUS_SKIPPED = "skipped"
 
 STATUS_COMPLETED = "completed"
 STATUS_SKIPPED = "skipped"
@@ -111,12 +128,26 @@ def _facts(selected_word, root, pattern, quiz, lookup_trace) -> dict[str, Any]:
     }
 
 
-def _agent(id, step, name, engine, status, summary, reasoning, output, model=None):
+def _agent(
+    id,
+    step,
+    name,
+    engine,
+    status,
+    summary,
+    reasoning,
+    output,
+    model=None,
+    engine_status=ENGINE_STATUS_DETERMINISTIC,
+):
     return {
         "id": id,
         "step": step,
         "name": name,
+        # Legacy: `engine_status` is the field to branch on. Kept so a client
+        # that predates it still renders.
         "engine": engine,
+        "engine_status": engine_status,
         "model": model,
         "status": status,
         "summary": summary,
@@ -189,8 +220,9 @@ The pattern {f['pattern_ar']} {f['pattern_effect'] or 'shapes the root meaning'}
 Combining root + pattern yields "{f['meaning']}". I will state this plainly and invent no new Arabic."""
     return _agent(
         "explanation", 3, "Explanation Agent", K2_ENGINE, STATUS_COMPLETED,
-        "Generated a learner-friendly explanation using only verified data.",
+        "Sample explanation — this step has not run live.",
         reasoning, explanation, model=K2_MODEL_NAME,
+        engine_status=ENGINE_STATUS_DEMO_SAMPLE,
     )
 
 
@@ -205,9 +237,10 @@ Confirmed the quiz introduces no words outside the verified family.
 Result: no unsupported or invented content detected."""
     return _agent(
         "guardrail", 5, "Guardrail Agent", K2_ENGINE, STATUS_COMPLETED,
-        "Validated root, pattern, meaning, and quiz answers. No unapproved content detected.",
+        "Sample review — this step has not run live.",
         reasoning, f"{passed}/{len(checks)} checks passed — {guardrails.get('summary', '')}",
         model=K2_MODEL_NAME,
+        engine_status=ENGINE_STATUS_DEMO_SAMPLE,
     )
 
 
@@ -223,11 +256,12 @@ Clarity: phrasing is beginner-appropriate ({m.get('clarity')}%).
 Overall quality: {overall}/100."""
     return _agent(
         "evaluation", 6, "Evaluation Agent", K2_ENGINE, STATUS_COMPLETED,
-        "Scored the response for quality and learning effectiveness.",
+        "Sample scores — this step has not run live.",
         reasoning,
         f"Overall {overall}/100 · Groundedness {m.get('groundedness')}% · "
         f"Quiz {m.get('quiz_validity')}% · Clarity {m.get('clarity')}%",
         model=K2_MODEL_NAME,
+        engine_status=ENGINE_STATUS_DEMO_SAMPLE,
     )
 
 
@@ -237,6 +271,7 @@ def _k2_skipped(id, step, name, flag) -> dict[str, Any]:
         f"Skipped — {flag} is not enabled.",
         f"This K2 step did not run. Enable {flag} to produce a live reasoning trace.",
         "", model=K2_MODEL_NAME,
+        engine_status=ENGINE_STATUS_SKIPPED,
     )
 
 
@@ -249,6 +284,11 @@ def _build_evaluation(demo: bool) -> dict[str, Any] | None:
     return {
         "overall": dict(_DEMO_EVALUATION["overall"]),
         "metrics": [dict(metric) for metric in _DEMO_EVALUATION["metrics"]],
+        # These numbers are hand-written and identical for every word. The panel
+        # must label them as a sample — an unlabelled 94/100 next to real
+        # morphology reads as a measured score (§1.5). /api/insights replaces
+        # this block with `engine_status: "k2_live"` or omits it entirely.
+        "engine_status": ENGINE_STATUS_DEMO_SAMPLE,
     }
 
 
@@ -266,4 +306,7 @@ def _build_guardrails(word, pattern, quiz, lookup_trace) -> dict[str, Any]:
         "passed": passed,
         "summary": "All Checks Passed" if passed else "Some Checks Need Review",
         "checks": checks,
+        # Four predicates over the KB lookup, not a model review. §1.7 replaces
+        # them with the real validator; until then the panel says which they are.
+        "engine_status": ENGINE_STATUS_DETERMINISTIC,
     }

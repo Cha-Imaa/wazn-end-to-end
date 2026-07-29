@@ -360,6 +360,7 @@ def _live_evaluation(result: dict[str, Any] | None) -> dict[str, Any] | None:
             "stars": round(overall) / 2,
         },
         "metrics": metrics,
+        "engine_status": ENGINE_STATUS_K2_LIVE,
     }
 
 
@@ -414,4 +415,5 @@ def _live_guardrails(result: dict[str, Any] | None) -> dict[str, Any] | None:
         if passed
         else f"{flagged_count} Check{'s' if flagged_count != 1 else ''} Flagged",
         "checks": checks,
+        "engine_status": ENGINE_STATUS_K2_LIVE,
     }
