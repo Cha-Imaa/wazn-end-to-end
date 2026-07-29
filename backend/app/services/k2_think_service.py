@@ -29,6 +29,7 @@ branch on it.
 from typing import Any
 
 from app.core.config import Settings, get_settings
+from app.modules.guardrail_validator_module import run_guardrail_validator_module
 
 
 DETERMINISTIC_SOURCE = "deterministic"
@@ -66,12 +67,23 @@ def build_k2_think(
     pipeline_trace: dict[str, Any],
     selected_leaf: dict[str, Any] | None = None,
     settings: Settings | None = None,
+    guardrails: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     active_settings = settings or get_settings()
     demo = active_settings.enable_k2_think_demo
 
     lookup_trace = pipeline_trace.get("lookup", {})
-    guardrails = _build_guardrails(selected_word, pattern, quiz, lookup_trace)
+    if guardrails is None:
+        # The analyze pipeline hands over the verdict its guardrail stage
+        # already computed; callers shaping from an evidence state (insights)
+        # run the same module here.
+        guardrails = run_guardrail_validator_module(
+            selected_word=selected_word,
+            root=root,
+            pattern=pattern,
+            quiz=quiz,
+            selected_leaf=selected_leaf,
+        )["guardrails"]
     evaluation = _build_evaluation(demo)
 
     # shared facts for word-specific mock reasoning
@@ -292,21 +304,6 @@ def _build_evaluation(demo: bool) -> dict[str, Any] | None:
     }
 
 
-def _build_guardrails(word, pattern, quiz, lookup_trace) -> dict[str, Any]:
-    checks = [
-        {"id": "verified_words", "label": "Only verified words used", "passed": bool(word.get("id"))},
-        {"id": "root_pattern_matched", "label": "Root & pattern matched",
-         "passed": bool(lookup_trace.get("root_found")) and bool(pattern)},
-        {"id": "meanings_verified", "label": "Meanings from verified KB", "passed": bool(word.get("meaning"))},
-        {"id": "quiz_one_answer", "label": "Quiz has one correct answer",
-         "passed": bool(quiz) and all(isinstance(q, dict) and bool(q.get("answer_id")) for q in quiz)},
-    ]
-    passed = all(c["passed"] for c in checks)
-    return {
-        "passed": passed,
-        "summary": "All Checks Passed" if passed else "Some Checks Need Review",
-        "checks": checks,
-        # Four predicates over the KB lookup, not a model review. §1.7 replaces
-        # them with the real validator; until then the panel says which they are.
-        "engine_status": ENGINE_STATUS_DETERMINISTIC,
-    }
+# The guardrail checks live in `app.modules.guardrail_validator_module` — a
+# real pipeline stage over the served content, not predicates over the lookup
+# (§1.7). This service only places its verdict in the panel.

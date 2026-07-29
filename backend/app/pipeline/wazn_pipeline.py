@@ -1,5 +1,6 @@
 from typing import Any
 
+from app.modules.guardrail_validator_module import run_guardrail_validator_module
 from app.modules.lookup_module import run_lookup_module
 from app.modules.morphology_reasoning_module import (
     build_morphology_output,
@@ -94,6 +95,18 @@ def run_pipeline_components(query: str) -> dict[str, Any]:
         quiz=quiz,
     )
 
+    # Last stage by design: it reviews what the earlier stages produced, the
+    # same position the live guardrail agent holds on /api/insights.
+    guardrail_result = run_guardrail_validator_module(
+        selected_word=selected_word,
+        root=root,
+        pattern=pattern,
+        quiz=quiz,
+        selected_leaf=selected_leaf,
+    )
+
+    pipeline_trace.update(guardrail_result.get("pipeline_trace", {}))
+
     return {
         "found": True,
         "query": query,
@@ -109,6 +122,7 @@ def run_pipeline_components(query: str) -> dict[str, Any]:
         "leaf_details": leaf_details,
         "selected_leaf": selected_leaf,
         "quiz": quiz,
+        "guardrails": guardrail_result["guardrails"],
         "pipeline_trace": pipeline_trace,
     }
 
@@ -134,6 +148,7 @@ def run_wazn_pipeline(query: str) -> dict[str, Any]:
         quiz=components["quiz"],
         pipeline_trace=components["pipeline_trace"],
         selected_leaf=components["selected_leaf"],
+        guardrails=components["guardrails"],
     )
 
     return {
