@@ -18,6 +18,11 @@ export default function App() {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
 
+  // True while GET /api/insights is in flight. The learning view has already
+  // rendered deterministic content by then, so the Insights tab must say which
+  // steps are still waiting rather than presenting sample text as final.
+  const [insightsPending, setInsightsPending] = useState(false);
+
   const inputRef = useRef(null);
 
   // Increments on every search so a slow /api/insights response for an earlier
@@ -31,6 +36,7 @@ export default function App() {
 
   function resetLearningState() {
     setLearningResult(null);
+    setInsightsPending(false);
     resetSelectedNode();
   }
 
@@ -51,6 +57,9 @@ export default function App() {
     }
 
     setIsSearching(true);
+    // Cleared up front so a not_found or failed search cannot leave the
+    // previous word's pending flag set.
+    setInsightsPending(false);
 
     const searchSeq = ++searchSeqRef.current;
 
@@ -61,6 +70,7 @@ export default function App() {
       if (result.status === "found") {
         // Deliberately not awaited: /api/analyze renders immediately and the
         // K2 enrichment (live Insights + upgraded quiz) swaps in on arrival.
+        setInsightsPending(true);
         enrichWithInsights(cleaned, searchSeq);
       }
     } finally {
@@ -71,11 +81,14 @@ export default function App() {
   async function enrichWithInsights(word, searchSeq) {
     const insights = await resolveInsightsResult(word);
 
-    if (
-      !insights ||
-      insights.status !== "found" ||
-      searchSeq !== searchSeqRef.current
-    ) {
+    // A superseded search must not clear the newer one's pending state.
+    if (searchSeq !== searchSeqRef.current) {
+      return;
+    }
+
+    setInsightsPending(false);
+
+    if (!insights || insights.status !== "found") {
       return;
     }
 
@@ -168,6 +181,7 @@ export default function App() {
           onClosePanel={handleClosePanel}
           onReturnHome={handleLogoClick}
           isSearching={isSearching}
+          insightsPending={insightsPending}
         />
       )}
     </AppShell>

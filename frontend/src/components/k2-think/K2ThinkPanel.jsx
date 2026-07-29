@@ -8,6 +8,11 @@ import AgentFlowItem from "./AgentFlowItem.jsx";
 import ScoreGauge from "./ScoreGauge.jsx";
 import GuardrailChecklist from "./GuardrailChecklist.jsx";
 import { StarRating, LeafSprig } from "./icons.jsx";
+import {
+  describeEngineStatus,
+  describePanelProvenance,
+  engineStatusOf,
+} from "./engineStatus.js";
 
 const HEADER_BRANCH = "/assets/k2/header-branch.png";
 const K2_MARK = "/assets/k2/k2-mark.png";
@@ -22,12 +27,40 @@ function SectionLabel({ children }) {
   );
 }
 
-export default function K2ThinkPanel({ k2Think, word = "" }) {
+// The same badge the agent rows use, so a section's provenance reads identically
+// to the provenance of the steps that produced it.
+function ProvenanceChip({ descriptor, className = "" }) {
+  return (
+    <span
+      className={`k2-engine-badge k2-engine-badge--${descriptor.variant} ${className}`.trim()}
+    >
+      {descriptor.mark && (
+        <img
+          className="k2-engine-badge-mark"
+          src={K2_MARK}
+          alt=""
+          aria-hidden="true"
+        />
+      )}
+      {descriptor.label}
+    </span>
+  );
+}
+
+export default function K2ThinkPanel({ k2Think, word = "", insightsPending = false }) {
   const data = k2Think || getK2ThinkSample(word);
   const agents = Array.isArray(data.agents) ? data.agents : [];
   const evaluation = data.evaluation;
   const overall = evaluation?.overall;
   const metrics = Array.isArray(evaluation?.metrics) ? evaluation.metrics : [];
+
+  // Sample data has no live steps, so a missing k2_think must not read as live.
+  const pending = insightsPending && Boolean(k2Think);
+
+  const panelProvenance = describePanelProvenance(agents, pending);
+  const evaluationProvenance = evaluation
+    ? describeEngineStatus(engineStatusOf(evaluation))
+    : null;
 
   return (
     <section className="k2-think-panel" aria-label="Insights">
@@ -36,6 +69,10 @@ export default function K2ThinkPanel({ k2Think, word = "" }) {
         <div className="k2-think-heading">
           <h2 className="k2-think-title">Insights</h2>
           <p className="k2-think-subtitle">{data.subtitle}</p>
+          <ProvenanceChip
+            descriptor={panelProvenance}
+            className="k2-think-provenance"
+          />
         </div>
         <img
           className="k2-think-header-branch"
@@ -50,7 +87,7 @@ export default function K2ThinkPanel({ k2Think, word = "" }) {
         <div className="k2-flow-container">
           <ol className="k2-agent-flow">
             {agents.map((agent) => (
-              <AgentFlowItem key={agent.id} agent={agent} />
+              <AgentFlowItem key={agent.id} agent={agent} pending={pending} />
             ))}
           </ol>
         </div>
@@ -60,6 +97,16 @@ export default function K2ThinkPanel({ k2Think, word = "" }) {
         <section className="k2-think-section">
           <SectionLabel>Quality Evaluation</SectionLabel>
           <div className="k2-eval-container">
+            {/* The demo scores are hand-written and identical for every word.
+                Unlabelled beside real morphology they read as measured (§1.5).
+                Inside the container so the section label keeps its negative
+                margin overlap. */}
+            {evaluationProvenance && (
+              <ProvenanceChip
+                descriptor={evaluationProvenance}
+                className="k2-section-provenance"
+              />
+            )}
             <div className="k2-eval-row">
               {overall && (
                 <div className="k2-eval-overall-card">

@@ -29,6 +29,7 @@ export default function LearningInterface({
   onClosePanel,
   onReturnHome,
   isSearching = false,
+  insightsPending = false,
 }) {
   const searchedWord = learningResult?.normalized_query || "";
   const activeTree = learningResult?.tree || null;
@@ -327,7 +328,11 @@ export default function LearningInterface({
             )}
 
             {!isNotFound && companionTab === "k2think" && (
-              <K2ThinkPanel k2Think={k2Think} word={activeWord?.arabic || searchedWord} />
+              <K2ThinkPanel
+                k2Think={k2Think}
+                word={activeWord?.arabic || searchedWord}
+                insightsPending={insightsPending}
+              />
             )}
 
             {!isNotFound && !hasCompanionContent && (

@@ -300,6 +300,111 @@
   border: 1px solid var(--border-soft);
 }
 
+/* Provenance variants (§1.5). Content that is NOT a live verified result gets a
+   dashed border — the one visual cue that reads as "provisional" without
+   borrowing a reserved colour. Orange is the origin word and red is root
+   letters; neither may signal status here, so these stay in the green family
+   and separate themselves by border style and contrast. */
+.k2-engine-badge--demo,
+.k2-engine-badge--fallback,
+.k2-engine-badge--pending {
+  border-style: dashed;
+}
+
+.k2-engine-badge--demo {
+  color: rgba(37, 89, 74, 0.78);
+  background: rgba(151, 166, 151, 0.14);
+  border: 1px dashed rgba(37, 89, 74, 0.42);
+}
+
+.k2-engine-badge--fallback {
+  color: rgba(37, 89, 74, 0.72);
+  background: rgba(151, 166, 151, 0.12);
+  border: 1px dashed var(--border-soft);
+}
+
+.k2-engine-badge--pending {
+  color: var(--color-green-secondary);
+  background: rgba(78, 129, 116, 0.1);
+  border: 1px dashed rgba(78, 129, 116, 0.4);
+  animation: k2-provenance-pulse 1.6s ease-in-out infinite;
+}
+
+.k2-engine-badge--skipped {
+  color: rgba(54, 61, 1, 0.5);
+  background: rgba(151, 166, 151, 0.1);
+  border: 1px solid rgba(37, 89, 74, 0.14);
+}
+
+@keyframes k2-provenance-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .k2-engine-badge--pending {
+    animation: none;
+  }
+}
+
+/* Panel-level chip, under the subtitle in the header. */
+.k2-think-provenance {
+  margin-top: 8px;
+}
+
+/* Section-level chip, at the top of a section's own container. */
+.k2-section-provenance {
+  margin-bottom: 10px;
+}
+
+/* Pushed to the right of the guardrail card's header row. */
+.k2-guardrails-provenance {
+  margin-left: auto;
+  /* The head row is uppercase with wide tracking; the badge is not. */
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+/* --- pending agent row --- */
+.k2-agent-status--pending .k2-agent-status-label {
+  color: var(--color-green-secondary);
+}
+
+.k2-agent-status--pending .k2-agent-status-icon {
+  color: rgba(78, 129, 116, 0.55);
+  animation: k2-provenance-pulse 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .k2-agent-status--pending .k2-agent-status-icon {
+    animation: none;
+  }
+}
+
+/* --- why an agent was rejected --- */
+.k2-agent-error {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: rgba(54, 61, 1, 0.7);
+}
+
+.k2-agent-violations {
+  margin: 0;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11px;
+  line-height: 1.4;
+  color: rgba(54, 61, 1, 0.62);
+}
+
 .k2-engine-badge-mark {
   width: 14px;
   height: 14px;

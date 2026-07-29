@@ -1,18 +1,40 @@
 // One row in the agentic reasoning flow: numbered step, botanical icon, name,
-// summary, status, and an expandable panel showing the agent's engine badge, a
-// typewriter-animated reasoning trace, and its final output.
+// summary, status, and an expandable panel showing the agent's provenance badge,
+// a typewriter-animated reasoning trace, and its final output.
 
 import { useState } from "react";
 import { CheckIcon, DotIcon, ChevronIcon } from "./icons.jsx";
 import { useTypewriter } from "./useTypewriter.js";
+import {
+  ENGINE_STATUS,
+  describeEngineStatus,
+  resolveAgentStatus,
+} from "./engineStatus.js";
 
-const STATUS_LABEL = { completed: "Completed", skipped: "Skipped" };
+const STATUS_LABEL = {
+  completed: "Completed",
+  skipped: "Skipped",
+  pending: "Running",
+};
 const K2_MARK = "/assets/k2/k2-mark.png";
 
-export default function AgentFlowItem({ agent }) {
+export default function AgentFlowItem({ agent, pending = false }) {
   const [open, setOpen] = useState(false);
-  const isCompleted = agent.status === "completed";
-  const isK2 = agent.engine === "k2";
+
+  const engineStatus = resolveAgentStatus(agent, pending);
+  const badge = describeEngineStatus(engineStatus, agent.model);
+
+  const isPending = engineStatus === ENGINE_STATUS.PENDING;
+  const isLive = engineStatus === ENGINE_STATUS.K2_LIVE;
+
+  // The row's own state, not its provenance: a pending step has not finished,
+  // and a skipped one never started. Everything else ran, whatever produced it.
+  const rowStatus = isPending
+    ? "pending"
+    : agent.status === "skipped"
+      ? "skipped"
+      : "completed";
+
   const reasoning = agent.reasoning || "";
   const { shown, done } = useTypewriter(reasoning, open);
 
@@ -34,15 +56,11 @@ export default function AgentFlowItem({ agent }) {
             <span className="k2-agent-name">{agent.name}</span>
             <span className="k2-agent-desc">{agent.summary}</span>
           </span>
-          <span
-            className={`k2-agent-status k2-agent-status--${
-              isCompleted ? "completed" : "skipped"
-            }`}
-          >
+          <span className={`k2-agent-status k2-agent-status--${rowStatus}`}>
             <span className="k2-agent-status-label">
-              {STATUS_LABEL[agent.status] || agent.status}
+              {STATUS_LABEL[rowStatus]}
             </span>
-            {isCompleted ? (
+            {rowStatus === "completed" ? (
               <CheckIcon className="k2-agent-status-icon" />
             ) : (
               <DotIcon className="k2-agent-status-icon" />
@@ -52,18 +70,32 @@ export default function AgentFlowItem({ agent }) {
         </summary>
 
         <div className="k2-agent-trace">
-          <span
-            className={`k2-engine-badge k2-engine-badge--${isK2 ? "k2" : "det"}`}
-          >
-            {isK2 ? (
-              <>
-                <img className="k2-engine-badge-mark" src={K2_MARK} alt="" aria-hidden="true" />
-                {agent.model || "K2 Think"}
-              </>
-            ) : (
-              "Deterministic"
+          <span className={`k2-engine-badge k2-engine-badge--${badge.variant}`}>
+            {badge.mark && (
+              <img
+                className="k2-engine-badge-mark"
+                src={K2_MARK}
+                alt=""
+                aria-hidden="true"
+              />
             )}
+            {badge.label}
           </span>
+
+          {/* Why an agent was rejected belongs in the transparency tab, not
+              only in the server log — the badge says "fallback", this says
+              what failed. */}
+          {agent.error && engineStatus === ENGINE_STATUS.FALLBACK && (
+            <p className="k2-agent-error">{agent.error}</p>
+          )}
+
+          {Array.isArray(agent.violations) && agent.violations.length > 0 && (
+            <ul className="k2-agent-violations">
+              {agent.violations.map((violation) => (
+                <li key={violation}>{violation}</li>
+              ))}
+            </ul>
+          )}
 
           {reasoning && (
             <div className="k2-trace-block">
@@ -77,9 +109,7 @@ export default function AgentFlowItem({ agent }) {
 
           {agent.output && (
             <div className="k2-trace-block">
-              <span className="k2-trace-label">
-                {isK2 ? "Output" : "Result"}
-              </span>
+              <span className="k2-trace-label">{isLive ? "Output" : "Result"}</span>
               <p className="k2-output-text">{agent.output}</p>
             </div>
           )}
