@@ -36,7 +36,7 @@ export default function AgentFlowItem({ agent, pending = false }) {
       : "completed";
 
   const reasoning = agent.reasoning || "";
-  const { shown, done } = useTypewriter(reasoning, open);
+  const { shown, done, skip } = useTypewriter(reasoning, open);
 
   return (
     <li className="k2-agent-item">
@@ -100,7 +100,13 @@ export default function AgentFlowItem({ agent, pending = false }) {
           {reasoning && (
             <div className="k2-trace-block">
               <span className="k2-trace-label">Reasoning</span>
-              <pre className="k2-trace-text">
+              {/* Click-to-skip while typing. The full text is one click away,
+                  so the animation never holds the content hostage. */}
+              <pre
+                className={`k2-trace-text${done ? "" : " k2-trace-text--typing"}`}
+                onClick={done ? undefined : skip}
+                title={done ? undefined : "Click to show the full trace"}
+              >
                 {open ? shown : ""}
                 {open && !done && <span className="k2-caret" aria-hidden="true" />}
               </pre>
