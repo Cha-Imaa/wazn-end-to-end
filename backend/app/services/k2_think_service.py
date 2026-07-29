@@ -160,12 +160,16 @@ def _quiz_agent(f) -> dict[str, Any]:
 Built one correct answer and three plausible distractors per question.
 Covered categories: {cats}.
 Verified every question has exactly one correct answer."""
+    # Deterministic, not K2. This agent was labelled `engine: "k2"` with
+    # `model: "K2-Think-v2"` while running 100% template logic — the exact
+    # mislabelling §1.5 exists to remove. A live K2 quiz does exist now, but it
+    # is served by /api/insights, which relabels this entry to k2_live.
     return _agent(
-        "quiz", 4, "Quiz Agent", K2_ENGINE, STATUS_COMPLETED,
+        "quiz", 4, "Quiz Agent", DETERMINISTIC_ENGINE, STATUS_COMPLETED,
         f"Created {f['quiz_count']} practice question{'s' if f['quiz_count'] != 1 else ''} based on root, pattern, and meaning.",
         reasoning,
         f"{f['quiz_count']} questions · categories: {cats}",
-        model=K2_MODEL_NAME,
+        engine_status=ENGINE_STATUS_DETERMINISTIC,
     )
 
 
