@@ -244,7 +244,7 @@ def build_multiple_choice_question(
     selected_word: dict[str, Any],
     correct_answer: str,
     distractors: list[str],
-) -> dict[str, Any]:
+) -> dict[str, Any] | None:
     selected_word_id = selected_word["id"]
     template_id = template["id"]
 
@@ -253,6 +253,11 @@ def build_multiple_choice_question(
         distractors=distractors,
         seed=question_seed(selected_word, template),
     )
+
+    # De-duplication can leave fewer than four choices; a short question is
+    # dropped like any other unbuildable one rather than served malformed.
+    if len(choices) < MAX_CHOICES:
+        return None
 
     return {
         "id": f"{selected_word_id}_{template_id}",
