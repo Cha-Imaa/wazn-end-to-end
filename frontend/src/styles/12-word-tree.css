@@ -235,22 +235,35 @@
   font-family: "Amiri", "Noto Naskh Arabic", serif;
   font-weight: 700;
   letter-spacing: 0.04em;
-  fill: rgba(255, 248, 225, 0.98);
-  paint-order: stroke fill;
-  stroke: rgba(80, 54, 39, 0.28);
-  stroke-width: 2px;
-  stroke-linejoin: round;
+  fill: var(--color-panel-surface);
 }
 
 .tree-root-transliteration {
   font-family: "EB Garamond", "Inter", sans-serif;
   font-weight: 700;
   letter-spacing: 0.18em;
-  fill: rgba(255, 248, 225, 0.86);
-  paint-order: stroke fill;
-  stroke: rgba(80, 54, 39, 0.24);
-  stroke-width: 1.4px;
-  stroke-linejoin: round;
+  fill: var(--color-panel-surface);
+  opacity: 0.88;
+}
+
+/* Variant A — text sits on the cream plaque art, so it flips to dark green */
+.tree-root-label--plaque .tree-root-arabic,
+.tree-root-label--plaque .tree-root-transliteration {
+  fill: var(--color-green-primary);
+  opacity: 1;
+}
+
+/* Variant B — each root letter on its own gold-ringed disc */
+.tree-root-chip {
+  fill: var(--color-panel-surface);
+  stroke: var(--color-gold);
+  stroke-width: 2.5;
+}
+
+.tree-root-chip-letter {
+  font-family: "Amiri", "Noto Naskh Arabic", serif;
+  font-weight: 700;
+  fill: var(--color-green-primary);
 }
 
 /*
