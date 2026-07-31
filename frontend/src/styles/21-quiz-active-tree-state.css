@@ -160,3 +160,63 @@
   display: block;
   overflow: visible;
 }
+
+/*
+ The unconditional .learning-panels block above wins over the media queries
+ at the top of this file (same specificity, later in file), so the stacked
+ layouts must be restated below it.
+*/
+
+@media (max-width: 1200px) {
+  .learning-panels {
+    grid-template-columns: minmax(0, 1fr);
+    height: auto;
+    min-height: calc(100vh - 40px);
+    gap: 18px;
+  }
+}
+
+/* Phone: search + tree as the first screen, companion panel scrolls below */
+@media (max-width: 700px) {
+  .learning-panels {
+    min-height: 0;
+    gap: 14px;
+  }
+
+  .learning-results-panel {
+    height: auto;
+    min-height: 0;
+    padding-top: 58px;
+  }
+
+  /* The logo can't sit beside the full-width search bar — give it its own
+     centered strip above it. left/right + margin (not transform) so the
+     focus-visible transform doesn't undo the centering. */
+  .learning-logo-link {
+    top: 14px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 58px;
+  }
+
+  /* Hug the artwork instead of a fixed-height stage — the SVG viewBox is
+     1470x1172, so this removes the dead space above and below the tree. */
+  .tree-stage {
+    height: auto;
+    aspect-ratio: 1470 / 1172;
+    max-height: 48vh;
+    margin: 0 auto;
+  }
+
+  .learning-companion-panel {
+    height: auto;
+    min-height: 0;
+  }
+
+  .tree-quiz-overlay {
+    left: 14px;
+    bottom: 14px;
+    max-width: 230px;
+  }
+}
