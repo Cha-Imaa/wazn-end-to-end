@@ -646,6 +646,7 @@ export default function WordTree({
   onLeafClick,
   searchTerm = "",
   isQuizActive = false,
+  notFoundReason = "",
 }) {
   const containerRef = useRef(null);
   const [svgMarkup, setSvgMarkup] = useState("");
@@ -779,6 +780,25 @@ export default function WordTree({
   ]);
 
   if (!hasTreeData) {
+    // A dead backend is not an unknown word — telling users their word
+    // doesn't exist when the server is down teaches them a falsehood.
+    if (notFoundReason === "backend_error") {
+      return (
+        <div className="word-tree-empty word-tree-empty--offline" role="status">
+          <p className="word-tree-empty-title">We can’t reach the Wazn server</p>
+
+          <p className="word-tree-empty-copy">
+            Your word wasn’t the problem — the connection failed before we
+            could look it up.
+          </p>
+
+          <p className="word-tree-empty-hint">
+            Check that you’re online, then search again.
+          </p>
+        </div>
+      );
+    }
+
     return (
       <div className="word-tree-empty word-tree-empty--unknown" role="status">
         <p className="word-tree-empty-title">This word has not bloomed yet</p>

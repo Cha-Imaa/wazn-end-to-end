@@ -210,6 +210,7 @@ export default function LearningInterface({
               onLeafClick={handleLeafClick}
               searchTerm={query}
               isQuizActive={companionTab === "quiz"}
+              notFoundReason={isNotFound ? learningResult?.reason || "" : ""}
             />
 
             {companionTab === "quiz" && hasTree && (
