@@ -22,7 +22,7 @@
 .leaf-left {
   left: -12px;
   bottom: -60px;
-  width: clamp(190px, 10.5vw, 240px);
+  width: clamp(165px, 9vw, 205px);
   transform: rotate(0deg);
   transform-origin: bottom right;
 }
@@ -30,7 +30,7 @@
 .leaf-right {
   right: -12px;
   bottom: -60px;
-  width: clamp(190px, 10.5vw, 240px);
+  width: clamp(165px, 9vw, 205px);
   transform: rotate(0deg);
   transform-origin: bottom right;
 }
