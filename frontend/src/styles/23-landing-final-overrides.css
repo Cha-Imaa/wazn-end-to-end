@@ -91,8 +91,8 @@
 }
 
 .app-shell-landing .search-row {
-  min-height: 52px;
-  padding: 5px;
+  min-height: 56px;
+  padding: 6px;
   border-width: 1.5px;
   border-radius: 13px;
 }
@@ -129,8 +129,19 @@
 }
 
 .app-shell-landing .examples-title-row {
-  grid-template-columns: 128px auto 128px;
-  gap: 20px;
+  grid-template-columns: 150px auto 150px;
+  gap: 24px;
+}
+
+.app-shell-landing .examples-title-row::before,
+.app-shell-landing .examples-title-row::after {
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-gold),
+    transparent
+  );
 }
 
 .app-shell-landing .examples-sprout {
@@ -257,21 +268,21 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 1560px;
 }
 
 .app-shell-landing .main {
-  padding-top: clamp(36px, 4.5vh, 76px);
+  padding-top: clamp(36px, 4.6vh, 84px);
 }
 
-/* Rhythm: 12-16px between related text, 32-48px between components,
-   56-72px between major sections (guide_changes.md) */
+/* Proportions matched to the landing inspiration mockup:
+   compact hero, a wide clear band around "Try these examples",
+   tall roomy cards, quiet well-separated footer. */
 .app-shell-landing .hero-title {
   margin-bottom: 10px;
 }
 
 .app-shell-landing .hero {
-  margin-bottom: clamp(42px, 5vh, 62px);
+  margin-bottom: clamp(40px, 4.9vh, 60px);
 }
 
 .app-shell-landing .search-area {
@@ -279,11 +290,12 @@
 }
 
 .app-shell-landing .examples-section {
-  margin-top: clamp(50px, 6vh, 74px);
+  width: min(900px, 100%);
+  margin-top: clamp(52px, 7vh, 92px);
 }
 
 .app-shell-landing .footer {
-  margin: clamp(32px, 4vh, 52px) auto clamp(22px, 2.8vh, 34px);
+  margin: clamp(38px, 5.6vh, 68px) auto clamp(24px, 3vh, 40px);
   font-size: 15px;
 }
 
@@ -293,27 +305,28 @@
 
 /* The sprig sits clearly below the heading, the cards clearly below it */
 .app-shell-landing .examples-sprout {
-  margin: 12px auto clamp(28px, 3.2vh, 40px);
+  margin: 14px auto clamp(32px, 4.2vh, 56px);
 }
 
-/* Cards: slightly narrower with wider gutters, roomier inside */
+/* Cards: a wide row of tall cards with generous gutters, like the mockup */
 .app-shell-landing .examples-grid {
+  width: min(900px, 100%);
   gap: clamp(30px, 2.8vw, 40px);
 }
 
 .app-shell-landing .example-card {
-  min-height: clamp(162px, 18.2vh, 200px);
-  padding: 26px 22px 22px;
+  min-height: clamp(172px, 21.4vh, 232px);
+  padding: 28px 22px 24px;
 }
 
 .app-shell-landing .example-card-icon,
 .app-shell-landing .example-card img {
-  height: clamp(42px, 3.2vw, 54px);
-  margin-bottom: 16px;
+  height: clamp(52px, 3.9vw, 72px);
+  margin-bottom: 18px;
 }
 
 .app-shell-landing .example-arabic {
-  font-size: clamp(26px, 1.6vw, 31px);
+  font-size: clamp(29px, 1.85vw, 36px);
   margin-bottom: 10px;
 }
 
@@ -325,6 +338,34 @@
 .app-shell-landing .example-card::after {
   right: -16px;
   bottom: -10px;
+}
+
+/* Mid-height desktops (~850-940px tall): keep the mockup's rhythm but
+   slightly condensed so the page still fits one viewport */
+@media (max-height: 940px) {
+  .app-shell-landing .main {
+    padding-top: clamp(32px, 4vh, 44px);
+  }
+
+  .app-shell-landing .hero {
+    margin-bottom: clamp(36px, 4.4vh, 48px);
+  }
+
+  .app-shell-landing .examples-section {
+    margin-top: clamp(46px, 6vh, 56px);
+  }
+
+  .app-shell-landing .examples-sprout {
+    margin-bottom: clamp(26px, 3.4vh, 32px);
+  }
+
+  .app-shell-landing .example-card {
+    min-height: clamp(168px, 20vh, 182px);
+  }
+
+  .app-shell-landing .footer {
+    margin: clamp(32px, 4.6vh, 44px) auto clamp(22px, 2.8vh, 28px);
+  }
 }
 
 /* Shorter laptops (1366x768 and down): tighten zone gaps, keep type size */
@@ -346,7 +387,7 @@
   }
 
   .app-shell-landing .example-card {
-    min-height: 150px;
+    min-height: 160px;
   }
 
   .app-shell-landing .footer {

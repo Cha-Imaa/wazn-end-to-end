@@ -20,17 +20,17 @@
 }
 
 .leaf-left {
-  left: -18px;
-  bottom: -44px;
-  width: clamp(170px, 10vw, 220px);
+  left: -12px;
+  bottom: 8px;
+  width: clamp(240px, 13.5vw, 310px);
   transform: rotate(0deg);
   transform-origin: bottom right;
 }
 
 .leaf-right {
-  right: -18px;
-  bottom: -44px;
-  width: clamp(170px, 10vw, 220px);
+  right: -12px;
+  bottom: 8px;
+  width: clamp(240px, 13.5vw, 310px);
   transform: rotate(0deg);
   transform-origin: bottom right;
 }
