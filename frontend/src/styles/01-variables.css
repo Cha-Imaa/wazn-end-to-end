@@ -40,6 +40,8 @@
   --color-gold: #c1a04f;
   --color-gold-ring: rgba(184, 154, 79, 0.24);
   --shadow-gold-soft: rgba(184, 154, 79, 0.16);
+  --color-hero-title: #1e2201;
+  --color-footer-text: #31552f;
 }
 
 * {

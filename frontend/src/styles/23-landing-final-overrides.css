@@ -245,3 +245,55 @@
   opacity: 0.54;
 }
 
+/* =========================
+   Landing single-screen composition (§2.6)
+   The shell is a flex column that centers .main + footer as one
+   composition: the footer stays tight under the cards, and leftover
+   height becomes balanced top/bottom breathing room instead of a
+   dead band under the footer.
+   ========================= */
+
+.app-shell-landing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.app-shell-landing .main {
+  padding-top: clamp(20px, 2.6vh, 56px);
+}
+
+.app-shell-landing .footer {
+  margin: clamp(28px, 3.6vh, 48px) auto clamp(22px, 2.8vh, 34px);
+}
+
+/* The examples heading introduces the cards — keep the sprig tight to both */
+.app-shell-landing .examples-sprout {
+  margin: 8px auto clamp(24px, 3vh, 38px);
+}
+
+/* Shorter laptops (1366x768 and down): tighten zone gaps, keep type size */
+@media (max-height: 830px) {
+  .app-shell-landing .hero {
+    margin-bottom: clamp(24px, 3.2vh, 32px);
+  }
+
+  .app-shell-landing .examples-section {
+    margin-top: clamp(30px, 4vh, 40px);
+  }
+
+  .app-shell-landing .examples-sprout {
+    margin-bottom: 22px;
+  }
+
+  .app-shell-landing .footer {
+    margin: 24px auto 20px;
+  }
+}
+
+@media (max-width: 700px) {
+  .app-shell-landing .main {
+    padding-top: 44px;
+  }
+}
+

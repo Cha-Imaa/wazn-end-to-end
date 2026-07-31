@@ -211,7 +211,7 @@ button.example-card {
   font-family: "Inter", sans-serif;
   font-size: 16px;
   font-weight: 500;
-  color: #31552f;
+  color: var(--color-footer-text);
   pointer-events: none;
   opacity: 1;
 }

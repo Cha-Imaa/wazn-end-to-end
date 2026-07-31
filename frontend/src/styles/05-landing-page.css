@@ -106,7 +106,7 @@
   font-family: "EB Garamond", serif;
   font-size: clamp(21px, 1.35vw, 27px);
   line-height: 1.2;
-  color: #1e2201;
+  color: var(--color-hero-title);
   font-weight: 500;
 }
 
