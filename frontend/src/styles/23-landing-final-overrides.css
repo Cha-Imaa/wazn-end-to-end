@@ -386,7 +386,7 @@
 /* Shorter laptops (1366x768 and down): tighten zone gaps, keep type size */
 @media (max-height: 830px) {
   .app-shell-landing .main {
-    padding-top: clamp(28px, 3.6vh, 40px);
+    padding-top: clamp(64px, 10.5vh, 92px);
   }
 
   .app-shell-landing .hero {
@@ -394,7 +394,7 @@
   }
 
   .app-shell-landing .examples-section {
-    margin-top: clamp(30px, 4vh, 40px);
+    margin-top: clamp(70px, 11vh, 96px);
   }
 
   .app-shell-landing .examples-sprout {
