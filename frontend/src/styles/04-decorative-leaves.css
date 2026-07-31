@@ -13,24 +13,24 @@
 
 .leaf {
   position: absolute;
-  opacity: 0.34;
+  opacity: 0.42;
   pointer-events: none;
   user-select: none;
   z-index: 0;
 }
 
 .leaf-left {
-  left: -50px;
-  bottom: -100px;
-  width: clamp(240px, 14.5vw, 330px);
+  left: -18px;
+  bottom: -44px;
+  width: clamp(200px, 12vw, 280px);
   transform: rotate(0deg);
   transform-origin: bottom right;
 }
 
 .leaf-right {
-  right: -50px;
-  bottom: -100px;
-  width: clamp(240px, 14.5vw, 330px);
+  right: -18px;
+  bottom: -44px;
+  width: clamp(200px, 12vw, 280px);
   transform: rotate(0deg);
   transform-origin: bottom right;
 }
