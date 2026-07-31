@@ -278,7 +278,7 @@
    full size; only the content shrinks. */
 .app-shell-landing .main,
 .app-shell-landing .footer {
-  zoom: 0.9;
+  zoom: 0.87;
 }
 
 .app-shell-landing .main {
