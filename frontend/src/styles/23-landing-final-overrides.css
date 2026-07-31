@@ -306,7 +306,7 @@
 
 .app-shell-landing .examples-section {
   width: min(760px, 100%);
-  margin-top: clamp(52px, 7vh, 92px);
+  margin-top: clamp(66px, 8.6vh, 112px);
 }
 
 .app-shell-landing .footer {
@@ -367,7 +367,7 @@
   }
 
   .app-shell-landing .examples-section {
-    margin-top: clamp(46px, 6vh, 56px);
+    margin-top: clamp(58px, 7.6vh, 70px);
   }
 
   .app-shell-landing .examples-sprout {
