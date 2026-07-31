@@ -242,6 +242,23 @@ function addRootText(svgElement, activeTree) {
   rootLabelGroup.appendChild(rootTextGroup);
 }
 
+function ensureLeafLift(leafGroup, shapeElement, contentGroup) {
+  if (!shapeElement || !contentGroup) return;
+
+  // Idempotent: populateSvgTree re-runs on the same DOM (e.g. selection change).
+  if (shapeElement.parentNode?.classList?.contains("big-leaf-lift")) return;
+  if (shapeElement.parentNode !== leafGroup) return;
+
+  const lift = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  lift.setAttribute("class", "big-leaf-lift");
+
+  // The branch connector (and hit area) stay outside the wrapper so they
+  // never move on hover — only the leaf shape and its text lift.
+  leafGroup.insertBefore(lift, shapeElement);
+  lift.appendChild(shapeElement);
+  lift.appendChild(contentGroup);
+}
+
 function setupLeafInteraction({
   leafGroup,
   hitArea,
@@ -439,6 +456,12 @@ function populateSvgTree({
       leafNumber,
       index
     );
+    const shapeElement = queryLeafElement(
+      svgElement,
+      "BigLeafShape",
+      leafNumber,
+      index
+    );
 
     if (!leafGroup) continue;
 
@@ -446,6 +469,8 @@ function populateSvgTree({
       hideUnusedLeaf(leafGroup);
       continue;
     }
+
+    ensureLeafLift(leafGroup, shapeElement, contentGroup);
 
     leafGroup.style.visibility = "visible";
     leafGroup.style.opacity = "1";

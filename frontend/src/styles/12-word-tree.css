@@ -96,11 +96,16 @@
    =========================
 */
 
-.word-tree .big-leaf-node [id^="BigLeafShape_"] {
+/* The lift wrapper carries the hover transform so shape AND text travel
+   together; the branch connector stays outside it and never moves. */
+.word-tree .big-leaf-node .big-leaf-lift {
   transform-box: fill-box;
   transform-origin: center;
+  transition: transform 180ms ease;
+}
+
+.word-tree .big-leaf-node [id^="BigLeafShape_"] {
   transition:
-    transform 180ms ease,
     filter 180ms ease,
     stroke 180ms ease,
     stroke-width 180ms ease;
@@ -120,9 +125,13 @@
 }
 
 /* Related leaves: hover / keyboard focus */
+.word-tree .big-leaf-node:hover .big-leaf-lift,
+.word-tree .big-leaf-node:focus-visible .big-leaf-lift {
+  transform: translateY(-3px) scale(1.025);
+}
+
 .word-tree .big-leaf-node:hover [id^="BigLeafShape_"],
 .word-tree .big-leaf-node:focus-visible [id^="BigLeafShape_"] {
-  transform: translateY(-3px) scale(1.025);
   stroke: var(--tree-related-hover-color);
   stroke-width: 3;
   filter:
@@ -151,9 +160,13 @@
     drop-shadow(0 0 5px rgba(var(--tree-related-hover-rgb), 0.14));
 }
 
+.word-tree .big-leaf-node--selected:hover .big-leaf-lift,
+.word-tree .big-leaf-node--selected:focus-visible .big-leaf-lift {
+  transform: translateY(-4px) scale(1.035);
+}
+
 .word-tree .big-leaf-node--selected:hover [id^="BigLeafShape_"],
 .word-tree .big-leaf-node--selected:focus-visible [id^="BigLeafShape_"] {
-  transform: translateY(-4px) scale(1.035);
   filter:
     drop-shadow(0 12px 18px rgba(var(--tree-related-hover-rgb), 0.26))
     drop-shadow(0 0 8px rgba(var(--tree-related-hover-rgb), 0.2));
@@ -175,11 +188,11 @@
     drop-shadow(0 0 5px rgba(var(--tree-origin-hover-rgb), 0.12));
 }
 
+/* Origin lift comes from the generic .big-leaf-node:hover .big-leaf-lift rule */
 .word-tree #BigLeaf_01:hover [id^="BigLeafShape_"],
 .word-tree #BigLeaf_01:focus-visible [id^="BigLeafShape_"],
 .word-tree #BigLeaf_1:hover [id^="BigLeafShape_"],
 .word-tree #BigLeaf_1:focus-visible [id^="BigLeafShape_"] {
-  transform: translateY(-3px) scale(1.025);
   stroke: var(--tree-origin-hover-color);
   stroke-width: 3;
   filter:
@@ -286,6 +299,10 @@
 }
 
 /* Remove hover/selected emphasis during quiz */
+.word-tree.word-tree--quiz-active .big-leaf-lift {
+  transform: none !important;
+}
+
 .word-tree.word-tree--quiz-active [id^="BigLeafShape_"] {
   transform: none !important;
   filter: none !important;
