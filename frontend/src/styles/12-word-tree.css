@@ -13,7 +13,6 @@
   --tree-origin-hover-rgb: 192, 122, 84;
 
   --tree-text-color: var(--color-text-black);
-  --tree-root-text-color: var(--color-panel-surface);
 
   width: 100%;
   height: 100%;
@@ -228,18 +227,30 @@
   fill: var(--tree-text-color);
 }
 
+.tree-root-label {
+  pointer-events: none;
+}
+
 .tree-root-arabic {
   font-family: "Amiri", "Noto Naskh Arabic", serif;
   font-weight: 700;
-  letter-spacing: -0.08em;
-  fill: var(--tree-root-text-color);
+  letter-spacing: 0.04em;
+  fill: rgba(255, 248, 225, 0.98);
+  paint-order: stroke fill;
+  stroke: rgba(80, 54, 39, 0.28);
+  stroke-width: 2px;
+  stroke-linejoin: round;
 }
 
 .tree-root-transliteration {
   font-family: "EB Garamond", "Inter", sans-serif;
   font-weight: 700;
   letter-spacing: 0.18em;
-  fill: var(--tree-root-text-color);
+  fill: rgba(255, 248, 225, 0.86);
+  paint-order: stroke fill;
+  stroke: rgba(80, 54, 39, 0.24);
+  stroke-width: 1.4px;
+  stroke-linejoin: round;
 }
 
 /*
@@ -313,30 +324,4 @@
 /* Disable leaf click targets during quiz */
 .word-tree.word-tree--quiz-active [id^="BigLeafHitArea_"] {
   pointer-events: none !important;
-}
-
-.tree-root-label {
-  pointer-events: none;
-}
-
-.tree-root-arabic {
-  font-family: "Amiri", "Noto Naskh Arabic", serif;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  fill: rgba(255, 248, 225, 0.98);
-  paint-order: stroke fill;
-  stroke: rgba(80, 54, 39, 0.28);
-  stroke-width: 2px;
-  stroke-linejoin: round;
-}
-
-.tree-root-transliteration {
-  font-family: "EB Garamond", "Inter", sans-serif;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  fill: rgba(255, 248, 225, 0.86);
-  paint-order: stroke fill;
-  stroke: rgba(80, 54, 39, 0.24);
-  stroke-width: 1.4px;
-  stroke-linejoin: round;
 }
