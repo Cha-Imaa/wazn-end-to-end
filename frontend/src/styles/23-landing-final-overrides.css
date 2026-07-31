@@ -91,32 +91,32 @@
 }
 
 .app-shell-landing .search-row {
-  min-height: 56px;
-  padding: 6px;
+  min-height: 50px;
+  padding: 5px;
   border-width: 1.5px;
   border-radius: 13px;
 }
 
 .app-shell-landing .search-input {
-  height: 40px;
-  font-size: 21px;
+  height: 36px;
+  font-size: 19px;
 }
 
 .app-shell-landing .search-input::placeholder {
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .app-shell-landing .keyboard-toggle,
 .app-shell-landing .find-root-button {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
 }
 
 .app-shell-landing .keyboard-icon-img,
 .app-shell-landing .search-action-icon-img {
-  width: 19px;
-  height: 19px;
+  width: 18px;
+  height: 18px;
 }
 
 .app-shell-landing .examples-section {
@@ -268,10 +268,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  /* Match the inspiration's panel aspect (~1.55:1 width to height)
+     instead of stretching across ultrawide windows */
+  max-width: calc((100vh - (var(--page-padding-y) * 2)) * 1.55);
 }
 
 .app-shell-landing .main {
-  padding-top: clamp(36px, 4.6vh, 84px);
+  padding-top: clamp(56px, 8vh, 120px);
 }
 
 /* Proportions matched to the landing inspiration mockup:
@@ -286,11 +289,11 @@
 }
 
 .app-shell-landing .search-area {
-  width: min(730px, 100%);
+  width: min(640px, 100%);
 }
 
 .app-shell-landing .examples-section {
-  width: min(900px, 100%);
+  width: min(760px, 100%);
   margin-top: clamp(52px, 7vh, 92px);
 }
 
@@ -308,30 +311,30 @@
   margin: 14px auto clamp(32px, 4.2vh, 56px);
 }
 
-/* Cards: a wide row of tall cards with generous gutters, like the mockup */
+/* Cards: a compact curated row with clear gutters */
 .app-shell-landing .examples-grid {
-  width: min(900px, 100%);
-  gap: clamp(30px, 2.8vw, 40px);
+  width: min(760px, 100%);
+  gap: clamp(26px, 2.2vw, 34px);
 }
 
 .app-shell-landing .example-card {
-  min-height: clamp(172px, 21.4vh, 232px);
-  padding: 28px 22px 24px;
+  min-height: clamp(150px, 17vh, 176px);
+  padding: 20px 16px 18px;
 }
 
 .app-shell-landing .example-card-icon,
 .app-shell-landing .example-card img {
-  height: clamp(52px, 3.9vw, 72px);
-  margin-bottom: 18px;
+  height: clamp(40px, 3vw, 52px);
+  margin-bottom: 14px;
 }
 
 .app-shell-landing .example-arabic {
-  font-size: clamp(29px, 1.85vw, 36px);
-  margin-bottom: 10px;
+  font-size: clamp(26px, 1.55vw, 30px);
+  margin-bottom: 8px;
 }
 
 .app-shell-landing .example-english {
-  padding-bottom: 12px;
+  padding-bottom: 11px;
 }
 
 /* Corner leaf farther into the corner so it doesn't crowd the text */
@@ -344,7 +347,7 @@
    slightly condensed so the page still fits one viewport */
 @media (max-height: 940px) {
   .app-shell-landing .main {
-    padding-top: clamp(32px, 4vh, 44px);
+    padding-top: clamp(48px, 6.5vh, 80px);
   }
 
   .app-shell-landing .hero {
@@ -360,7 +363,7 @@
   }
 
   .app-shell-landing .example-card {
-    min-height: clamp(168px, 20vh, 182px);
+    min-height: clamp(146px, 16.5vh, 160px);
   }
 
   .app-shell-landing .footer {
@@ -387,7 +390,7 @@
   }
 
   .app-shell-landing .example-card {
-    min-height: 160px;
+    min-height: 140px;
   }
 
   .app-shell-landing .footer {
