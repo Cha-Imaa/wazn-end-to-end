@@ -3,7 +3,10 @@ import QuizOption from "./QuizOption.jsx";
 import QuizFeedbackCard from "./QuizFeedbackCard.jsx";
 import QuizComplete from "./QuizComplete.jsx";
 
-const OPTION_LETTERS = ["A", "B", "C", "D"];
+// Derived, not a lookup table — a 5-choice question must not render a blank letter.
+function getOptionLetter(index) {
+  return String.fromCharCode(65 + index);
+}
 
 function shuffleArray(items) {
   const shuffledItems = [...items];
@@ -36,6 +39,21 @@ export default function WordQuiz({ questions = [] }) {
   const [questionResults, setQuestionResults] = useState(
     Array(quizQuestions.length).fill("empty")
   );
+
+  // If the questions change without a remount (the parent's key currently
+  // forces one, but nothing here should depend on that), every piece of quiz
+  // state is stale — reset during render rather than trusting initializers.
+  const [seenQuestions, setSeenQuestions] = useState(quizQuestions);
+
+  if (seenQuestions !== quizQuestions) {
+    setSeenQuestions(quizQuestions);
+    setQuestionIndex(0);
+    setSelectedChoiceId("");
+    setSubmitted(false);
+    setScore(0);
+    setIsComplete(false);
+    setQuestionResults(Array(quizQuestions.length).fill("empty"));
+  }
 
   const currentQuestion = quizQuestions[questionIndex];
 
@@ -165,7 +183,7 @@ export default function WordQuiz({ questions = [] }) {
               return (
                 <QuizOption
                   key={`${currentQuestion.id}-${choice.id}`}
-                  letter={OPTION_LETTERS[index]}
+                  letter={getOptionLetter(index)}
                   text={choice.text}
                   isSelected={isSelected}
                   isCorrect={isCorrect}
