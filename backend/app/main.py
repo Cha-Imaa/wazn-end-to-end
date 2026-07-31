@@ -21,6 +21,9 @@ app.add_middleware(
         "http://127.0.0.1:3000",
         "http://localhost:5173",
         "http://127.0.0.1:5173",
+        # Dev machine's LAN address, so other devices on the same network
+        # can open the Vite dev server and still reach this backend.
+        "http://192.168.8.39:5173",
         "https://wazn-theta.vercel.app",
     ],
     # Vercel gives every preview deploy its own generated subdomain, so a branch
