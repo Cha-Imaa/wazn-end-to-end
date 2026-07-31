@@ -286,7 +286,7 @@
      leaving the footer pinned at the bottom of the shell */
   flex: 1;
   align-items: center;
-  padding-top: clamp(126px, 14.6vh, 162px);
+  padding-top: clamp(104px, 12.5vh, 140px);
 }
 
 /* Proportions matched to the landing inspiration mockup:
@@ -297,7 +297,7 @@
 }
 
 .app-shell-landing .hero {
-  margin-bottom: clamp(75px, 8.5vh, 95px);
+  margin-bottom: clamp(53px, 6.5vh, 73px);
 }
 
 .app-shell-landing .search-area {
@@ -359,11 +359,11 @@
    slightly condensed so the page still fits one viewport */
 @media (max-height: 940px) {
   .app-shell-landing .main {
-    padding-top: clamp(134px, 16.2vh, 166px);
+    padding-top: clamp(112px, 13.8vh, 144px);
   }
 
   .app-shell-landing .hero {
-    margin-bottom: clamp(71px, 8.3vh, 83px);
+    margin-bottom: clamp(49px, 5.9vh, 61px);
   }
 
   .app-shell-landing .examples-section {
@@ -386,11 +386,11 @@
 /* Shorter laptops (1366x768 and down): tighten zone gaps, keep type size */
 @media (max-height: 830px) {
   .app-shell-landing .main {
-    padding-top: clamp(64px, 10.5vh, 92px);
+    padding-top: clamp(42px, 7.5vh, 70px);
   }
 
   .app-shell-landing .hero {
-    margin-bottom: clamp(59px, 8vh, 68px);
+    margin-bottom: clamp(37px, 5vh, 46px);
   }
 
   .app-shell-landing .examples-section {
