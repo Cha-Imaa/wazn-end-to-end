@@ -417,13 +417,13 @@ function prepareTreeEntranceAnimation(svgElement) {
     );
   });
 
-  getOrderedSmallLeaves(svgElement).forEach((leaf, index) => {
-    setAnimationTiming(
-      leaf,
-      timing.smallLeaves.delay + index * timing.smallLeaves.stagger,
-      timing.smallLeaves.duration
-    );
-  });
+  // The last big leaf is the last thing to finish; ending the entering
+  // state any earlier snaps in-flight leaves to their final position.
+  return (
+    bigLeavesStartTime +
+    (BIG_LEAF_COUNT - 1) * timing.bigLeaves.stagger +
+    timing.bigLeaves.duration
+  );
 }
 
 function populateSvgTree({
@@ -434,7 +434,7 @@ function populateSvgTree({
   shouldAnimate,
 }) {
   const svgElement = container.querySelector("svg");
-  if (!svgElement) return;
+  if (!svgElement) return null;
 
   prepareSvg(svgElement);
   clearGeneratedText(svgElement);
@@ -494,8 +494,10 @@ function populateSvgTree({
   addRootText(svgElement, activeTree);
 
   if (shouldAnimate) {
-    prepareTreeEntranceAnimation(svgElement);
+    return prepareTreeEntranceAnimation(svgElement);
   }
+
+  return null;
 }
 
 export default function WordTree({
@@ -510,6 +512,12 @@ export default function WordTree({
   const [loadError, setLoadError] = useState(false);
   const [isTreeEntering, setIsTreeEntering] = useState(false);
 
+  // Parents recreate onLeafClick every render; reading it through a ref keeps
+  // those re-renders from re-running the populate effect mid-entrance, which
+  // would tear down the generated text and replay its animation.
+  const onLeafClickRef = useRef(onLeafClick);
+  onLeafClickRef.current = onLeafClick;
+
   const hasTreeData = Boolean(activeTree?.leaves?.length);
 
   const treeKey = useMemo(() => {
@@ -520,14 +528,6 @@ export default function WordTree({
     if (!hasTreeData) return;
 
     setIsTreeEntering(true);
-
-    const timeoutId = window.setTimeout(() => {
-      setIsTreeEntering(false);
-    }, TREE_ENTRANCE_ANIMATION.totalDuration);
-
-    return () => {
-      window.clearTimeout(timeoutId);
-    };
   }, [treeKey, hasTreeData]);
 
   useEffect(() => {
@@ -564,26 +564,37 @@ export default function WordTree({
   useEffect(() => {
     if (!svgMarkup || !containerRef.current || !hasTreeData) return;
 
+    let timeoutId = null;
+
     const frameId = requestAnimationFrame(() => {
       if (!containerRef.current) return;
 
-      populateSvgTree({
+      const entranceFinishTime = populateSvgTree({
         container: containerRef.current,
         activeTree,
         selectedNode,
-        onLeafClick,
+        onLeafClick: (node) => onLeafClickRef.current?.(node),
         shouldAnimate: isTreeEntering,
       });
+
+      if (entranceFinishTime != null) {
+        timeoutId = window.setTimeout(() => {
+          setIsTreeEntering(false);
+        }, entranceFinishTime + TREE_ENTRANCE_ANIMATION.totalDurationBuffer);
+      }
     });
 
     return () => {
       cancelAnimationFrame(frameId);
+
+      if (timeoutId != null) {
+        window.clearTimeout(timeoutId);
+      }
     };
   }, [
     svgMarkup,
     activeTree,
     selectedNode,
-    onLeafClick,
     hasTreeData,
     isTreeEntering,
   ]);
