@@ -282,7 +282,11 @@
 }
 
 .app-shell-landing .main {
-  padding-top: clamp(56px, 8vh, 120px);
+  /* Take the leftover height and center the content column in it,
+     leaving the footer pinned at the bottom of the shell */
+  flex: 1;
+  align-items: center;
+  padding-top: clamp(40px, 5vh, 76px);
 }
 
 /* Proportions matched to the landing inspiration mockup:
@@ -306,7 +310,7 @@
 }
 
 .app-shell-landing .footer {
-  margin: clamp(38px, 5.6vh, 68px) auto clamp(24px, 3vh, 40px);
+  margin: clamp(20px, 2.6vh, 32px) auto clamp(26px, 3.4vh, 42px);
   font-size: 15px;
 }
 
@@ -375,7 +379,7 @@
   }
 
   .app-shell-landing .footer {
-    margin: clamp(32px, 4.6vh, 44px) auto clamp(22px, 2.8vh, 28px);
+    margin: clamp(16px, 2.2vh, 26px) auto clamp(22px, 2.8vh, 30px);
   }
 }
 
@@ -402,7 +406,7 @@
   }
 
   .app-shell-landing .footer {
-    margin: 24px auto 20px;
+    margin: 16px auto 20px;
   }
 }
 
