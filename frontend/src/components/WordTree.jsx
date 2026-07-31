@@ -417,8 +417,10 @@ function prepareTreeEntranceAnimation(svgElement) {
     );
   });
 
-  // The last big leaf is the last thing to finish; ending the entering
-  // state any earlier snaps in-flight leaves to their final position.
+  // The big leaves are the last track to finish. Report when the whole
+  // timeline ends so the caller can release the entering state only after
+  // every animation has reached its final keyframe — removing the class
+  // earlier cancels in-flight animations and makes the leaves snap.
   return (
     bigLeavesStartTime +
     (BIG_LEAF_COUNT - 1) * timing.bigLeaves.stagger +
@@ -434,7 +436,7 @@ function populateSvgTree({
   shouldAnimate,
 }) {
   const svgElement = container.querySelector("svg");
-  if (!svgElement) return null;
+  if (!svgElement) return;
 
   prepareSvg(svgElement);
   clearGeneratedText(svgElement);
@@ -510,13 +512,6 @@ export default function WordTree({
   const containerRef = useRef(null);
   const [svgMarkup, setSvgMarkup] = useState("");
   const [loadError, setLoadError] = useState(false);
-  const [isTreeEntering, setIsTreeEntering] = useState(false);
-
-  // Parents recreate onLeafClick every render; reading it through a ref keeps
-  // those re-renders from re-running the populate effect mid-entrance, which
-  // would tear down the generated text and replay its animation.
-  const onLeafClickRef = useRef(onLeafClick);
-  onLeafClickRef.current = onLeafClick;
 
   const hasTreeData = Boolean(activeTree?.leaves?.length);
 
@@ -524,11 +519,25 @@ export default function WordTree({
     return activeTree?.trunk?.root_id || activeTree?.trunk?.arabic || "word-tree";
   }, [activeTree]);
 
-  useEffect(() => {
-    if (!hasTreeData) return;
+  // React decides whether to re-apply dangerouslySetInnerHTML by comparing
+  // this object between renders. It must stay referentially stable: a fresh
+  // `{ __html }` literal on every render makes React re-set the innerHTML on
+  // any re-render of the container (e.g. the entering→ready class swap),
+  // which wipes everything populateSvgTree wrote into the SVG.
+  const svgHtml = useMemo(() => ({ __html: svgMarkup }), [svgMarkup]);
 
-    setIsTreeEntering(true);
-  }, [treeKey, hasTreeData]);
+  const [isTreeEntering, setIsTreeEntering] = useState(hasTreeData);
+  const [enteringTreeKey, setEnteringTreeKey] = useState(treeKey);
+
+  // Restart the entrance animation when a different tree arrives, adjusting
+  // state during render instead of in an effect.
+  if (enteringTreeKey !== treeKey) {
+    setEnteringTreeKey(treeKey);
+
+    if (hasTreeData) {
+      setIsTreeEntering(true);
+    }
+  }
 
   useEffect(() => {
     let isMounted = true;
@@ -561,42 +570,74 @@ export default function WordTree({
     };
   }, []);
 
+  // Which tree the SVG was last populated (and animated) for. Deciding
+  // "should this run animate" from this ref instead of isTreeEntering keeps
+  // the entering→ready flip out of the populate effect's dependencies: the
+  // flip must only swap the container class. Re-running the populate pass at
+  // that moment forces layout and churns the SVG DOM, which interrupts an
+  // in-flight hover transition and makes the hovered leaf visibly dip.
+  const animatedTreeKeyRef = useRef(null);
+
+  // Absolute time at which the current entrance ends. Kept in a ref so a
+  // mid-entrance re-run of the populate effect (whose cleanup clears the
+  // pending timeout) can reschedule the remaining wait instead of losing it.
+  const entranceDeadlineRef = useRef(null);
+
   useEffect(() => {
     if (!svgMarkup || !containerRef.current || !hasTreeData) return;
 
-    let timeoutId = null;
+    let entranceTimeoutId = null;
 
     const frameId = requestAnimationFrame(() => {
       if (!containerRef.current) return;
 
-      const entranceFinishTime = populateSvgTree({
+      const shouldAnimate = animatedTreeKeyRef.current !== treeKey;
+      animatedTreeKeyRef.current = treeKey;
+
+      const entranceEndTime = populateSvgTree({
         container: containerRef.current,
         activeTree,
         selectedNode,
-        onLeafClick: (node) => onLeafClickRef.current?.(node),
-        shouldAnimate: isTreeEntering,
+        onLeafClick,
+        shouldAnimate,
       });
 
-      if (entranceFinishTime != null) {
-        timeoutId = window.setTimeout(() => {
+      // Release the entering state only once the slowest animation track is
+      // done; ending it early cancels in-flight animations and the tree jumps.
+      if (entranceEndTime != null) {
+        entranceDeadlineRef.current =
+          performance.now() +
+          entranceEndTime +
+          TREE_ENTRANCE_ANIMATION.totalDurationBuffer;
+      }
+
+      if (entranceDeadlineRef.current != null) {
+        const remaining = Math.max(
+          0,
+          entranceDeadlineRef.current - performance.now()
+        );
+
+        entranceTimeoutId = window.setTimeout(() => {
+          entranceDeadlineRef.current = null;
           setIsTreeEntering(false);
-        }, entranceFinishTime + TREE_ENTRANCE_ANIMATION.totalDurationBuffer);
+        }, remaining);
       }
     });
 
     return () => {
       cancelAnimationFrame(frameId);
 
-      if (timeoutId != null) {
-        window.clearTimeout(timeoutId);
+      if (entranceTimeoutId !== null) {
+        window.clearTimeout(entranceTimeoutId);
       }
     };
   }, [
     svgMarkup,
     activeTree,
     selectedNode,
+    onLeafClick,
     hasTreeData,
-    isTreeEntering,
+    treeKey,
   ]);
 
   if (!hasTreeData) {
@@ -637,7 +678,7 @@ export default function WordTree({
       className={`word-tree ${
         isQuizActive ? "word-tree--quiz-active" : ""
       } ${isTreeEntering ? "word-tree--entering" : "word-tree--ready"}`}
-      dangerouslySetInnerHTML={{ __html: svgMarkup }}
+      dangerouslySetInnerHTML={svgHtml}
     />
   );
 }

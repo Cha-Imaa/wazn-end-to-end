@@ -1,7 +1,5 @@
 export const TREE_ENTRANCE_ANIMATION = {
-  // Slack after the computed finish time before the entering state ends,
-  // so the class swap never lands while the last leaf is still painting.
-  totalDurationBuffer: 150,
+  totalDurationBuffer: 900,
 
   ground: {
     delay: 0,
