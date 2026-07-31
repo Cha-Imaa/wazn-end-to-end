@@ -120,6 +120,11 @@ export default function LearningInterface({
     onSearch(query);
   }
 
+  function handleTryAnotherWord() {
+    setQuery("");
+    inputRef?.current?.focus();
+  }
+
   function handleLeafClick(node) {
     setCompanionTab("details");
 
@@ -211,6 +216,7 @@ export default function LearningInterface({
               searchTerm={query}
               isQuizActive={companionTab === "quiz"}
               notFoundReason={isNotFound ? learningResult?.reason || "" : ""}
+              onTryAnotherWord={handleTryAnotherWord}
             />
 
             {companionTab === "quiz" && hasTree && (
@@ -299,10 +305,18 @@ export default function LearningInterface({
 
           <div className="companion-panel-body">
             {isNotFound && (
-              <div className="companion-empty-state">
+              <div className="companion-empty-state companion-empty-state--not-found">
+                <img
+                  className="companion-empty-illustration"
+                  src="/assets/decor/leaf-rightside.png"
+                  alt=""
+                  aria-hidden="true"
+                />
                 <p className="companion-empty-title">Nothing to explore yet</p>
+                <div className="companion-empty-divider" aria-hidden="true" />
                 <p className="companion-empty-text">
-                  Search for another word to see its root, pattern, family, and quiz.
+                  When WAZN finds a word, its root, pattern, family, quiz, and
+                  insights will appear here.
                 </p>
               </div>
             )}

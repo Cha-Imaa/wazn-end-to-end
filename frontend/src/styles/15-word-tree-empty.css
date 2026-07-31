@@ -1,51 +1,160 @@
 /*
  =========================
-   Empty tree state
+   Empty tree state — "word not found"
    =========================
 */
 
 .word-tree-empty--unknown {
-  width: min(520px, 90%);
+  width: min(560px, 94%);
   margin: auto;
-  padding: 28px 30px;
-  border: 1.5px dashed rgba(37, 89, 74, 0.28);
-  border-radius: 22px;
-  background: rgba(250, 248, 239, 0.42);
   text-align: center;
   color: var(--color-green-primary);
 }
 
+.word-tree-empty-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.word-tree-empty-illustration {
+  width: min(240px, 46vw);
+  height: auto;
+  /* the PNG carries wide transparent margins — reclaim them */
+  margin: -36px 0 -34px;
+  animation: empty-state-rise 700ms ease-out both;
+}
+
+@keyframes empty-state-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word-tree-empty-illustration,
+  .companion-empty-illustration {
+    animation: none;
+  }
+}
+
 .word-tree-empty-title {
-  margin: 0 0 8px;
+  margin: 0;
   font-family: "EB Garamond", serif;
   font-size: 28px;
   font-weight: 600;
   color: var(--color-green-primary);
 }
 
-.word-tree-empty-copy {
-  margin: 0;
-  font-family: "Inter", sans-serif;
-  font-size: 15px;
-  line-height: 1.55;
-  color: var(--color-text-black);
+.word-tree-empty-divider {
+  width: min(100%, 320px);
+  height: 22px;
+  margin: 8px 0 12px;
+  background-image: url("/assets/decor/panel-divider.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: min(100%, 300px) auto;
 }
 
-.word-tree-empty-copy strong {
-  color: var(--color-orange);
+.word-tree-empty-word {
+  margin: 0 0 10px;
+  font-family: "Amiri", serif;
+  font-size: 32px;
+  line-height: 1.4;
+  color: var(--color-terracotta);
+}
+
+.word-tree-empty-copy {
+  margin: 0;
+  max-width: 460px;
+  font-family: "Inter", sans-serif;
+  font-size: 13.5px;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--color-footer-text);
+}
+
+.word-tree-empty-copy .word-tree-empty-button-icon {
+  width: 14px;
+  height: 14px;
+  margin-right: 6px;
+  vertical-align: -2px;
+  opacity: 0.75;
+}
+
+.word-tree-empty-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.word-tree-empty-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 36px;
+  border-radius: 999px;
+  font-family: "Inter", sans-serif;
+  font-size: 15.5px;
   font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: box-shadow 160ms ease, transform 160ms ease,
+    filter 160ms ease;
+}
+
+.word-tree-empty-button-icon {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+
+.word-tree-empty-button--filled {
+  border: 1px solid var(--color-gold);
+  /* sage fill softened toward the cream canvas */
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 58%),
+    color-mix(in srgb, var(--color-olive-bg) 55%, var(--color-cream-bg));
+  color: var(--color-empty-cta-text);
+  box-shadow: 0 8px 18px var(--shadow-green-soft),
+    0 2px 6px var(--shadow-gold-soft);
+}
+
+.word-tree-empty-button--filled:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+  box-shadow: 0 10px 22px var(--shadow-green-soft),
+    0 0 0 4px var(--color-gold-ring);
 }
 
 .word-tree-empty-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   margin: 14px 0 0;
   font-family: "Inter", sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.5;
   color: var(--color-green-secondary);
 }
 
-.word-tree-empty-hint span {
-  font-family: "Amiri", serif;
-  font-size: 20px;
+.word-tree-empty-hint .word-tree-empty-button-icon {
+  width: 14px;
+  height: 14px;
+  opacity: 0.75;
 }
 
+/* Offline variant keeps the plain centred text layout */
+.word-tree-empty--offline {
+  width: min(520px, 90%);
+  margin: auto;
+  padding: 28px 30px;
+  text-align: center;
+  color: var(--color-green-primary);
+}

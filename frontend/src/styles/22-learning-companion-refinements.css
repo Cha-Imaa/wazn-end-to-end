@@ -116,3 +116,43 @@
   height: 16px;
 }
 
+
+/*
+ =========================
+   Companion "word not found" empty state
+   =========================
+*/
+
+.companion-empty-state--not-found {
+  justify-content: center;
+}
+
+.companion-empty-illustration {
+  width: min(330px, 86%);
+  height: auto;
+  /* the PNG carries wide transparent margins — reclaim them */
+  margin: -40px 0 -36px;
+  animation: empty-state-rise 700ms ease-out both;
+}
+
+.companion-empty-state--not-found .companion-empty-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.companion-empty-divider {
+  width: min(100%, 220px);
+  height: 20px;
+  margin: 8px 0 10px;
+  background-image: url("/assets/decor/panel-divider.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: min(100%, 200px) auto;
+}
+
+.companion-empty-state--not-found .companion-empty-text {
+  max-width: 300px;
+  font-style: italic;
+  color: var(--color-footer-text);
+}

@@ -640,6 +640,36 @@ function populateSvgTree({
   return null;
 }
 
+function EmptyStateArrowIcon() {
+  return (
+    <svg
+      className="word-tree-empty-button-icon"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M6 3.5L10.5 8L6 12.5" />
+    </svg>
+  );
+}
+
+function EmptyStateLeafIcon() {
+  return (
+    <svg
+      className="word-tree-empty-button-icon"
+      viewBox="0 0 16 16"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M13.5 2.5c-5.6.3-9.4 2.4-10.6 6-.6 1.9-.2 3.7.4 4.8l.9-.5c1.3-2.9 3.4-5 6.3-6.4-2.3 2-4 4.3-4.9 6.9 1.2.4 2.9.5 4.4-.3 2.9-1.5 4-5.6 3.5-10.5z" />
+    </svg>
+  );
+}
+
 export default function WordTree({
   activeTree,
   selectedNode,
@@ -647,6 +677,7 @@ export default function WordTree({
   searchTerm = "",
   isQuizActive = false,
   notFoundReason = "",
+  onTryAnotherWord,
 }) {
   const containerRef = useRef(null);
   const [svgMarkup, setSvgMarkup] = useState("");
@@ -801,22 +832,42 @@ export default function WordTree({
 
     return (
       <div className="word-tree-empty word-tree-empty--unknown" role="status">
-        <p className="word-tree-empty-title">This word has not bloomed yet</p>
+        <div className="word-tree-empty-body">
+          <img
+            className="word-tree-empty-illustration"
+            src="/assets/decor/young-flower.png"
+            alt=""
+            aria-hidden="true"
+          />
 
-        {searchTerm ? (
-          <p className="word-tree-empty-copy">
-            We could not grow a tree for{" "}
-            <strong dir="auto">“{searchTerm}”</strong>.
+          <p className="word-tree-empty-title">
+            We couldn’t grow this word yet
           </p>
-        ) : (
-          <p className="word-tree-empty-copy">
-            Search an Arabic word to grow its tree.
-          </p>
-        )}
 
-        <p className="word-tree-empty-hint">
-          Try another Arabic word, or check the spelling and diacritics.
-        </p>
+          <div className="word-tree-empty-divider" aria-hidden="true" />
+
+          {searchTerm && (
+            <p className="word-tree-empty-word" lang="ar" dir="rtl">
+              {searchTerm}
+            </p>
+          )}
+
+          <p className="word-tree-empty-copy">
+            <EmptyStateLeafIcon />
+            We couldn’t find it in WAZN — check the spelling and diacritics.
+          </p>
+
+          <div className="word-tree-empty-actions">
+            <button
+              type="button"
+              className="word-tree-empty-button word-tree-empty-button--filled"
+              onClick={onTryAnotherWord}
+            >
+              Try another word
+              <EmptyStateArrowIcon />
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
