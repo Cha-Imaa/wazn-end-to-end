@@ -13,7 +13,7 @@
 
 .leaf {
   position: absolute;
-  opacity: 0.42;
+  opacity: 0.5;
   pointer-events: none;
   user-select: none;
   z-index: 0;
@@ -22,7 +22,7 @@
 .leaf-left {
   left: -18px;
   bottom: -44px;
-  width: clamp(200px, 12vw, 280px);
+  width: clamp(170px, 10vw, 220px);
   transform: rotate(0deg);
   transform-origin: bottom right;
 }
@@ -30,7 +30,7 @@
 .leaf-right {
   right: -18px;
   bottom: -44px;
-  width: clamp(200px, 12vw, 280px);
+  width: clamp(170px, 10vw, 220px);
   transform: rotate(0deg);
   transform-origin: bottom right;
 }

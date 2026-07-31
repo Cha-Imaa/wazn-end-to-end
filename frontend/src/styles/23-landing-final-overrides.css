@@ -264,38 +264,67 @@
   padding-top: clamp(36px, 4.5vh, 76px);
 }
 
+/* Rhythm: 12-16px between related text, 32-48px between components,
+   56-72px between major sections (guide_changes.md) */
+.app-shell-landing .hero-title {
+  margin-bottom: 10px;
+}
+
 .app-shell-landing .hero {
-  margin-bottom: clamp(38px, 4.8vh, 60px);
+  margin-bottom: clamp(42px, 5vh, 62px);
+}
+
+.app-shell-landing .search-area {
+  width: min(730px, 100%);
 }
 
 .app-shell-landing .examples-section {
-  margin-top: clamp(46px, 5.8vh, 70px);
+  margin-top: clamp(50px, 6vh, 74px);
 }
 
 .app-shell-landing .footer {
-  margin: clamp(30px, 4vh, 52px) auto clamp(22px, 2.8vh, 34px);
+  margin: clamp(32px, 4vh, 52px) auto clamp(22px, 2.8vh, 34px);
+  font-size: 15px;
 }
 
-/* The examples heading introduces the cards — keep the sprig tight to both */
+.app-shell-landing .footerLogo {
+  height: 25px;
+}
+
+/* The sprig sits clearly below the heading, the cards clearly below it */
 .app-shell-landing .examples-sprout {
-  margin: 8px auto clamp(24px, 3vh, 38px);
+  margin: 12px auto clamp(28px, 3.2vh, 40px);
 }
 
-/* Cards: a compact curated row, quieter than the search action above it */
+/* Cards: slightly narrower with wider gutters, roomier inside */
+.app-shell-landing .examples-grid {
+  gap: clamp(30px, 2.8vw, 40px);
+}
+
 .app-shell-landing .example-card {
-  min-height: clamp(146px, 16vh, 166px);
-  padding: 20px 14px 18px;
+  min-height: clamp(162px, 18.2vh, 200px);
+  padding: 26px 22px 22px;
 }
 
 .app-shell-landing .example-card-icon,
 .app-shell-landing .example-card img {
   height: clamp(42px, 3.2vw, 54px);
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .app-shell-landing .example-arabic {
   font-size: clamp(26px, 1.6vw, 31px);
-  margin-bottom: 9px;
+  margin-bottom: 10px;
+}
+
+.app-shell-landing .example-english {
+  padding-bottom: 12px;
+}
+
+/* Corner leaf farther into the corner so it doesn't crowd the text */
+.app-shell-landing .example-card::after {
+  right: -16px;
+  bottom: -10px;
 }
 
 /* Shorter laptops (1366x768 and down): tighten zone gaps, keep type size */
@@ -314,6 +343,10 @@
 
   .app-shell-landing .examples-sprout {
     margin-bottom: 22px;
+  }
+
+  .app-shell-landing .example-card {
+    min-height: 150px;
   }
 
   .app-shell-landing .footer {
