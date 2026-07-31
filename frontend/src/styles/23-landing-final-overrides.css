@@ -273,12 +273,12 @@
   max-width: calc((100vh - (var(--page-padding-y) * 2)) * 1.75);
 }
 
-/* The whole landing composition renders at 80% — the owner picked this
-   scale by eye (browser zoom 80% was "best"). The shell and the side
-   leaves keep their full size; only the content shrinks. */
+/* The whole landing composition renders slightly reduced — the owner
+   tuned this scale by eye. The shell and the side leaves keep their
+   full size; only the content shrinks. */
 .app-shell-landing .main,
 .app-shell-landing .footer {
-  zoom: 0.8;
+  zoom: 0.9;
 }
 
 .app-shell-landing .main {
