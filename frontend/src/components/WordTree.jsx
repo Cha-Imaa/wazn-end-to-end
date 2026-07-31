@@ -251,7 +251,7 @@ function addRootText(svgElement, activeTree) {
       x: anchor.x,
       y: anchor.arabicY,
       className: "tree-root-arabic",
-      fontSize: 54,
+      fontSize: 48,
       direction: "rtl",
     })
   );
@@ -261,7 +261,7 @@ function addRootText(svgElement, activeTree) {
       createSvgText({
         text: displayTransliteration,
         x: anchor.x,
-        y: anchor.translitY,
+        y: anchor.translitY + 6,
         className: "tree-root-transliteration",
         fontSize: 22,
       })
