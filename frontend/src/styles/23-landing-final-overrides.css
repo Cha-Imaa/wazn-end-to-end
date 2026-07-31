@@ -286,7 +286,7 @@
      leaving the footer pinned at the bottom of the shell */
   flex: 1;
   align-items: center;
-  padding-top: clamp(84px, 9.8vh, 120px);
+  padding-top: clamp(126px, 14.6vh, 162px);
 }
 
 /* Proportions matched to the landing inspiration mockup:
@@ -306,7 +306,7 @@
 
 .app-shell-landing .examples-section {
   width: min(760px, 100%);
-  margin-top: clamp(104px, 12.6vh, 150px);
+  margin-top: clamp(146px, 16.5vh, 192px);
 }
 
 .app-shell-landing .footer {
@@ -359,7 +359,7 @@
    slightly condensed so the page still fits one viewport */
 @media (max-height: 940px) {
   .app-shell-landing .main {
-    padding-top: clamp(92px, 11.5vh, 124px);
+    padding-top: clamp(134px, 16.2vh, 166px);
   }
 
   .app-shell-landing .hero {
@@ -367,7 +367,7 @@
   }
 
   .app-shell-landing .examples-section {
-    margin-top: clamp(100px, 12.4vh, 118px);
+    margin-top: clamp(138px, 16.8vh, 156px);
   }
 
   .app-shell-landing .examples-sprout {
