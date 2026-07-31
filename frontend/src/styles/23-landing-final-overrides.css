@@ -268,9 +268,17 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* Match the inspiration's panel aspect (~1.55:1 width to height)
+  /* Match the inspiration's panel aspect (~1.75:1 width to height)
      instead of stretching across ultrawide windows */
-  max-width: calc((100vh - (var(--page-padding-y) * 2)) * 1.55);
+  max-width: calc((100vh - (var(--page-padding-y) * 2)) * 1.75);
+}
+
+/* The whole landing composition renders at 80% — the owner picked this
+   scale by eye (browser zoom 80% was "best"). The shell and the side
+   leaves keep their full size; only the content shrinks. */
+.app-shell-landing .main,
+.app-shell-landing .footer {
+  zoom: 0.8;
 }
 
 .app-shell-landing .main {
