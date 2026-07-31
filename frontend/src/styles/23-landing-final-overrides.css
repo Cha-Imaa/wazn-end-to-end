@@ -297,7 +297,7 @@
 }
 
 .app-shell-landing .hero {
-  margin-bottom: clamp(40px, 4.9vh, 60px);
+  margin-bottom: clamp(75px, 8.5vh, 95px);
 }
 
 .app-shell-landing .search-area {
@@ -306,7 +306,7 @@
 
 .app-shell-landing .examples-section {
   width: min(760px, 100%);
-  margin-top: clamp(146px, 16.5vh, 192px);
+  margin-top: clamp(111px, 12.6vh, 157px);
 }
 
 .app-shell-landing .footer {
@@ -363,11 +363,11 @@
   }
 
   .app-shell-landing .hero {
-    margin-bottom: clamp(36px, 4.4vh, 48px);
+    margin-bottom: clamp(71px, 8.3vh, 83px);
   }
 
   .app-shell-landing .examples-section {
-    margin-top: clamp(138px, 16.8vh, 156px);
+    margin-top: clamp(103px, 12.9vh, 121px);
   }
 
   .app-shell-landing .examples-sprout {
@@ -390,11 +390,11 @@
   }
 
   .app-shell-landing .hero {
-    margin-bottom: clamp(24px, 3.2vh, 32px);
+    margin-bottom: clamp(59px, 8vh, 68px);
   }
 
   .app-shell-landing .examples-section {
-    margin-top: clamp(70px, 11vh, 96px);
+    margin-top: clamp(35px, 6.2vh, 61px);
   }
 
   .app-shell-landing .examples-sprout {
