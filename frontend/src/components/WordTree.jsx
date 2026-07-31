@@ -17,11 +17,6 @@ function queryLeafElement(svgElement, baseId, leafNumber, index) {
   );
 }
 
-function formatRootArabic(rootLetters) {
-  if (!rootLetters?.length) return "";
-  return rootLetters.join(" · ");
-}
-
 function normalizeText(value = "") {
   return String(value)
     .trim()
@@ -57,22 +52,6 @@ function createSvgText({
   }
 
   return textElement;
-}
-
-function createSvgRect({ x, y, width, height, rx, className }) {
-  const rectElement = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "rect"
-  );
-
-  rectElement.setAttribute("x", String(x));
-  rectElement.setAttribute("y", String(y));
-  rectElement.setAttribute("width", String(width));
-  rectElement.setAttribute("height", String(height));
-  rectElement.setAttribute("rx", String(rx));
-  rectElement.setAttribute("class", className);
-
-  return rectElement;
 }
 
 function getBBoxSafe(element) {
@@ -189,17 +168,6 @@ function populateLeafText({ contentGroup, leafNumber, node }) {
   contentGroup.appendChild(englishText);
 }
 
-// Temporary prototype switch for the root display (NEXT_STEPS §2.2):
-// ?rootVariant=a (plaque) | b (letter chips) | c (typographic, default).
-// Collapses to one variant once a direction is picked.
-function getRootDisplayVariant() {
-  const param = new URLSearchParams(window.location.search).get("rootVariant");
-
-  if (param === "a") return "plaque";
-  if (param === "b") return "chips";
-  return "type";
-}
-
 // The Figma artwork carries the intended root-label placement as two hidden
 // paths inside #TreeRootLabel. Their boxes are the anchor — the same idea as
 // leaf text deriving its position from the leaf divider. getBBox returns
@@ -248,74 +216,6 @@ function getRootLabelAnchor(svgElement) {
   return { x: 745, arabicY: 817, translitY: 869 };
 }
 
-function createSvgCircle({ cx, cy, r, className }) {
-  const circleElement = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "circle"
-  );
-
-  circleElement.setAttribute("cx", String(cx));
-  circleElement.setAttribute("cy", String(cy));
-  circleElement.setAttribute("r", String(r));
-  circleElement.setAttribute("class", className);
-
-  return circleElement;
-}
-
-function buildPlaqueRootLabel(rootTextGroup, anchor) {
-  const plaqueWidth = 360;
-  const plaqueHeight = plaqueWidth * (1024 / 1536);
-
-  const plaque = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "image"
-  );
-
-  plaque.setAttribute("href", "/assets/tree/root-plaque.png");
-  plaque.setAttribute("x", String(anchor.x - plaqueWidth / 2));
-  plaque.setAttribute(
-    "y",
-    String((anchor.arabicY + anchor.translitY) / 2 - plaqueHeight / 2)
-  );
-  plaque.setAttribute("width", String(plaqueWidth));
-  plaque.setAttribute("height", String(plaqueHeight));
-  plaque.setAttribute("class", "tree-root-plaque");
-
-  rootTextGroup.appendChild(plaque);
-}
-
-function buildChipsRootLabel(rootTextGroup, anchor, rootArabic) {
-  const letters = rootArabic.split(" ").filter(Boolean);
-  const chipRadius = 38;
-  const chipSpacing = 92;
-  // First root letter sits rightmost — the root reads right to left.
-  const rowStart = anchor.x + ((letters.length - 1) * chipSpacing) / 2;
-
-  letters.forEach((letter, index) => {
-    const cx = rowStart - index * chipSpacing;
-
-    rootTextGroup.appendChild(
-      createSvgCircle({
-        cx,
-        cy: anchor.arabicY,
-        r: chipRadius,
-        className: "tree-root-chip",
-      })
-    );
-
-    rootTextGroup.appendChild(
-      createSvgText({
-        text: letter,
-        x: cx,
-        y: anchor.arabicY,
-        className: "tree-root-chip-letter",
-        fontSize: 46,
-        direction: "rtl",
-      })
-    );
-  });
-}
-
 function addRootText(svgElement, activeTree) {
   const rootArabic = activeTree?.trunk?.arabic || "";
   const rootTransliteration = activeTree?.trunk?.transliteration || "";
@@ -333,7 +233,6 @@ function addRootText(svgElement, activeTree) {
 
   if (!rootArabic) return;
 
-  const variant = getRootDisplayVariant();
   const anchor = getRootLabelAnchor(svgElement);
 
   const rootTextGroup = document.createElementNS(
@@ -343,27 +242,19 @@ function addRootText(svgElement, activeTree) {
 
   rootTextGroup.setAttribute(
     "class",
-    `tree-root-generated-text tree-root-label tree-root-label--${variant}`
+    "tree-root-generated-text tree-root-label"
   );
 
-  if (variant === "plaque") {
-    buildPlaqueRootLabel(rootTextGroup, anchor);
-  }
-
-  if (variant === "chips") {
-    buildChipsRootLabel(rootTextGroup, anchor, rootArabic);
-  } else {
-    rootTextGroup.appendChild(
-      createSvgText({
-        text: rootArabic,
-        x: anchor.x,
-        y: anchor.arabicY,
-        className: "tree-root-arabic",
-        fontSize: 54,
-        direction: "rtl",
-      })
-    );
-  }
+  rootTextGroup.appendChild(
+    createSvgText({
+      text: rootArabic,
+      x: anchor.x,
+      y: anchor.arabicY,
+      className: "tree-root-arabic",
+      fontSize: 54,
+      direction: "rtl",
+    })
+  );
 
   if (displayTransliteration) {
     rootTextGroup.appendChild(

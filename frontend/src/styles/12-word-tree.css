@@ -246,26 +246,6 @@
   opacity: 0.88;
 }
 
-/* Variant A — text sits on the cream plaque art, so it flips to dark green */
-.tree-root-label--plaque .tree-root-arabic,
-.tree-root-label--plaque .tree-root-transliteration {
-  fill: var(--color-green-primary);
-  opacity: 1;
-}
-
-/* Variant B — each root letter on its own gold-ringed disc */
-.tree-root-chip {
-  fill: var(--color-panel-surface);
-  stroke: var(--color-gold);
-  stroke-width: 2.5;
-}
-
-.tree-root-chip-letter {
-  font-family: "Amiri", "Noto Naskh Arabic", serif;
-  font-weight: 700;
-  fill: var(--color-green-primary);
-}
-
 /*
  =========================
    Empty / fallback states
