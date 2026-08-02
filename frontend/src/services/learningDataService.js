@@ -1,6 +1,7 @@
 import {
   fetchInsightsFromBackend,
   fetchLearningResultFromBackend,
+  fetchSentenceFromBackend,
 } from "../api/learningApi.js";
 import { normalizeArabic } from "../utils/normalizeArabic.js";
 
@@ -59,6 +60,23 @@ export async function resolveInsightsResult(rawWord) {
     // Insights are enrichment only — the deterministic view already rendered,
     // so a failed fetch is silent and the caller just keeps what it has.
     console.error("Backend insights fetch failed.", error);
+    return null;
+  }
+}
+
+export async function resolveSentenceResult(rawWord) {
+  const query = rawWord.trim();
+
+  if (!query) {
+    return null;
+  }
+
+  try {
+    return await fetchSentenceFromBackend(query);
+  } catch (error) {
+    // The sentence is enrichment only — the Details tab renders without it,
+    // so a failed fetch means the section is simply absent.
+    console.error("Backend sentence fetch failed.", error);
     return null;
   }
 }

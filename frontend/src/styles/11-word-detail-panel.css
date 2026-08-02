@@ -469,6 +469,68 @@
     0 0 0 2px var(--color-active-ring);
 }
 
+/* --- "In a sentence" — generated content, arrives after first paint ------- */
+
+.word-detail-sentence-arabic {
+  margin: 0 0 8px;
+  font-family: "Noto Naskh Arabic", serif;
+  font-size: 24px;
+  line-height: 1.7;
+  font-weight: 500;
+  color: var(--color-text-black);
+  text-align: center;
+}
+
+.word-detail-sentence-translation {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  font-style: italic;
+  color: var(--color-text-black);
+  text-align: center;
+}
+
+/* Provenance, not decoration: this is the one generated sentence on a screen
+   of verified morphology, and it says so. */
+.word-detail-sentence-source {
+  margin: 10px 0 0;
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-green-secondary);
+  text-align: center;
+}
+
+.word-detail-sentence-pending {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  font-style: italic;
+  color: var(--color-green-secondary);
+  text-align: center;
+  animation: sentence-pending-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes sentence-pending-pulse {
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word-detail-sentence-pending {
+    animation: none;
+  }
+}
+
 
 
 

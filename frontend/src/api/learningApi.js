@@ -58,6 +58,15 @@ export async function fetchLearningResultFromBackend(query) {
   );
 }
 
+export async function fetchSentenceFromBackend(query) {
+  const encodedWord = encodeURIComponent(query);
+
+  return fetchBackendJson(
+    `/api/sentence?word=${encodedWord}`,
+    "Failed to fetch the example sentence."
+  );
+}
+
 export async function fetchInsightsFromBackend(query) {
   const encodedWord = encodeURIComponent(query);
 

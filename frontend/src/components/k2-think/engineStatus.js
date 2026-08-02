@@ -28,12 +28,13 @@ const DESCRIPTORS = {
   [ENGINE_STATUS.PENDING]: { variant: "pending", label: "Running live K2…" },
 };
 
-// The four steps GET /api/insights replaces. While that request is in flight the
+// The five steps GET /api/insights replaces. While that request is in flight the
 // panel shows what /api/analyze served, so these rows are explicitly pending
 // rather than silently presenting sample content as final.
 const ENRICHED_AGENT_IDS = new Set([
   "explanation",
   "quiz",
+  "sentence",
   "guardrail",
   "evaluation",
 ]);

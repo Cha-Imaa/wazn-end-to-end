@@ -1,3 +1,5 @@
+import { SENTENCE_STATUS, useSentence } from "../hooks/useSentence.js";
+
 function getPanelWord(selectedDetail, selectedNode) {
   const detailWord = selectedDetail?.word;
 
@@ -34,6 +36,12 @@ export default function WordDetailPanel({
   const pattern = selectedDetail?.pattern || null;
   const breakdownSegments = selectedDetail?.breakdown?.segments || [];
   const samePatternWords = selectedDetail?.same_pattern_words || [];
+
+  // Generated per displayed word, so it arrives after first paint: pending
+  // while the agent runs, and simply absent when nothing valid comes back.
+  const sentenceEntry = useSentence(shouldShowPanel ? panelWord.arabic : "");
+  const showSentenceSection =
+    sentenceEntry && sentenceEntry.status !== SENTENCE_STATUS.ABSENT;
 
   return (
     <aside
@@ -133,6 +141,40 @@ export default function WordDetailPanel({
                 {selectedDetail?.explanation || "Details coming next."}
               </p>
             </section>
+
+            {showSentenceSection && (
+              <>
+                <div className="word-detail-divider" />
+
+                <section className="word-detail-section word-detail-sentence-section">
+                  <p className="word-detail-section-label">In a Sentence</p>
+
+                  {sentenceEntry.status === SENTENCE_STATUS.PENDING ? (
+                    <p className="word-detail-sentence-pending">
+                      Writing an example sentence…
+                    </p>
+                  ) : (
+                    <>
+                      <p
+                        className="word-detail-sentence-arabic"
+                        lang="ar"
+                        dir="rtl"
+                      >
+                        {sentenceEntry.sentence.arabic}
+                      </p>
+
+                      <p className="word-detail-sentence-translation">
+                        {sentenceEntry.sentence.translation}
+                      </p>
+
+                      <p className="word-detail-sentence-source">
+                        Generated live by K2
+                      </p>
+                    </>
+                  )}
+                </section>
+              </>
+            )}
 
             <div className="word-detail-divider" />
 
