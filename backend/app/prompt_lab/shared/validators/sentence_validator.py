@@ -22,6 +22,7 @@
 # so a generated sentence never presents itself as verified morphology.
 
 import re
+import unicodedata
 from typing import Any
 
 from app.prompt_lab.shared.validators.common_validator import (
@@ -61,12 +62,14 @@ CLITIC_PREFIXES = (
 
 _LATIN_OR_DIGIT = tuple("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 
-# A grammatical case ending on the word's final letter — tanween, a short
-# vowel, shadda, or sukun (U+064B–U+0652). The KB spells words without case
-# endings, but a fully vocalized sentence correctly adds one (المَدْرَسَةُ),
-# and refusing it would reject exactly the well-formed sentences the prompt
-# asks for. At most two marks (shadda + vowel).
-_CASE_ENDING_RE = re.compile(r"^[ً-ْ]{0,2}$")
+# The marks that may sit on a word's final letter — tanween, a short vowel,
+# shadda, or sukun (U+064B–U+0652). The KB spells words without case endings,
+# but a fully vocalized sentence correctly adds one (المَدْرَسَةُ), and
+# refusing it would reject exactly the well-formed sentences the prompt asks
+# for. At most two extra marks (shadda + vowel).
+_FINAL_MARKS_RE = re.compile(r"[ً-ْ]*$")
+
+MAX_EXTRA_CASE_MARKS = 2
 
 
 def token_is_target(token: str, target: str) -> bool:
@@ -76,17 +79,52 @@ def token_is_target(token: str, target: str) -> bool:
     carrying a case ending. Trailing punctuation is stripped; nothing else is
     tolerated — a pronoun suffix or a re-vowelled copy is not the word the app
     vouches for.
+
+    Both sides are put in NFC first. 54 of the KB's words stack shadda before
+    the short vowel (مُعَلِّم), which is how Arabic is conventionally typed but
+    is *not* Unicode canonical order — NFC reorders those two marks. The two
+    spellings render identically and are the same word, so comparing raw code
+    points would reject a correct sentence purely on mark order. K2 currently
+    copies the KB spelling out of the prompt, which is the only reason this has
+    not bitten; that is a property of the model's behaviour, not a guarantee.
+
+    The case ending is compared as a *set of marks on the final letter* rather
+    than as a string suffix. Appending a case ending to a word that already
+    ends in a vowel (دَرَسَ + tanween) puts two marks on one letter, and NFC
+    reorders them by combining class — so the target is no longer a literal
+    prefix of the token even though the word is unchanged.
     """
-    stripped = token.strip("؟!.،؛:,\"'()«»…")
+    stripped = _nfc(token).strip("؟!.،؛:,\"'()«»…")
 
     for prefix in ("",) + CLITIC_PREFIXES:
-        candidate = prefix + target
-        if stripped.startswith(candidate) and _CASE_ENDING_RE.match(
-            stripped[len(candidate):]
+        candidate = _nfc(prefix + _nfc(target))
+
+        if stripped == candidate:
+            return True
+
+        token_base, token_marks = _split_final_marks(stripped)
+        cand_base, cand_marks = _split_final_marks(candidate)
+
+        # Same word up to its final letter's marks, and the token keeps every
+        # mark the KB spelling has while adding no more than a case ending.
+        if (
+            token_base == cand_base
+            and set(cand_marks) <= set(token_marks)
+            and len(token_marks) <= len(cand_marks) + MAX_EXTRA_CASE_MARKS
         ):
             return True
 
     return False
+
+
+def _nfc(text: str) -> str:
+    return unicodedata.normalize("NFC", text)
+
+
+def _split_final_marks(text: str) -> tuple[str, str]:
+    """Split a word into its body and the diacritics on its final letter."""
+    match = _FINAL_MARKS_RE.search(text)
+    return text[: match.start()], match.group()
 
 
 def sentence_contains_target(sentence: str, target: str) -> bool:
