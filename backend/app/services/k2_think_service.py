@@ -1,6 +1,6 @@
 """Builds the `k2_think` transparency object for the /api/analyze response.
 
-This powers the frontend "K2 Think" tab: a 6-step agentic reasoning flow (each
+This powers the frontend "K2 Think" tab: a 7-step agentic reasoning flow (each
 agent exposing a reasoning trace + final output), a quality-evaluation summary,
 and a safety/guardrails checklist.
 
@@ -94,6 +94,7 @@ def build_k2_think(
         _morphology_agent(facts),
         _explanation_agent(facts, selected_leaf, demo),
         _quiz_agent(facts),
+        _sentence_agent(),
         _guardrail_agent(facts, guardrails, demo),
         _evaluation_agent(facts, evaluation, demo),
     ]
@@ -238,9 +239,18 @@ Combining root + pattern yields "{f['meaning']}". I will state this plainly and 
     )
 
 
+def _sentence_agent() -> dict[str, Any]:
+    # Always "skipped" on the deterministic path — never a demo sample. The
+    # other demo agents template their mock text out of KB facts; a mock
+    # example *sentence* would be hand-invented Arabic presented inside the
+    # product that claims to show only verifiable content. /api/insights
+    # replaces this entry with the live result.
+    return _k2_skipped("sentence", 5, "Sentence Agent", "ENABLE_K2_SENTENCE")
+
+
 def _guardrail_agent(f, guardrails, demo) -> dict[str, Any]:
     if not demo:
-        return _k2_skipped("guardrail", 5, "Guardrail Agent", "ENABLE_K2_GUARDRAIL_REVIEW")
+        return _k2_skipped("guardrail", 6, "Guardrail Agent", "ENABLE_K2_GUARDRAIL_REVIEW")
     checks = guardrails.get("checks", [])
     passed = sum(1 for c in checks if c.get("passed"))
     reasoning = f"""Reviewed the tutor and quiz output against the verified evidence for {f['word_ar']}.
@@ -248,7 +258,7 @@ Checked that the meaning, root {f['root_ar']}, and pattern {f['pattern_ar']} are
 Confirmed the quiz introduces no words outside the verified family.
 Result: no unsupported or invented content detected."""
     return _agent(
-        "guardrail", 5, "Guardrail Agent", K2_ENGINE, STATUS_COMPLETED,
+        "guardrail", 6, "Guardrail Agent", K2_ENGINE, STATUS_COMPLETED,
         "Sample review — this step has not run live.",
         reasoning, f"{passed}/{len(checks)} checks passed — {guardrails.get('summary', '')}",
         model=K2_MODEL_NAME,
@@ -258,7 +268,7 @@ Result: no unsupported or invented content detected."""
 
 def _evaluation_agent(f, evaluation, demo) -> dict[str, Any]:
     if not demo or not evaluation:
-        return _k2_skipped("evaluation", 6, "Evaluation Agent", "ENABLE_K2_EVALUATION")
+        return _k2_skipped("evaluation", 7, "Evaluation Agent", "ENABLE_K2_EVALUATION")
     overall = evaluation["overall"]["value"]
     m = {metric["id"]: metric["percent"] for metric in evaluation["metrics"]}
     reasoning = f"""Scored the response for {f['word_ar']} on three dimensions.
@@ -267,7 +277,7 @@ Quiz validity: questions are well-formed with a single correct answer ({m.get('q
 Clarity: phrasing is beginner-appropriate ({m.get('clarity')}%).
 Overall quality: {overall}/100."""
     return _agent(
-        "evaluation", 6, "Evaluation Agent", K2_ENGINE, STATUS_COMPLETED,
+        "evaluation", 7, "Evaluation Agent", K2_ENGINE, STATUS_COMPLETED,
         "Sample scores — this step has not run live.",
         reasoning,
         f"Overall {overall}/100 · Groundedness {m.get('groundedness')}% · "

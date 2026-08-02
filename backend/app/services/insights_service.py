@@ -29,10 +29,12 @@ from app.prompt_lab.shared.evidence_builder import build_state_from_components
 from app.services.k2_agents_service import (
     AGENT_EVALUATION,
     AGENT_GUARDRAIL,
+    AGENT_SENTENCE,
     ENGINE_STATUS_FALLBACK,
     ENGINE_STATUS_K2_LIVE,
     ENGINE_STATUS_SKIPPED,
     build_insights,
+    run_sentence_agent,
 )
 from app.services.k2_think_service import build_k2_think
 
@@ -126,7 +128,75 @@ def build_insights_response(
         "cached": bool(insights.get("cached")),
         "k2_think": _enriched_k2_think(state, insights, active_settings),
         "quiz": insights.get("quiz"),
+        "sentence": _sentence_block(insights.get("agents", {}).get(AGENT_SENTENCE)),
         "source": INSIGHTS_SOURCE,
+    }
+
+
+def build_sentence_response(
+    word: str,
+    settings: Settings | None = None,
+) -> dict[str, Any]:
+    """
+    Shapes GET /api/sentence — the sentence agent alone, for whichever leaf
+    the Details tab is showing. The full insights chain is 15-45s; this is one
+    K2 call (or a cache hit shared with that chain). Always a fully shaped
+    body: `sentence` is the block or None, never an error.
+    """
+    active_settings = settings or get_settings()
+
+    state = build_pipeline_state(word)
+
+    if not state.get("found"):
+        return {
+            "status": STATUS_NOT_FOUND,
+            "query": state.get("query", word),
+            "normalized_query": state.get("normalized_query", ""),
+            "selected_word_id": None,
+            "sentence": None,
+            "source": INSIGHTS_SOURCE,
+            "reason": state.get("reason", "word_not_found"),
+            "message": state.get("message", "Word not found in the knowledge base."),
+        }
+
+    result = run_sentence_agent(state, active_settings)
+
+    return {
+        "status": STATUS_FOUND,
+        "query": state["query"],
+        "normalized_query": state["normalized_query"],
+        "selected_word_id": state["selected_word_id"],
+        "sentence": _sentence_block(result),
+        "source": INSIGHTS_SOURCE,
+    }
+
+
+def _sentence_block(result: dict[str, Any] | None) -> dict[str, Any] | None:
+    """
+    The Details tab's "In a sentence" payload, or None.
+
+    None is the clean absence §2.2c asks for — the section simply does not
+    render when the agent failed, was skipped, or never produced valid output.
+    Only k2_live content ships: there is no deterministic sentence to fall
+    back to, and an unvalidated one must never reach a learner.
+    """
+    if not result or result.get("engine_status") != ENGINE_STATUS_K2_LIVE:
+        return None
+
+    output = result.get("output")
+    if not isinstance(output, dict):
+        return None
+
+    arabic = output.get("sentence")
+    translation = output.get("translation")
+    if not isinstance(arabic, str) or not isinstance(translation, str):
+        return None
+
+    return {
+        "arabic": arabic,
+        "translation": translation,
+        "engine_status": ENGINE_STATUS_K2_LIVE,
+        "model": result.get("model"),
     }
 
 
@@ -220,11 +290,14 @@ def _agent_summary(result: dict[str, Any], state: dict[str, Any]) -> str:
     if engine_status == ENGINE_STATUS_FALLBACK:
         if agent_id in ("guardrail", "evaluation"):
             return "K2 review unavailable — no verdict is shown rather than an invented one."
+        if agent_id == "sentence":
+            return "K2 output was rejected — the example sentence is left out rather than shown unverified."
         return "K2 output was rejected — verified deterministic content is shown instead."
 
     live_summaries = {
         "explanation": "Generated a learner-friendly explanation from a live K2 call.",
         "quiz": f"Generated {_quiz_question_count(result, state)} practice questions from a live K2 call.",
+        "sentence": "Wrote an example sentence using the word, from a live K2 call.",
         "guardrail": _guardrail_live_summary(result),
         "evaluation": "Scored the response against the quality rubric.",
     }
@@ -247,6 +320,13 @@ def _agent_output_text(result: dict[str, Any], state: dict[str, Any]) -> str:
             return f"{count} questions · generated live by K2"
         if engine_status == ENGINE_STATUS_FALLBACK:
             return f"{count} questions · deterministic templates (fallback)"
+        return ""
+
+    if agent_id == "sentence":
+        if engine_status == ENGINE_STATUS_K2_LIVE and isinstance(output, dict):
+            arabic = output.get("sentence", "")
+            translation = output.get("translation", "")
+            return f"{arabic} — {translation}" if translation else arabic
         return ""
 
     if agent_id == "guardrail" and engine_status == ENGINE_STATUS_K2_LIVE:

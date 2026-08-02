@@ -40,6 +40,11 @@ class Settings:
     # templates, so it had no flag of its own. It has one now.
     enable_k2_quiz: bool
 
+    # The "In a sentence" section on the Details tab. Generated, never
+    # hand-written (see NEXT_STEPS "Decisions taken"): off means the section
+    # is simply absent — there is no deterministic fallback sentence.
+    enable_k2_sentence: bool
+
     # Pre-warm the insights cache at startup for the demo words. Off by default:
     # it fires four sequential K2 calls per word before the app serves traffic.
     enable_k2_insights_prewarm: bool
@@ -95,6 +100,10 @@ def get_settings() -> Settings:
         ),
         enable_k2_quiz=_get_bool_env(
             "ENABLE_K2_QUIZ",
+            default=False,
+        ),
+        enable_k2_sentence=_get_bool_env(
+            "ENABLE_K2_SENTENCE",
             default=False,
         ),
         enable_k2_insights_prewarm=_get_bool_env(

@@ -3,7 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.data_loader import kb
 from app.services.analyze_service import analyze_word
-from app.services.insights_service import build_insights_response, build_pipeline_state
+from app.services.insights_service import (
+    build_insights_response,
+    build_pipeline_state,
+    build_sentence_response,
+)
 from app.services.k2_agents_service import prewarm_insights
 
 
@@ -59,6 +63,13 @@ def analyze(word: str = Query(..., min_length=1)):
 @app.get("/api/insights")
 def insights(word: str = Query(..., min_length=1)):
     return build_insights_response(word)
+
+
+@app.get("/api/sentence")
+def sentence(word: str = Query(..., min_length=1)):
+    # The sentence agent alone — the Details tab asks per displayed leaf, and
+    # waiting on the full insights chain would hold the section for 15-45s.
+    return build_sentence_response(word)
 
 # @app.get("/debug/patterns")
 # def debug_patterns():

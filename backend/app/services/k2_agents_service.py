@@ -1,9 +1,10 @@
-"""Runs the four live K2 agents that enrich a word, for GET /api/insights.
+"""Runs the five live K2 agents that enrich a word, for GET /api/insights.
 
-Four agents run **sequentially**, because guardrail and evaluation review what
-explanation and quiz produced:
+The agents run **sequentially**, because guardrail and evaluation review what
+explanation and quiz produced (the sentence agent sits between them but is
+reviewed by neither — its target-word contract lives in its own validator):
 
-    explanation → quiz → guardrail → evaluation
+    explanation → quiz → sentence → guardrail → evaluation
 
 That is why this work lives off /api/analyze entirely (see NEXT_STEPS.md §1.1).
 Each agent independently either succeeds against a live K2 call or falls back,
@@ -48,6 +49,7 @@ from app.prompt_lab.shared.evidence_builder import (
     build_combined_guardrail_input_from_state,
     build_explanation_evidence_from_state,
     build_quiz_evidence_from_state,
+    build_sentence_evidence_from_state,
 )
 from app.prompt_lab.shared.validators.evaluation_validator import (
     validate_evaluation_output,
@@ -64,6 +66,11 @@ from app.prompt_lab.shared.validators.common_validator import (
     replace_arabic_runs,
 )
 from app.prompt_lab.shared.validators.quiz_claim_checker import affirmed_choice_id
+from app.prompt_lab.shared.validators.sentence_validator import (
+    CLITIC_PREFIXES,
+    token_is_target,
+    validate_sentence_output,
+)
 from app.prompt_lab.shared.validators.quiz_validator import (
     derive_correct_choice_id,
     validate_quiz_output,
@@ -80,6 +87,7 @@ ENGINE_STATUS_SKIPPED = "skipped"
 
 AGENT_EXPLANATION = "explanation"
 AGENT_QUIZ = "quiz"
+AGENT_SENTENCE = "sentence"
 AGENT_GUARDRAIL = "guardrail"
 AGENT_EVALUATION = "evaluation"
 
@@ -158,10 +166,29 @@ AGENT_SPECS: dict[str, AgentSpec] = {
         prompt_version_dir="quiz_agent/v4_grounded_feedback",
         reasoning_effort="medium",
     ),
+    AGENT_SENTENCE: AgentSpec(
+        id=AGENT_SENTENCE,
+        name="Sentence Agent",
+        step=5,
+        flag_attribute="enable_k2_sentence",
+        flag_env_name="ENABLE_K2_SENTENCE",
+        # The contract: the selected word must appear in the KB's exact
+        # vocalized spelling (clitic- and case-ending-tolerant); everything
+        # else in the sentence is vocabulary the KB cannot ground, so it is
+        # bounded (one sentence, ≤12 words, Arabic-only) and labelled instead.
+        # v2 writes everything except the target word WITHOUT diacritics —
+        # v1 asked for full tashkeel and K2 invented wrong harakat on its own
+        # vocabulary on ~half the sampled words (تُدْرِسُ for تُدَرِّسُ, ثُمْ
+        # for ثُمَّ), which no deterministic check can see. Bare script cannot
+        # carry a wrong mark. Medium effort like the other four — the
+        # empty-content disease is a property of the endpoint, not the prompt.
+        prompt_version_dir="sentence_agent/v2_plain_script",
+        reasoning_effort="medium",
+    ),
     AGENT_GUARDRAIL: AgentSpec(
         id=AGENT_GUARDRAIL,
         name="Guardrail Agent",
-        step=5,
+        step=6,
         flag_attribute="enable_k2_guardrail_review",
         flag_env_name="ENABLE_K2_GUARDRAIL_REVIEW",
         # v5 scopes quiz grounding checks to content presented as true —
@@ -172,7 +199,7 @@ AGENT_SPECS: dict[str, AgentSpec] = {
     AGENT_EVALUATION: AgentSpec(
         id=AGENT_EVALUATION,
         name="Evaluation Agent",
-        step=6,
+        step=7,
         flag_attribute="enable_k2_evaluation",
         flag_env_name="ENABLE_K2_EVALUATION",
         prompt_version_dir="evaluation_agent/v2_scoring",
@@ -214,6 +241,13 @@ _INSIGHTS_CACHE: dict[str, dict[str, Any]] = {}
 # word — via _INSIGHTS_CACHE above.)
 _QUIZ_CACHE_BY_ROOT: dict[str, dict[str, Any]] = {}
 
+# The sentence is per word, and it is fetched from two directions: GET
+# /api/sentence (the Details tab asks for whichever leaf is displayed) and the
+# /api/insights chain (the origin word's sentence, so the agent appears in the
+# Insights flow). One cache keyed by word id keeps that to one K2 call per
+# word. Only k2_live results are stored, same rule as the quiz cache.
+_SENTENCE_CACHE_BY_WORD: dict[str, dict[str, Any]] = {}
+
 
 def build_insights(
     state: dict[str, Any],
@@ -248,6 +282,12 @@ def build_insights(
     explanation_result = _run_explanation(state, word, active_settings)
     quiz_result = _run_quiz(state, word, active_settings, use_cache=use_cache)
 
+    # After explanation and quiz on purpose: the frontend fires GET
+    # /api/sentence for the origin word as soon as the learning view loads, so
+    # by the time this chain reaches the sentence step the per-word cache
+    # usually already holds the answer.
+    sentence_result = run_sentence_agent(state, active_settings, use_cache=use_cache)
+
     # Guardrail and evaluation review whatever the first two actually produced,
     # live output or deterministic fallback, so their verdicts describe what the
     # learner will really see.
@@ -276,6 +316,7 @@ def build_insights(
         "agents": {
             AGENT_EXPLANATION: explanation_result,
             AGENT_QUIZ: quiz_result,
+            AGENT_SENTENCE: sentence_result,
             AGENT_GUARDRAIL: guardrail_result,
             AGENT_EVALUATION: evaluation_result,
         },
@@ -315,6 +356,7 @@ def _not_found_insights(state: dict[str, Any]) -> dict[str, Any]:
 def clear_insights_cache() -> None:
     _INSIGHTS_CACHE.clear()
     _QUIZ_CACHE_BY_ROOT.clear()
+    _SENTENCE_CACHE_BY_WORD.clear()
 
 
 def insights_cache_size() -> int:
@@ -462,6 +504,57 @@ def _run_quiz(
     # cache can no longer hold a quiz that was never checked in the form served.
     if result.get("engine_status") == ENGINE_STATUS_K2_LIVE and use_cache and root_id:
         _QUIZ_CACHE_BY_ROOT[root_id] = copy.deepcopy(result)
+
+    return result
+
+
+def run_sentence_agent(
+    state: dict[str, Any],
+    settings: Settings | None = None,
+    use_cache: bool = True,
+) -> dict[str, Any]:
+    """
+    Run the sentence agent over an already-computed pipeline state.
+
+    Public because GET /api/sentence calls it directly for whichever leaf the
+    Details tab is showing — the full build_insights chain is 15-45s and the
+    sentence alone is a few. No deterministic fallback exists: a failed or
+    disabled agent means the section is simply absent (§2.2c — a clean absence
+    beats an invented sentence).
+    """
+    active_settings = settings or get_settings()
+    spec = AGENT_SPECS[AGENT_SENTENCE]
+
+    if not getattr(active_settings, spec.flag_attribute):
+        return _skipped(spec)
+
+    word_id = state.get("selected_word_id")
+
+    if use_cache and word_id and word_id in _SENTENCE_CACHE_BY_WORD:
+        return copy.deepcopy(_SENTENCE_CACHE_BY_WORD[word_id])
+
+    packet = build_sentence_evidence_from_state(state)
+    target = (packet.get("llm_input", {}).get("selected_word") or {}).get("arabic")
+
+    def postprocess(output: dict[str, Any] | None) -> list[str]:
+        return _canonicalize_checked(
+            output,
+            lambda value: _canonicalize_sentence_arabic(value, target),
+            {target} if isinstance(target, str) else set(),
+        )
+
+    result = _call_and_validate(
+        spec=spec,
+        packet=packet,
+        word=state.get("query", ""),
+        settings=active_settings,
+        validate=_validate_via_validation_result(validate_sentence_output),
+        fallback_output=None,
+        postprocess=postprocess,
+    )
+
+    if result.get("engine_status") == ENGINE_STATUS_K2_LIVE and use_cache and word_id:
+        _SENTENCE_CACHE_BY_WORD[word_id] = copy.deepcopy(result)
 
     return result
 
@@ -1203,6 +1296,88 @@ def _canonicalize_quiz_arabic(
             if not isinstance(text, str):
                 continue
             choice["text"] = _canonical_form(canonical_by_key, text)
+
+
+_SENTENCE_PUNCT = "؟!.،؛:,\"'()«»…"
+
+# Tashkeel-stripped forms of the clitics the validator tolerates in front of
+# the target word, for recognizing an under-vocalized clitic in a token.
+_CLITIC_KEYS = {normalize_arabic(prefix) for prefix in CLITIC_PREFIXES}
+
+
+def _canonicalize_sentence_arabic(output: Any, target: Any) -> None:
+    """
+    Rewrite under-vocalized copies of the target word back to the KB's exact
+    form, in place — token by token, because an all-Arabic sentence is a
+    *single* run under the shared run regex, so `_canonicalize_prose`'s
+    whole-run replacement can never match a word inside it.
+
+    Only the target word is touched (optionally behind a clitic); the rest of
+    the sentence is the model's own vocabulary, which the KB has no spelling
+    authority over. The pass runs under `_canonicalize_checked`, so a rewrite
+    that changed anything but tashkeel rejects the agent.
+    """
+    if not isinstance(output, dict) or not isinstance(target, str) or not target:
+        return
+
+    sentence = output.get("sentence")
+    if not isinstance(sentence, str):
+        return
+
+    tokens = []
+    for token in sentence.split(" "):
+        core = token.strip(_SENTENCE_PUNCT)
+        if not core:
+            tokens.append(token)
+            continue
+
+        # A core the validator already accepts — the exact form, possibly
+        # behind a clitic or carrying a case ending — is left untouched;
+        # "canonicalizing" it would strip a correct case vowel.
+        if token_is_target(core, target):
+            tokens.append(token)
+            continue
+
+        start = token.find(core)
+        lead = token[:start]
+        trail = token[start + len(core):]
+        tokens.append(lead + _canonical_sentence_token(core, target) + trail)
+
+    output["sentence"] = " ".join(tokens)
+
+
+def _canonical_sentence_token(core: str, target: str) -> str:
+    """
+    The KB spelling for a token that *is* the target word (optionally behind a
+    clitic), or the token unchanged. Splits are tried longest-remainder first,
+    so the bare word wins over a clitic reading when both fit.
+
+    Only a remainder carrying **no tashkeel at all** is rewritten. The stripped
+    key is not an identity (§1.3): مُدَرِّسَة "teacher" and the target
+    مَدْرَسَة "school" share it, differing only in marks — caught by this
+    module's own offline checks before it ever ran. A token the model
+    vocalized is the model asserting a specific word; if that word is not the
+    target, rewriting it *to* the target swaps one real word for another, so
+    it is declined and validation decides (an under-vocalized near-miss falls
+    back to a clean absence, never to a different word on screen).
+    """
+    target_key = _arabic_comparison_key(target)
+
+    for split in range(len(core)):
+        prefix = core[:split]
+        remainder = core[split:]
+
+        if _arabic_comparison_key(remainder) != target_key:
+            continue
+        if prefix and normalize_arabic(prefix) not in _CLITIC_KEYS:
+            continue
+
+        if normalize_arabic(remainder) != remainder:
+            return core
+
+        return prefix + target
+
+    return core
 
 
 def _upgraded_quiz(quiz_result: dict[str, Any]) -> list[dict[str, Any]] | None:

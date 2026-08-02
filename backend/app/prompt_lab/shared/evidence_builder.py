@@ -302,6 +302,50 @@ def build_quiz_leaf_input(
     }
 
 
+def build_sentence_evidence(word: str) -> dict[str, Any]:
+    return build_sentence_evidence_from_state(build_base_state(word))
+
+
+def build_sentence_evidence_from_state(state: dict[str, Any]) -> dict[str, Any]:
+    """
+    The sentence agent's packet is deliberately the smallest of the five: the
+    selected word (with its type, so a verb is used as a verb), the root and
+    pattern for context. No cards, no tree — the sentence is about one word,
+    and everything the packet does not contain is vocabulary the validator
+    cannot ground anyway (see sentence_validator's target-word contract).
+    """
+    require_found_state(state)
+
+    pattern = compact_pattern(state.get("pattern"))
+    selected_word = state["selected_word"]
+
+    llm_input = {
+        "selected_word": {
+            "arabic": selected_word.get("arabic"),
+            "meaning": selected_word.get("meaning"),
+            "word_type": selected_word.get("word_type"),
+            "transliteration": selected_word.get("transliteration"),
+        },
+        "root": {
+            "arabic": state["root"].get("arabic"),
+            "meaning": state["root"].get("meaning"),
+        },
+        "pattern": {
+            "arabic": pattern.get("arabic") if pattern else None,
+            "name": pattern.get("name") if pattern else None,
+            "meaning_effect": pattern.get("meaning_effect") if pattern else None,
+        },
+    }
+
+    return {
+        "agent": "k2_sentence_agent",
+        "prompt_lab_packet_version": "sentence_v1_target_word",
+        "query": state["query"],
+        "selected_word_id": state["selected_word_id"],
+        "llm_input": llm_input,
+    }
+
+
 def build_quiz_evidence(word: str) -> dict[str, Any]:
     return build_quiz_evidence_from_state(build_base_state(word))
 
