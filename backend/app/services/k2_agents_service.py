@@ -38,6 +38,7 @@ import copy
 import json
 import random
 import re
+import threading
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable
@@ -248,6 +249,32 @@ _QUIZ_CACHE_BY_ROOT: dict[str, dict[str, Any]] = {}
 # word. Only k2_live results are stored, same rule as the quiz cache.
 _SENTENCE_CACHE_BY_WORD: dict[str, dict[str, Any]] = {}
 
+# Caching alone does not bound the call rate: the endpoints are sync `def`, so
+# FastAPI runs them in a threadpool, and N requests for the same word that
+# arrive before the first one returns all miss the cache and all call K2.
+# Measured: 8 concurrent /api/sentence for one word produced 8 calls, and K2
+# answered some of them with HTTP 429, which surfaces to the learner as a
+# silently missing "In a sentence" section. One lock per cache key makes the
+# losers wait for the winner and read its cached result — one K2 call, not N.
+#
+# Lock order is always insights -> {quiz, sentence}, and neither inner lock ever
+# reaches back for the insights lock, so the nesting cannot cycle.
+class _KeyedLocks:
+    """One lock per cache key, created on first use."""
+
+    def __init__(self) -> None:
+        self._locks: dict[str, threading.Lock] = {}
+        self._guard = threading.Lock()
+
+    def get(self, key: str) -> threading.Lock:
+        with self._guard:
+            return self._locks.setdefault(key, threading.Lock())
+
+
+_INSIGHTS_LOCKS = _KeyedLocks()
+_QUIZ_LOCKS = _KeyedLocks()
+_SENTENCE_LOCKS = _KeyedLocks()
+
 
 def build_insights(
     state: dict[str, Any],
@@ -275,6 +302,30 @@ def build_insights(
         cached["cached"] = True
         return cached
 
+    if use_cache and selected_word_id:
+        # Single-flight, same reasoning as the sentence agent but a far bigger
+        # prize: this chain is four sequential K2 calls (~16s), so a duplicate
+        # is four wasted calls against the rate limit, not one.
+        with _INSIGHTS_LOCKS.get(selected_word_id):
+            if selected_word_id in _INSIGHTS_CACHE:
+                cached = dict(_INSIGHTS_CACHE[selected_word_id])
+                cached["cached"] = True
+                return cached
+            return _build_insights_uncached(state, active_settings, use_cache=True)
+
+    return _build_insights_uncached(state, active_settings, use_cache=use_cache)
+
+
+def _build_insights_uncached(
+    state: dict[str, Any],
+    active_settings: Settings,
+    use_cache: bool,
+) -> dict[str, Any]:
+    """
+    The agent chain itself. Split out so the cached path can hold the per-word
+    lock across it; the caller has already decided the cache is cold.
+    """
+    selected_word_id = state.get("selected_word_id")
     word = state.get("query", "")
     selected_leaf = state.get("selected_leaf") or {}
     deterministic_quiz = state.get("quiz", [])
@@ -472,6 +523,30 @@ def _run_quiz(
         # themselves cached, so two words must never share mutable structures.
         return copy.deepcopy(_QUIZ_CACHE_BY_ROOT[root_id])
 
+    if use_cache and root_id:
+        # Single-flight per root. This one spans *different words*: the eight
+        # leaves of a family share a quiz, so eight learners on eight different
+        # words of the same root would otherwise each pay for it.
+        with _QUIZ_LOCKS.get(root_id):
+            if root_id in _QUIZ_CACHE_BY_ROOT:
+                return copy.deepcopy(_QUIZ_CACHE_BY_ROOT[root_id])
+            return _run_quiz_uncached(state, word, settings, root_id)
+
+    return _run_quiz_uncached(state, word, settings, root_id if use_cache else None)
+
+
+def _run_quiz_uncached(
+    state: dict[str, Any],
+    word: str,
+    settings: Settings,
+    cache_key: str | None,
+) -> dict[str, Any]:
+    """
+    The quiz agent's actual call. Split out so the cached path can hold the
+    per-root lock across it. `cache_key` is the root id to store a k2_live
+    result under, or None to skip caching.
+    """
+    spec = AGENT_SPECS[AGENT_QUIZ]
     packet = build_quiz_evidence_from_state(state)
 
     def repair(output: dict[str, Any] | None) -> None:
@@ -502,8 +577,8 @@ def _run_quiz(
 
     # Cached content is now post-canonicalization *and* post-validation — the
     # cache can no longer hold a quiz that was never checked in the form served.
-    if result.get("engine_status") == ENGINE_STATUS_K2_LIVE and use_cache and root_id:
-        _QUIZ_CACHE_BY_ROOT[root_id] = copy.deepcopy(result)
+    if result.get("engine_status") == ENGINE_STATUS_K2_LIVE and cache_key:
+        _QUIZ_CACHE_BY_ROOT[cache_key] = copy.deepcopy(result)
 
     return result
 
@@ -533,6 +608,29 @@ def run_sentence_agent(
     if use_cache and word_id and word_id in _SENTENCE_CACHE_BY_WORD:
         return copy.deepcopy(_SENTENCE_CACHE_BY_WORD[word_id])
 
+    if use_cache and word_id:
+        # Single-flight: the first caller runs the agent, the rest block here
+        # and take the cached answer. The second cache read is inside the lock
+        # because the winner filled it while we waited.
+        with _SENTENCE_LOCKS.get(word_id):
+            if word_id in _SENTENCE_CACHE_BY_WORD:
+                return copy.deepcopy(_SENTENCE_CACHE_BY_WORD[word_id])
+            return _run_sentence_uncached(state, active_settings, word_id)
+
+    return _run_sentence_uncached(state, active_settings, word_id if use_cache else None)
+
+
+def _run_sentence_uncached(
+    state: dict[str, Any],
+    active_settings: Settings,
+    cache_key: str | None,
+) -> dict[str, Any]:
+    """
+    The sentence agent's actual call. Split out so the cached path can hold a
+    per-word lock across it without duplicating the body. `cache_key` is the
+    word id to store a k2_live result under, or None to skip caching.
+    """
+    spec = AGENT_SPECS[AGENT_SENTENCE]
     packet = build_sentence_evidence_from_state(state)
     target = (packet.get("llm_input", {}).get("selected_word") or {}).get("arabic")
 
@@ -553,8 +651,8 @@ def run_sentence_agent(
         postprocess=postprocess,
     )
 
-    if result.get("engine_status") == ENGINE_STATUS_K2_LIVE and use_cache and word_id:
-        _SENTENCE_CACHE_BY_WORD[word_id] = copy.deepcopy(result)
+    if result.get("engine_status") == ENGINE_STATUS_K2_LIVE and cache_key:
+        _SENTENCE_CACHE_BY_WORD[cache_key] = copy.deepcopy(result)
 
     return result
 
