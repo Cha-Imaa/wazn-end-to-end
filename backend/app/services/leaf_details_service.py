@@ -151,16 +151,14 @@ def build_template_explanation(
         )
 
         return (
-            f"{word_arabic} comes from the root {root_arabic}, "
-            f"which carries the meaning of {root_meaning}. "
-            f"It follows the pattern {pattern_arabic}, which {pattern_effect}. "
-            f"This helps explain why it means {word_meaning}."
+            f"The root {root_arabic} carries the idea of {root_meaning}. "
+            f"The pattern {pattern_arabic} {pattern_effect}. "
+            f"{word_arabic} therefore means “{word_meaning}”."
         )
 
     return (
-        f"{word_arabic} comes from the root {root_arabic}, "
-        f"which carries the meaning of {root_meaning}. "
-        f"It means {word_meaning}."
+        f"The root {root_arabic} carries the idea of {root_meaning}. "
+        f"{word_arabic} means “{word_meaning}”."
     )
 
 
