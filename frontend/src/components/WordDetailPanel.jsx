@@ -165,8 +165,6 @@ export default function WordDetailPanel({
           </button>
 
           <div className="word-detail-shell-content">
-            <div className="word-detail-divider" />
-
             <header className="word-detail-header">
               <h2 className="word-detail-arabic" lang="ar" dir="rtl">
                 {panelWord.arabic}
@@ -394,10 +392,9 @@ export default function WordDetailPanel({
                     ))}
                   </div>
                 </section>
-
-                <div className="word-detail-divider" />
               </>
             )}
+
           </div>
         </>
       )}
