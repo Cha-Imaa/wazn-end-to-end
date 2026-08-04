@@ -7,12 +7,19 @@ function BookIcon({ className }) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
       <path
-        d="M12 6.5C10.4 5 8.2 4.4 5 4.4v13.2c3.2 0 5.4.6 7 2.1 1.6-1.5 3.8-2.1 7-2.1V4.4c-3.2 0-5.4.6-7 2.1zm0 0v13.2"
+        d="M3.5 5.6c3 0 5.8.9 8.5 2.7 2.7-1.8 5.5-2.7 8.5-2.7v12.1c-3 0-5.8.9-8.5 2.7-2.7-1.8-5.5-2.7-8.5-2.7z"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1.6"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
+      />
+      <path
+        d="M12 8.3v12.1"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
       />
     </svg>
   );
@@ -22,14 +29,16 @@ function SpeechIcon({ className }) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
       <path
-        d="M4.5 6.8A2.3 2.3 0 0 1 6.8 4.5h10.4a2.3 2.3 0 0 1 2.3 2.3v7a2.3 2.3 0 0 1-2.3 2.3H10l-4.2 3.4v-3.4h-1a2.3 2.3 0 0 1-2.3-2.3v-5z"
-        transform="translate(1.5 0)"
+        d="M12 4.6c-4.6 0-8.3 3-8.3 6.8 0 2.1 1.2 4 3 5.2-.1 1-.5 1.9-1.2 2.8 1.5-.2 2.8-.7 3.8-1.5.9.2 1.8.3 2.7.3 4.6 0 8.3-3 8.3-6.8s-3.7-6.8-8.3-6.8z"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1.6"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+      <circle cx="8.6" cy="11.4" r="0.95" fill="currentColor" />
+      <circle cx="12" cy="11.4" r="0.95" fill="currentColor" />
+      <circle cx="15.4" cy="11.4" r="0.95" fill="currentColor" />
     </svg>
   );
 }
@@ -38,29 +47,22 @@ function SproutIcon({ className }) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
       <path
-        d="M12 20v-7.5M12 12.5C12 8.9 9.4 6.6 5 6.4c.2 4.4 2.5 6.9 7 6.1zm0-1.5c.4-3 2.6-4.7 6.6-4.9-.3 3.9-2.4 5.8-6.2 5.4"
+        d="M12 20.5V12"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1.6"
+        strokeWidth="1.5"
         strokeLinecap="round"
-        strokeLinejoin="round"
       />
-    </svg>
-  );
-}
-
-function QuizMarkIcon({ className }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" strokeWidth="1.6" />
       <path
-        d="M9.6 9.4c.2-1.3 1.2-2.2 2.5-2.2 1.4 0 2.5 1 2.5 2.3 0 1.7-2.3 2-2.3 3.6"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
+        d="M11.8 12.6C11.6 8.8 9.2 6.8 5 6.5c.2 4.1 2.5 6.3 6.8 6.1z"
+        fill="currentColor"
+        opacity="0.8"
       />
-      <circle cx="12.2" cy="16.6" r="1" fill="currentColor" />
+      <path
+        d="M12.2 11.2c.2-3 2.2-4.6 6-4.8-.2 3.5-2.1 5.3-6 5z"
+        fill="currentColor"
+        opacity="0.5"
+      />
     </svg>
   );
 }
@@ -85,10 +87,6 @@ function getPanelWord(selectedDetail, selectedNode) {
 
 function getSamePatternSearchValue(word) {
   return word?.arabic || word?.id || "";
-}
-
-function capitalize(text) {
-  return text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
 }
 
 function toDottedTransliteration(text) {
@@ -143,11 +141,6 @@ export default function WordDetailPanel({
     breakdownSegments.length > 0 &&
     substitution.status !== "mismatch";
 
-  const metaParts = [
-    capitalize(panelWord.word_type),
-    capitalize(pattern?.name || ""),
-  ].filter(Boolean);
-
   // Generated per displayed word, so it arrives after first paint: pending
   // while the agent runs, and simply absent when nothing valid comes back.
   const sentenceEntry = useSentence(shouldShowPanel ? panelWord.arabic : "");
@@ -186,21 +179,6 @@ export default function WordDetailPanel({
               )}
 
               <p className="word-detail-english">{panelWord.meaning}</p>
-
-              {(metaParts.length > 0 || pattern?.arabic) && (
-                <p className="word-detail-meta">
-                  {metaParts.join(" · ")}
-                  {pattern?.arabic && (
-                    <>
-                      {metaParts.length > 0 && " · "}
-                      Pattern{" "}
-                      <span lang="ar" dir="rtl">
-                        {pattern.arabic}
-                      </span>
-                    </>
-                  )}
-                </p>
-              )}
             </header>
 
             <div className="word-detail-divider" />
@@ -288,11 +266,7 @@ export default function WordDetailPanel({
                         className="word-formation-swatch word-formation-swatch--root"
                         aria-hidden="true"
                       />
-                      {/* One text node so the bidi algorithm keeps the
-                          closing paren attached to the Arabic run. */}
-                      {root?.arabic
-                        ? `Root letters (from ${root.arabic})`
-                        : "Root letters"}
+                      Root letters
                     </span>
 
                     <span className="word-formation-legend-item">
@@ -300,7 +274,7 @@ export default function WordDetailPanel({
                         className="word-formation-swatch word-formation-swatch--pattern"
                         aria-hidden="true"
                       />
-                      Pattern letters (added by the pattern)
+                      Pattern letters
                     </span>
                   </div>
                 </div>
@@ -333,40 +307,38 @@ export default function WordDetailPanel({
               <>
                 <div className="word-detail-divider" />
 
-                <section className="word-detail-section word-detail-keyed-section word-detail-sentence-section">
-                  <span className="word-detail-section-icon" aria-hidden="true">
-                    <SpeechIcon className="word-detail-section-glyph" />
-                  </span>
+                <section className="word-detail-section word-detail-sentence-section">
+                  {/* Header keeps the icon-gutter look, but the sentence
+                      itself spans the panel so it centres truly. */}
+                  <div className="word-detail-keyed-header">
+                    <span className="word-detail-section-icon" aria-hidden="true">
+                      <SpeechIcon className="word-detail-section-glyph" />
+                    </span>
 
-                  <div className="word-detail-keyed-body">
                     <p className="word-detail-section-label word-detail-section-label--left">
                       In a sentence
                     </p>
-
-                    {sentenceEntry.status === SENTENCE_STATUS.PENDING ? (
-                      <p className="word-detail-sentence-pending">
-                        Writing an example sentence…
-                      </p>
-                    ) : (
-                      <>
-                        <p
-                          className="word-detail-sentence-arabic"
-                          lang="ar"
-                          dir="rtl"
-                        >
-                          {sentenceEntry.sentence.arabic}
-                        </p>
-
-                        <p className="word-detail-sentence-translation">
-                          {sentenceEntry.sentence.translation}
-                        </p>
-
-                        <p className="word-detail-sentence-source">
-                          Generated live by K2
-                        </p>
-                      </>
-                    )}
                   </div>
+
+                  {sentenceEntry.status === SENTENCE_STATUS.PENDING ? (
+                    <p className="word-detail-sentence-pending">
+                      Writing an example sentence…
+                    </p>
+                  ) : (
+                    <>
+                      <p
+                        className="word-detail-sentence-arabic"
+                        lang="ar"
+                        dir="rtl"
+                      >
+                        {sentenceEntry.sentence.arabic}
+                      </p>
+
+                      <p className="word-detail-sentence-translation">
+                        {sentenceEntry.sentence.translation}
+                      </p>
+                    </>
+                  )}
                 </section>
               </>
             )}
@@ -425,18 +397,10 @@ export default function WordDetailPanel({
 
             {typeof onStartQuiz === "function" && quizQuestionCount > 0 && (
               <div className="word-detail-quiz-cta">
-                <span className="word-detail-quiz-cta-icon" aria-hidden="true">
-                  <QuizMarkIcon className="word-detail-section-glyph" />
-                </span>
-
-                <div className="word-detail-quiz-cta-copy">
-                  <p className="word-detail-quiz-cta-title">
-                    Test your understanding
-                  </p>
-                  <p className="word-detail-quiz-cta-text">
-                    Practice this pattern with {quizQuestionCount} questions.
-                  </p>
-                </div>
+                <p className="word-detail-quiz-cta-text">
+                  Test your understanding with {quizQuestionCount} quick
+                  questions.
+                </p>
 
                 <button
                   className="word-detail-quiz-cta-button"

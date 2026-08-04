@@ -179,19 +179,12 @@
   }
 }
 
-@media (max-width: 700px) {
-  .word-detail-breakdown-word {
-    font-size: 42px;
-  }
-}
-
 .same-pattern-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--color-border-active);
+  transform: translateY(-2px);
+  border-color: rgba(184, 154, 79, 0.78);
   background: var(--color-panel-surface);
-  box-shadow: 0 14px 30px rgba(37, 89, 74, 0.11),
-    0 0 0 3px var(--color-active-ring);
-  filter: saturate(1.04);
+  box-shadow: 0 8px 18px rgba(184, 154, 79, 0.08),
+    0 0 0 2px rgba(184, 154, 79, 0.12);
 }
 
 .same-pattern-card:focus-visible {
