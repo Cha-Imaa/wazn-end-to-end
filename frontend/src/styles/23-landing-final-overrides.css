@@ -416,3 +416,218 @@
   }
 }
 
+/* =========================
+   Phone composition (≤520px)
+   Matches the phone mockup: the whole landing fits one screen —
+   compact hero, 2×2 example cards, footer in flow, corner leaves
+   restored. No scrolling.
+   ========================= */
+
+@media (max-width: 520px) {
+  /* 21-quiz-active-tree-state.css widens body padding to 18px at ≤760,
+     but the shell's min-height math assumes 12px — realign so the
+     landing fits 100vh exactly */
+  body {
+    padding: 12px;
+  }
+
+  .app-shell-landing {
+    max-width: none;
+  }
+
+  /* The desktop composition renders at zoom 0.87; on the phone the
+     sizes below are set directly, so render 1:1 */
+  .app-shell-landing .main,
+  .app-shell-landing .footer {
+    zoom: 1;
+  }
+
+  .app-shell-landing .main {
+    padding: 32px 22px 0;
+  }
+
+  .app-shell-landing .hero {
+    margin-bottom: 16px;
+  }
+
+  .app-shell-landing .hero-brand-lockup {
+    margin-bottom: 10px;
+  }
+
+  .app-shell-landing .hero-english {
+    font-size: 66px;
+    line-height: 0.82;
+  }
+
+  .app-shell-landing .hero-brand-sprout {
+    width: 24px;
+    right: -20px;
+    top: -9px;
+  }
+
+  .hero-title-divider {
+    width: 200px;
+    height: 22px;
+    margin: 0 auto 10px;
+  }
+
+  .app-shell-landing .hero-title {
+    font-size: 21px;
+    margin-bottom: 6px;
+  }
+
+  .app-shell-landing .hero-subtitle {
+    font-size: 12px;
+  }
+
+  .app-shell-landing .search-area {
+    margin-top: 0;
+  }
+
+  .app-shell-landing .search-input::placeholder {
+    font-size: 13px;
+  }
+
+  .app-shell-landing .examples-section {
+    margin-top: 38px;
+  }
+
+  .app-shell-landing .examples-title {
+    font-size: 21px;
+  }
+
+  .app-shell-landing .examples-title-row {
+    grid-template-columns: minmax(30px, 1fr) auto minmax(30px, 1fr);
+    gap: 14px;
+  }
+
+  .app-shell-landing .examples-sprout {
+    width: 24px;
+    height: 24px;
+    margin: 8px auto 14px;
+  }
+
+  .app-shell-landing .examples-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .app-shell-landing .example-card {
+    min-height: 128px;
+    padding: 14px 10px 12px;
+    border-radius: 14px;
+  }
+
+  .app-shell-landing .example-card-icon,
+  .app-shell-landing .example-card img {
+    height: 42px;
+    margin-bottom: 8px;
+  }
+
+  .app-shell-landing .example-arabic {
+    font-size: 26px;
+    margin-bottom: 6px;
+  }
+
+  .app-shell-landing .example-english {
+    font-size: 13px;
+    padding-bottom: 9px;
+  }
+
+  .app-shell-landing .footer {
+    margin: 18px auto 16px;
+    font-size: 13px;
+  }
+
+  .app-shell-landing .footerLogo {
+    height: 20px;
+  }
+
+  /* Corner leaves back in frame, as in the mockup */
+  .leaf-left {
+    left: -10px;
+    bottom: -40px;
+    width: 120px;
+  }
+
+  .leaf-right {
+    right: -10px;
+    bottom: -40px;
+    width: 120px;
+  }
+}
+
+/* Short phones (e.g. iPhone SE, 667px tall): same composition,
+   further condensed so it still fits one screen */
+@media (max-width: 520px) and (max-height: 730px) {
+  .app-shell-landing .main {
+    padding-top: 16px;
+  }
+
+  .app-shell-landing .hero {
+    margin-bottom: 12px;
+  }
+
+  .app-shell-landing .hero-brand-lockup {
+    margin-bottom: 6px;
+  }
+
+  .app-shell-landing .hero-english {
+    font-size: 52px;
+  }
+
+  .hero-title-divider {
+    width: 170px;
+    height: 18px;
+    margin-bottom: 8px;
+  }
+
+  .app-shell-landing .hero-title {
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+
+  .app-shell-landing .examples-section {
+    margin-top: 18px;
+  }
+
+  .app-shell-landing .examples-title {
+    font-size: 18px;
+  }
+
+  .app-shell-landing .examples-sprout {
+    width: 20px;
+    height: 20px;
+    margin: 6px auto 10px;
+  }
+
+  .app-shell-landing .examples-grid {
+    gap: 12px;
+  }
+
+  .app-shell-landing .example-card {
+    min-height: 106px;
+    padding: 10px 8px 8px;
+  }
+
+  .app-shell-landing .example-card-icon,
+  .app-shell-landing .example-card img {
+    height: 32px;
+    margin-bottom: 6px;
+  }
+
+  .app-shell-landing .example-arabic {
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+
+  .app-shell-landing .example-english {
+    font-size: 12px;
+    padding-bottom: 8px;
+  }
+
+  .app-shell-landing .footer {
+    margin: 12px auto 12px;
+  }
+}
+
