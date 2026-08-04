@@ -128,7 +128,7 @@
   padding: 24px 14px 14px;
 }
 
-/* --- agentic reasoning flow (timeline: numbers in a left gutter) --- */
+/* --- agentic reasoning flow --- */
 .k2-agent-flow {
   list-style: none;
   margin: 0;
@@ -139,37 +139,8 @@
   position: relative;
 }
 
-.k2-agent-flow::before {
-  content: "";
-  position: absolute;
-  left: 13px;
-  top: 20px;
-  bottom: 20px;
-  width: 2px;
-  background: var(--color-gold-ring);
-  border-radius: 999px;
-}
-
 .k2-agent-item {
   position: relative;
-  padding-left: 40px;
-}
-
-.k2-agent-step {
-  position: absolute;
-  left: 2px;
-  top: 20px;
-  z-index: 1;
-  width: 24px;
-  height: 24px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  font-size: 12.5px;
-  font-weight: 800;
-  color: var(--color-panel-surface);
-  background: var(--color-green-primary);
-  box-shadow: 0 0 0 4px rgba(241, 242, 235, 0.9);
 }
 
 .k2-agent {
@@ -233,16 +204,6 @@
   gap: 7px;
 }
 
-.k2-agent-status-label {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--color-green-secondary);
-}
-
-.k2-agent-status--skipped .k2-agent-status-label {
-  color: rgba(54, 61, 1, 0.5);
-}
-
 /* orange completed check (deliberate inspiration match) */
 .k2-agent-status-icon {
   width: 23px;
@@ -270,7 +231,7 @@
 
 /* --- expandable trace: engine badge + reasoning + output --- */
 .k2-agent-trace {
-  padding: 2px 14px 14px 60px;
+  padding: 2px 14px 14px;
   display: flex;
   flex-direction: column;
   gap: 9px;
@@ -371,10 +332,6 @@
 }
 
 /* --- pending agent row --- */
-.k2-agent-status--pending .k2-agent-status-label {
-  color: var(--color-green-secondary);
-}
-
 .k2-agent-status--pending .k2-agent-status-icon {
   color: rgba(78, 129, 116, 0.55);
   animation: k2-provenance-pulse 1.6s ease-in-out infinite;

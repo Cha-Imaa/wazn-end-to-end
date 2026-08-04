@@ -1,28 +1,23 @@
-// One row in the agentic reasoning flow: numbered step, botanical icon, name,
-// summary, status, and an expandable panel showing the agent's provenance badge,
-// a typewriter-animated reasoning trace, and its final output.
+// One row in the agentic reasoning flow: botanical icon, name, summary,
+// status icon, and an expandable panel showing a typewriter-animated
+// reasoning trace and the agent's final output.
 
 import { useState } from "react";
 import { CheckIcon, DotIcon, ChevronIcon } from "./icons.jsx";
 import { useTypewriter } from "./useTypewriter.js";
-import {
-  ENGINE_STATUS,
-  describeEngineStatus,
-  resolveAgentStatus,
-} from "./engineStatus.js";
+import { ENGINE_STATUS, resolveAgentStatus } from "./engineStatus.js";
 
+// Spoken by the status icon (sr-only) — the icon alone carries it visually.
 const STATUS_LABEL = {
   completed: "Completed",
   skipped: "Skipped",
   pending: "Running",
 };
-const K2_MARK = "/assets/k2/k2-mark.png";
 
 export default function AgentFlowItem({ agent, pending = false }) {
   const [open, setOpen] = useState(false);
 
   const engineStatus = resolveAgentStatus(agent, pending);
-  const badge = describeEngineStatus(engineStatus, agent.model);
 
   const isPending = engineStatus === ENGINE_STATUS.PENDING;
   const isLive = engineStatus === ENGINE_STATUS.K2_LIVE;
@@ -40,7 +35,6 @@ export default function AgentFlowItem({ agent, pending = false }) {
 
   return (
     <li className="k2-agent-item">
-      <span className="k2-agent-step">{agent.step}</span>
       <details
         className="k2-agent"
         onToggle={(e) => setOpen(e.currentTarget.open)}
@@ -57,9 +51,7 @@ export default function AgentFlowItem({ agent, pending = false }) {
             <span className="k2-agent-desc">{agent.summary}</span>
           </span>
           <span className={`k2-agent-status k2-agent-status--${rowStatus}`}>
-            <span className="k2-agent-status-label">
-              {STATUS_LABEL[rowStatus]}
-            </span>
+            <span className="sr-only">{STATUS_LABEL[rowStatus]}</span>
             {rowStatus === "completed" ? (
               <CheckIcon className="k2-agent-status-icon" />
             ) : (
@@ -70,18 +62,6 @@ export default function AgentFlowItem({ agent, pending = false }) {
         </summary>
 
         <div className="k2-agent-trace">
-          <span className={`k2-engine-badge k2-engine-badge--${badge.variant}`}>
-            {badge.mark && (
-              <img
-                className="k2-engine-badge-mark"
-                src={K2_MARK}
-                alt=""
-                aria-hidden="true"
-              />
-            )}
-            {badge.label}
-          </span>
-
           {/* Why an agent was rejected belongs in the transparency tab, not
               only in the server log — the badge says "fallback", this says
               what failed. */}
