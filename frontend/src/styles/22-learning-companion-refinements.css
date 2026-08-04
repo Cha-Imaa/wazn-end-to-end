@@ -373,12 +373,20 @@
     padding: 16px 16px 22px;
   }
 
-  .learning-companion-panel .word-detail-pattern {
-    font-size: 34px;
+  .learning-companion-panel .word-detail-arabic {
+    font-size: 36px;
   }
 
-  .learning-companion-panel .word-detail-breakdown-word {
-    font-size: 36px;
+  /* The equation stacks on narrow screens: root / pattern / word in a
+     column, operators between them. */
+  .learning-companion-panel .word-formation-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+    justify-items: center;
+  }
+
+  .learning-companion-panel .word-formation-op {
+    padding-top: 0;
   }
 
   .learning-companion-panel .same-pattern-grid {
