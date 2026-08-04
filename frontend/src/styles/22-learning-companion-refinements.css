@@ -377,16 +377,43 @@
     font-size: 36px;
   }
 
-  /* The equation stacks on narrow screens: root / pattern / word in a
-     column, operators between them. */
+  /* The equation folds on narrow screens: "root + pattern" on one line,
+     then "=", then the word. The row's children are root, +, pattern, =,
+     word in DOM order, so each is pinned to its grid slot explicitly. */
   .learning-companion-panel .word-formation-row {
-    grid-template-columns: 1fr;
-    gap: 2px;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 2px 8px;
     justify-items: center;
   }
 
   .learning-companion-panel .word-formation-op {
     padding-top: 0;
+    align-self: center;
+  }
+
+  .learning-companion-panel .word-formation-row > div:nth-of-type(1) {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .learning-companion-panel .word-formation-row > span:nth-of-type(1) {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  .learning-companion-panel .word-formation-row > div:nth-of-type(2) {
+    grid-row: 1;
+    grid-column: 3;
+  }
+
+  .learning-companion-panel .word-formation-row > span:nth-of-type(2) {
+    grid-row: 2;
+    grid-column: 1 / -1;
+  }
+
+  .learning-companion-panel .word-formation-row > div:nth-of-type(3) {
+    grid-row: 3;
+    grid-column: 1 / -1;
   }
 
   /* All three cards on one line: drop the desktop inset and tighten the
