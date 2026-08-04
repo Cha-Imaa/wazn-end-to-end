@@ -24,9 +24,37 @@ function TreeIcon({ className }) {
   );
 }
 
+function HomeIcon({ className }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M4.5 11.2 12 4.6l7.5 6.6M6.4 10v9.4h11.2V10"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10.2 19.4v-4.6h3.6v4.6"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export default function MobileLearningNav({
   activeView,
   onNavigate,
+  onHome,
   quizAvailable = true,
   viewsDisabled = false,
 }) {
@@ -73,6 +101,14 @@ export default function MobileLearningNav({
 
   return (
     <nav className="mobile-learning-nav" aria-label="Learning views">
+      <button
+        type="button"
+        className="mobile-nav-item"
+        onClick={onHome}
+      >
+        <HomeIcon className="mobile-nav-glyph" />
+        <span className="mobile-nav-label">Home</span>
+      </button>
       {items.map((item) => (
         <button
           key={item.id}

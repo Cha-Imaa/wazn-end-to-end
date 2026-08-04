@@ -158,6 +158,23 @@
 }
 
 /* =========================
+   Home pill clearance
+   The Home pill occupies the results panel's top-left corner; the centered
+   search bar must stay clear of it. Symmetric shrink keeps it centered.
+   ========================= */
+
+.learning-search-area {
+  width: min(980px, calc(100% - 276px));
+}
+
+@media (max-width: 760px) {
+  .learning-search-area {
+    width: 100%;
+    padding-left: 100px;
+  }
+}
+
+/* =========================
    Phone learning workspace
    Four coordinated full-screen views — Tree / Details / Quiz / Insights —
    switched by a fixed bottom navigation. Desktop keeps the side-by-side
@@ -249,24 +266,16 @@
   /* Compact header row: logo at the left, search field beside it.
      The logo stays absolutely positioned (the results panel's grid rows
      are load-bearing); the search area clears it with padding. */
-  .learning-logo-link {
-    top: 14px;
-    left: 14px;
-    /* 21's old stacked-phone band centres the logo with right/margin —
-       undo that so it sits beside the search field */
-    right: auto;
-    margin: 0;
-    width: 48px;
-    /* the full-width search area is position:relative + z-index:40 (20-*.css)
-       and its padding zone covers the logo — lift the logo above it so it
-       stays tappable */
-    z-index: 45;
+  /* On phones Home lives in the bottom nav instead, so the search bar
+     keeps the full header width to itself. */
+  .learning-home-button {
+    display: none;
   }
 
   .learning-search-area {
     width: 100%;
     margin: 0 0 6px;
-    padding-left: 58px;
+    padding-left: 0;
   }
 
   /* Phones have a native keyboard — drop the on-screen Arabic keyboard
@@ -393,7 +402,7 @@
     bottom: 0;
     z-index: 60;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     padding: 0 6px env(safe-area-inset-bottom, 0px);
     border-top: 1px solid rgba(37, 89, 74, 0.18);
     background: var(--color-panel-surface, #faf8ef);

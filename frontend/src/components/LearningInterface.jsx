@@ -221,16 +221,21 @@ export default function LearningInterface({
         <section className="learning-results-panel" aria-label="Word tree results">
           <button
             type="button"
-            className="learning-logo-link"
+            className="learning-home-button"
             onClick={onReturnHome}
-            aria-label="Return to Wazn home"
           >
-            <img
-              className="learning-logo-image"
-              src="/assets/logo/logo.png"
-              alt=""
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               aria-hidden="true"
-            />
+            >
+              <path d="M15 5l-7 7 7 7" />
+            </svg>
+            <span>Home</span>
           </button>
 
           <div className="learning-search-area">
@@ -426,6 +431,7 @@ export default function LearningInterface({
       <MobileLearningNav
         activeView={mobileView}
         onNavigate={handleMobileNavigate}
+        onHome={onReturnHome}
         quizAvailable={shouldShowQuiz}
         viewsDisabled={isNotFound}
       />
