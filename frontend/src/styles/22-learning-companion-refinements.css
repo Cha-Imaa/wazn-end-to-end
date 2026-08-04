@@ -257,12 +257,27 @@
     right: auto;
     margin: 0;
     width: 48px;
+    /* the full-width search area is position:relative + z-index:40 (20-*.css)
+       and its padding zone covers the logo — lift the logo above it so it
+       stays tappable */
+    z-index: 45;
   }
 
   .learning-search-area {
     width: 100%;
     margin: 0 0 6px;
     padding-left: 58px;
+  }
+
+  /* Phones have a native keyboard — drop the on-screen Arabic keyboard
+     (toggle + panel) and close up its grid column in the search row. */
+  .keyboard-toggle,
+  .keyboard-panel {
+    display: none;
+  }
+
+  .search-row {
+    grid-template-columns: minmax(0, 1fr) auto auto;
   }
 
   .tree-stage {
