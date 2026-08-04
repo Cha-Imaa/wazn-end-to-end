@@ -137,6 +137,16 @@ def find_word_id(
         lookup_trace["alias_match_type"] = "raw_query"
         return raw_alias_match
 
+    # English/transliteration aliases are stored lowercase, so "School"
+    # must match the same entry as "school".
+    folded_query = raw_query.strip().casefold()
+    folded_alias_match = kb.aliases.get(folded_query)
+
+    if folded_alias_match:
+        lookup_trace["alias_match"] = True
+        lookup_trace["alias_match_type"] = "casefolded_query"
+        return folded_alias_match
+
     normalized_alias_match = kb.aliases.get(normalized_query)
 
     if normalized_alias_match:
