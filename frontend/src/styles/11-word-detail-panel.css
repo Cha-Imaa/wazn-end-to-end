@@ -400,14 +400,14 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
   margin-top: 4px;
-  /* Slightly inset so the cards read a touch taller than wide */
-  padding: 0 10px;
+  /* Inset so the cards read clearly taller than wide */
+  padding: 0 24px;
 }
 
 .same-pattern-card {
-  min-height: 112px;
+  min-height: 140px;
   width: 100%;
-  padding: 18px 10px 14px;
+  padding: 20px 8px 16px;
   border-radius: 14px;
   border: 1.5px solid rgba(184, 154, 79, 0.4);
   background: rgba(255, 255, 250, 0.62);
