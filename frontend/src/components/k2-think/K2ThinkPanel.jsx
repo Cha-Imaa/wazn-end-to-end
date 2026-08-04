@@ -136,9 +136,6 @@ export default function K2ThinkPanel({ k2Think, word = "", insightsPending = fal
         </section>
       )}
 
-      {data.fallback_note && (
-        <p className="k2-think-fallback-note">{data.fallback_note}</p>
-      )}
     </section>
   );
 }

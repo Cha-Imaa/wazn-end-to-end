@@ -115,8 +115,6 @@ export default function WordDetailPanel({
   isOriginNode = false,
   onClose,
   onSearch,
-  onStartQuiz = null,
-  quizQuestionCount = 0,
 }) {
   const shouldShowPanel = isOpen && (selectedDetail || selectedNode);
   const panelWord = getPanelWord(selectedDetail, selectedNode);
@@ -347,12 +345,14 @@ export default function WordDetailPanel({
               <>
                 <div className="word-detail-divider" />
 
-                <section className="word-detail-section word-detail-keyed-section">
-                  <span className="word-detail-section-icon" aria-hidden="true">
-                    <SproutIcon className="word-detail-section-glyph" />
-                  </span>
+                <section className="word-detail-section word-detail-more-words-section">
+                  {/* Icon-gutter header, full-width grid — keeps the cards
+                      centred in the panel rather than pushed right. */}
+                  <div className="word-detail-keyed-header">
+                    <span className="word-detail-section-icon" aria-hidden="true">
+                      <SproutIcon className="word-detail-section-glyph" />
+                    </span>
 
-                  <div className="word-detail-keyed-body">
                     <p className="word-detail-section-label word-detail-section-label--left">
                       More words on{" "}
                       {pattern?.arabic && (
@@ -365,52 +365,36 @@ export default function WordDetailPanel({
                         </span>
                       )}
                     </p>
+                  </div>
 
-                    <div className="same-pattern-grid">
-                      {samePatternWords.slice(0, 3).map((word) => (
-                        <button
-                          className="same-pattern-card"
-                          key={word.id}
-                          type="button"
-                          onClick={() => onSearch(getSamePatternSearchValue(word))}
-                        >
-                          <p className="same-pattern-arabic" lang="ar" dir="rtl">
-                            {word.arabic}
+                  <div className="same-pattern-grid">
+                    {samePatternWords.slice(0, 3).map((word) => (
+                      <button
+                        className="same-pattern-card"
+                        key={word.id}
+                        type="button"
+                        onClick={() => onSearch(getSamePatternSearchValue(word))}
+                      >
+                        <p className="same-pattern-arabic" lang="ar" dir="rtl">
+                          {word.arabic}
+                        </p>
+
+                        {word.transliteration && (
+                          <p className="same-pattern-transliteration">
+                            {word.transliteration}
                           </p>
+                        )}
 
-                          {word.transliteration && (
-                            <p className="same-pattern-transliteration">
-                              {word.transliteration}
-                            </p>
-                          )}
-
-                          <p className="same-pattern-english">
-                            {word.short_meaning || word.meaning}
-                          </p>
-                        </button>
-                      ))}
-                    </div>
+                        <p className="same-pattern-english">
+                          {word.short_meaning || word.meaning}
+                        </p>
+                      </button>
+                    ))}
                   </div>
                 </section>
               </>
             )}
 
-            {typeof onStartQuiz === "function" && quizQuestionCount > 0 && (
-              <div className="word-detail-quiz-cta">
-                <p className="word-detail-quiz-cta-text">
-                  Test your understanding with {quizQuestionCount} quick
-                  questions.
-                </p>
-
-                <button
-                  className="word-detail-quiz-cta-button"
-                  type="button"
-                  onClick={onStartQuiz}
-                >
-                  Start quiz
-                </button>
-              </div>
-            )}
           </div>
         </>
       )}

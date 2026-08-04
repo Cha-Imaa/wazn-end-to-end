@@ -394,8 +394,6 @@ export default function LearningInterface({
                 isOriginNode={isOriginCompanionNode}
                 onClose={onClosePanel}
                 onSearch={onSearch}
-                onStartQuiz={() => handleMobileNavigate("quiz")}
-                quizQuestionCount={activeQuizQuestions.length}
               />
             )}
 
