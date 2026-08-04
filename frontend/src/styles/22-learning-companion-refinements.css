@@ -389,8 +389,26 @@
     padding-top: 0;
   }
 
+  /* All three cards on one line: drop the desktop inset and tighten the
+     gap so the row fits a ~390px viewport without wrapping. */
   .learning-companion-panel .same-pattern-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding: 0;
+  }
+
+  .learning-companion-panel .same-pattern-card {
+    min-height: 132px;
+    padding: 14px 6px 12px;
+  }
+
+  .learning-companion-panel .same-pattern-arabic {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .learning-companion-panel .same-pattern-english {
+    font-size: 11px;
   }
 
   .learning-companion-panel .word-quiz {
