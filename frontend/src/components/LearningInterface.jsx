@@ -5,8 +5,16 @@ import WordTree from "./WordTree.jsx";
 import WordQuiz from "./WordQuiz.jsx";
 import WordDetailPanel from "./WordDetailPanel.jsx";
 import K2ThinkPanel from "./k2-think/K2ThinkPanel.jsx";
+import MobileLearningNav from "./MobileLearningNav.jsx";
+import MobileTreeViewport from "./MobileTreeViewport.jsx";
 import { BulbIcon } from "./k2-think/icons.jsx";
 import { useArabicKeyboardInput } from "../hooks/useArabicKeyboardInput.js";
+
+const MOBILE_VIEW_TITLES = {
+  details: "Details",
+  quiz: "Quiz",
+  k2think: "Insights",
+};
 
 function normalizeText(value = "") {
   return String(value)
@@ -41,9 +49,28 @@ export default function LearningInterface({
 
   const [companionTab, setCompanionTab] = useState("details");
 
+  // Phone-only view state: "tree" shows the results panel, anything else
+  // shows the companion panel (whose content companionTab already drives).
+  // Desktop ignores it — the data attribute only matters inside the phone
+  // media query.
+  const [mobileView, setMobileView] = useState("tree");
+
   const shouldShowQuiz = activeQuizQuestions.length > 0;
   const leaves = activeTree?.leaves || [];
   const isNotFound = learningResult?.status === "not_found";
+
+  // A new search result lands on the Tree view. Keyed on the word id, not
+  // the result object: the async insights enrichment replaces the object
+  // for the same word and must not yank the user back to the tree.
+  const resultKey =
+    learningResult?.selected_word_id || learningResult?.normalized_query || "";
+
+  const [seenResultKey, setSeenResultKey] = useState(resultKey);
+
+  if (seenResultKey !== resultKey) {
+    setSeenResultKey(resultKey);
+    setMobileView("tree");
+  }
 
   const searchedNode = useMemo(() => {
     if (!leaves.length) {
@@ -117,6 +144,7 @@ export default function LearningInterface({
 
   function handleSubmit() {
     setCompanionTab("details");
+    setMobileView("tree");
     onSearch(query);
   }
 
@@ -127,10 +155,28 @@ export default function LearningInterface({
 
   function handleLeafClick(node) {
     setCompanionTab("details");
+    // Tapping a leaf on the phone goes straight to its Details view.
+    setMobileView("details");
 
     if (typeof onLeafClick === "function") {
       onLeafClick(node);
     }
+  }
+
+  function handleMobileNavigate(view) {
+    if (view !== "tree") {
+      if (isNotFound) {
+        return;
+      }
+
+      if (view === "quiz" && !shouldShowQuiz) {
+        return;
+      }
+
+      setCompanionTab(view === "insights" ? "k2think" : view);
+    }
+
+    setMobileView(view);
   }
 
   function handleTabChange(nextTab) {
@@ -166,7 +212,7 @@ export default function LearningInterface({
     });
 
   return (
-    <div className="learning-main">
+    <div className="learning-main" data-mobile-view={mobileView}>
       <div
         className={`learning-panels ${
           companionTab === "quiz" ? "learning-panels--quiz-active" : ""
@@ -209,15 +255,17 @@ export default function LearningInterface({
           </div>
 
           <div className="tree-stage" aria-live="polite">
-            <WordTree
-              activeTree={displayTree}
-              selectedNode={activeCompanionNode}
-              onLeafClick={handleLeafClick}
-              searchTerm={query}
-              isQuizActive={companionTab === "quiz"}
-              notFoundReason={isNotFound ? learningResult?.reason || "" : ""}
-              onTryAnotherWord={handleTryAnotherWord}
-            />
+            <MobileTreeViewport>
+              <WordTree
+                activeTree={displayTree}
+                selectedNode={activeCompanionNode}
+                onLeafClick={handleLeafClick}
+                searchTerm={query}
+                isQuizActive={companionTab === "quiz"}
+                notFoundReason={isNotFound ? learningResult?.reason || "" : ""}
+                onTryAnotherWord={handleTryAnotherWord}
+              />
+            </MobileTreeViewport>
 
             {companionTab === "quiz" && hasTree && (
               <div className="tree-quiz-overlay" aria-hidden="true">
@@ -247,6 +295,18 @@ export default function LearningInterface({
         </section>
 
         <aside className="learning-companion-panel" aria-label="Learning companion">
+          <header className="mobile-context-header">
+            <span className="mobile-context-title">
+              {MOBILE_VIEW_TITLES[companionTab] || "Details"}
+            </span>
+
+            {!isNotFound && activeCompanionNode?.arabic && (
+              <span className="mobile-context-word" lang="ar" dir="rtl">
+                {activeCompanionNode.arabic}
+              </span>
+            )}
+          </header>
+
           <div className="companion-tabs" role="tablist" aria-label="Learning tools">
             <button
               type="button"
@@ -362,6 +422,13 @@ export default function LearningInterface({
           </div>
         </aside>
       </div>
+
+      <MobileLearningNav
+        activeView={mobileView}
+        onNavigate={handleMobileNavigate}
+        quizAvailable={shouldShowQuiz}
+        viewsDisabled={isNotFound}
+      />
     </div>
   );
 }

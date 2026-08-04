@@ -156,3 +156,289 @@
   font-style: italic;
   color: var(--color-footer-text);
 }
+
+/* =========================
+   Phone learning workspace
+   Four coordinated full-screen views — Tree / Details / Quiz / Insights —
+   switched by a fixed bottom navigation. Desktop keeps the side-by-side
+   layout and the companion panel's own tabs; everything below is inert
+   above the phone breakpoint.
+
+   The phone condition is: portrait phones (≤520px wide) OR landscape
+   phones (≤500px tall with a coarse primary pointer — the pointer guard
+   keeps short desktop windows on the desktop layout). If you change one
+   media list, change the other, and keep isPhoneViewport() in
+   MobileTreeViewport.jsx in sync.
+   ========================= */
+
+/* Base state: mobile-only chrome is invisible on desktop, and the tree
+   viewport wrapper is a transparent pass-through. */
+.mobile-learning-nav {
+  display: none;
+}
+
+.mobile-context-header {
+  display: none;
+}
+
+.mobile-tree-viewport {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.mobile-tree-canvas {
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-tree-reset {
+  display: none;
+}
+
+@media (max-width: 520px), (max-height: 500px) and (pointer: coarse) {
+  /* --- shell: one view at a time, room for the fixed nav --- */
+
+  /* Landscape phones fall into the ≤1100px tablet band, which sets body
+     padding to 20px; the panel heights below assume 12px all round. */
+  body {
+    padding: 12px;
+  }
+
+  .learning-main,
+  .learning-panels {
+    min-height: 0;
+    height: auto;
+  }
+
+  .learning-panels {
+    display: block;
+  }
+
+  .learning-main[data-mobile-view="tree"] .learning-companion-panel {
+    display: none;
+  }
+
+  .learning-main:not([data-mobile-view="tree"]) .learning-results-panel {
+    display: none;
+  }
+
+  .learning-results-panel,
+  .learning-companion-panel {
+    min-height: 0;
+    height: calc(100dvh - 24px - 58px - env(safe-area-inset-bottom, 0px));
+  }
+
+  /* --- tree view: compact header (logo + search), tree fills the rest --- */
+
+  .learning-results-panel {
+    padding: 12px 14px 8px;
+  }
+
+  /* Compact header row: logo at the left, search field beside it.
+     The logo stays absolutely positioned (the results panel's grid rows
+     are load-bearing); the search area clears it with padding. */
+  .learning-logo-link {
+    top: 14px;
+    left: 14px;
+    /* 21's old stacked-phone band centres the logo with right/margin —
+       undo that so it sits beside the search field */
+    right: auto;
+    margin: 0;
+    width: 48px;
+  }
+
+  .learning-search-area {
+    width: 100%;
+    margin: 0 0 6px;
+    padding-left: 58px;
+  }
+
+  .tree-stage {
+    /* 21's old phone band caps the stage to the artwork's aspect ratio;
+       here the tree owns the whole view and the SVG centres itself */
+    height: 100%;
+    max-height: none;
+    aspect-ratio: auto;
+    padding: 2px;
+  }
+
+  .learning-footer {
+    min-height: 0;
+    margin-top: 4px;
+    font-size: 12px;
+  }
+
+  /* --- tree pan/zoom --- */
+
+  .mobile-tree-viewport {
+    touch-action: none;
+  }
+
+  .mobile-tree-reset {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    z-index: 6;
+    min-height: 40px;
+    padding: 8px 12px;
+    border: 1px solid rgba(37, 89, 74, 0.24);
+    border-radius: 999px;
+    background: rgba(250, 248, 239, 0.92);
+    color: var(--color-green-primary);
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(37, 89, 74, 0.14);
+  }
+
+  .mobile-tree-reset svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* --- companion views: context header instead of desktop tabs --- */
+
+  .learning-companion-panel .companion-tabs {
+    display: none;
+  }
+
+  .mobile-context-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 46px;
+    padding: 8px 16px;
+    border-bottom: 1px solid rgba(37, 89, 74, 0.18);
+    background: rgba(250, 248, 239, 0.58);
+  }
+
+  .mobile-context-title {
+    font-family: "EB Garamond", serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-green-primary);
+  }
+
+  .mobile-context-word {
+    font-family: "Amiri", serif;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--color-green-secondary);
+  }
+
+  /* --- content density on narrow screens --- */
+
+  .learning-companion-panel .word-detail-panel {
+    padding: 16px 16px 22px;
+  }
+
+  .learning-companion-panel .word-detail-pattern {
+    font-size: 34px;
+  }
+
+  .learning-companion-panel .word-detail-breakdown-word {
+    font-size: 36px;
+  }
+
+  .learning-companion-panel .same-pattern-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .learning-companion-panel .word-quiz {
+    padding: 14px 14px 16px;
+  }
+
+  .learning-companion-panel .quiz-option {
+    min-height: 48px;
+  }
+
+  /* --- fixed bottom navigation --- */
+
+  .mobile-learning-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0 6px env(safe-area-inset-bottom, 0px);
+    border-top: 1px solid rgba(37, 89, 74, 0.18);
+    background: var(--color-panel-surface, #faf8ef);
+    box-shadow: 0 -8px 20px rgba(37, 89, 74, 0.1);
+  }
+
+  .mobile-nav-item {
+    position: relative;
+    min-height: 54px;
+    padding: 8px 4px 6px;
+    border: 0;
+    background: transparent;
+    color: rgba(37, 89, 74, 0.62);
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    font-family: "Inter", sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color 160ms ease;
+  }
+
+  .mobile-nav-item--active {
+    color: var(--color-green-primary);
+  }
+
+  .mobile-nav-item--active::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 22%;
+    right: 22%;
+    height: 3px;
+    border-radius: 0 0 999px 999px;
+    background: var(--color-green-secondary);
+  }
+
+  .mobile-nav-item:disabled {
+    opacity: 0.38;
+    cursor: not-allowed;
+  }
+
+  .mobile-nav-glyph {
+    width: 22px;
+    height: 22px;
+    display: block;
+    object-fit: contain;
+  }
+
+  .mobile-nav-label {
+    line-height: 1;
+  }
+}
+
+@media (max-width: 520px) and (prefers-reduced-motion: no-preference),
+  (max-height: 500px) and (pointer: coarse) and (prefers-reduced-motion: no-preference) {
+  .mobile-tree-canvas {
+    transition: transform 120ms ease-out;
+  }
+}
