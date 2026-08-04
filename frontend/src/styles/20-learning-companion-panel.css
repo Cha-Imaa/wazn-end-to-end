@@ -18,7 +18,7 @@
   min-height: calc(100vh - 64px);
   height: calc(100vh - 64px);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(460px, 500px);
+  grid-template-columns: minmax(0, 1fr) minmax(400px, 430px);
   gap: 22px;
   align-items: stretch;
 }
@@ -221,21 +221,8 @@
 }
 
 
-.learning-companion-panel .word-detail-pattern {
-  font-size: 40px;
-}
-
-.learning-companion-panel .word-detail-breakdown-word {
-  font-size: 42px;
-}
-
 .learning-companion-panel .same-pattern-grid {
   gap: 10px;
-}
-
-.learning-companion-panel .same-pattern-card {
-  min-height: 70px;
-  padding: 10px 8px;
 }
 
 .learning-companion-panel .word-quiz {
