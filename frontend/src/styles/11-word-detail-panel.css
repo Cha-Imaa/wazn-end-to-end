@@ -102,6 +102,16 @@
   background-size: min(100%, 270px) auto;
 }
 
+/* The framing dividers hug the panel edges: pull them into the panel's
+   own padding so they sit right at the top and bottom. */
+.word-detail-shell-content > .word-detail-divider:first-child {
+  margin: -14px 0 10px;
+}
+
+.word-detail-shell-content > .word-detail-divider:last-child {
+  margin: 10px 0 -12px;
+}
+
 .word-detail-placeholder {
   display: none;
 }
