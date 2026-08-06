@@ -7,41 +7,10 @@ import { getK2ThinkSample } from "../../data/k2ThinkSample.js";
 import AgentFlowItem from "./AgentFlowItem.jsx";
 import ScoreGauge from "./ScoreGauge.jsx";
 import GuardrailChecklist from "./GuardrailChecklist.jsx";
-import { StarRating, LeafSprig, LeafIcon } from "./icons.jsx";
-import { describeEngineStatus, engineStatusOf } from "./engineStatus.js";
+import { StarRating, LeafIcon, ShieldIcon } from "./icons.jsx";
 
 const HEADER_BRANCH = "/assets/k2/header-branch.png";
 const K2_MARK = "/assets/k2/k2-mark.png";
-
-function SectionLabel({ children }) {
-  return (
-    <p className="k2-think-section-label">
-      <LeafSprig className="k2-label-leaf" />
-      <span>{children}</span>
-      <LeafSprig className="k2-label-leaf" flip />
-    </p>
-  );
-}
-
-// The same badge the agent rows use, so a section's provenance reads identically
-// to the provenance of the steps that produced it.
-function ProvenanceChip({ descriptor, className = "" }) {
-  return (
-    <span
-      className={`k2-engine-badge k2-engine-badge--${descriptor.variant} ${className}`.trim()}
-    >
-      {descriptor.mark && (
-        <img
-          className="k2-engine-badge-mark"
-          src={K2_MARK}
-          alt=""
-          aria-hidden="true"
-        />
-      )}
-      {descriptor.label}
-    </span>
-  );
-}
 
 export default function K2ThinkPanel({ k2Think, word = "", insightsPending = false }) {
   const data = k2Think || getK2ThinkSample(word);
@@ -52,10 +21,6 @@ export default function K2ThinkPanel({ k2Think, word = "", insightsPending = fal
 
   // Sample data has no live steps, so a missing k2_think must not read as live.
   const pending = insightsPending && Boolean(k2Think);
-
-  const evaluationProvenance = evaluation
-    ? describeEngineStatus(engineStatusOf(evaluation))
-    : null;
 
   return (
     <section className="k2-think-panel" aria-label="Insights">
@@ -91,18 +56,14 @@ export default function K2ThinkPanel({ k2Think, word = "", insightsPending = fal
 
       {evaluation && (
         <section className="k2-think-section">
-          <SectionLabel>Quality Evaluation</SectionLabel>
+          {/* Inspiration-style card head: shield icon + left-aligned title,
+              matching the flow and guardrails heads (owner direction,
+              2026-08-07 — the provenance chip is gone with the pill). */}
           <div className="k2-eval-container">
-            {/* The demo scores are hand-written and identical for every word.
-                Unlabelled beside real morphology they read as measured (§1.5).
-                Inside the container so the section label keeps its negative
-                margin overlap. */}
-            {evaluationProvenance && (
-              <ProvenanceChip
-                descriptor={evaluationProvenance}
-                className="k2-section-provenance"
-              />
-            )}
+            <p className="k2-eval-head">
+              <ShieldIcon className="k2-eval-head-icon" />
+              <span>Quality Evaluation</span>
+            </p>
             <div className="k2-eval-row">
               {overall && (
                 <div className="k2-eval-overall-card">
