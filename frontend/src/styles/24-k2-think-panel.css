@@ -108,13 +108,18 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding-bottom: 9px;
-  border-bottom: 1px solid var(--border-soft);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--color-green-primary);
+}
+
+/* Only the flow head keeps its divider; the evaluation and guardrails heads
+   run straight into their content (inspiration, owner direction). */
+.k2-flow-head {
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--border-soft);
 }
 
 .k2-flow-head-icon,
@@ -610,8 +615,6 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding-bottom: 9px;
-  border-bottom: 1px solid var(--border-soft);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.09em;
@@ -642,6 +645,13 @@
   gap: 9px;
   font-size: 13px;
   color: var(--color-text-black);
+}
+
+/* Faint separator under each check; the list's right padding stops it well
+   short of the card edge, as in the inspiration. */
+.k2-check:not(:last-child) {
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(54, 61, 1, 0.1);
 }
 
 /* guardrail checks stay green (inspiration) */
