@@ -41,6 +41,8 @@ services:
         value: "true"
       - key: ENABLE_K2_EVALUATION
         value: "true"
+      - key: ENABLE_K2_SENTENCE
+        value: "true"
 
       # Off deliberately: pre-warm fires four sequential K2 calls per demo word
       # before the app serves traffic, which would push the first boot past
