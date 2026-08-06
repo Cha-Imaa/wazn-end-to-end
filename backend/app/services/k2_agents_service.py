@@ -641,15 +641,28 @@ def _run_sentence_uncached(
             {target} if isinstance(target, str) else set(),
         )
 
-    result = _call_and_validate(
-        spec=spec,
-        packet=packet,
-        word=state.get("query", ""),
-        settings=active_settings,
-        validate=_validate_via_validation_result(validate_sentence_output),
-        fallback_output=None,
-        postprocess=postprocess,
-    )
+    def attempt() -> dict[str, Any]:
+        return _call_and_validate(
+            spec=spec,
+            packet=packet,
+            word=state.get("query", ""),
+            settings=active_settings,
+            validate=_validate_via_validation_result(validate_sentence_output),
+            fallback_output=None,
+            postprocess=postprocess,
+        )
+
+    result = attempt()
+
+    # §2.9: validation failures here are transient ~10-17% of the time — K2
+    # re-spells the target word or adds a tatweel, and the same word passes on
+    # an immediate retry (measured 0/6 failures across previously-failing
+    # words). One retry costs ~2s worst case and there is no deterministic
+    # fallback for a sentence, so a rejected first attempt otherwise means a
+    # missing section. Only validation_failed retries: other errors (timeout,
+    # bad key, unreadable prompt) are not attempt-specific.
+    if result.get("error") == "validation_failed":
+        result = attempt()
 
     if result.get("engine_status") == ENGINE_STATUS_K2_LIVE and cache_key:
         _SENTENCE_CACHE_BY_WORD[cache_key] = copy.deepcopy(result)
