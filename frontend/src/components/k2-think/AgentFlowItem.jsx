@@ -16,6 +16,9 @@ const STATUS_LABEL = {
 
 export default function AgentFlowItem({ agent, pending = false }) {
   const [open, setOpen] = useState(false);
+  // An agent whose icon asset hasn't landed yet (currently the sentence
+  // agent) shows the empty disc instead of the browser's broken-image glyph.
+  const [iconMissing, setIconMissing] = useState(false);
 
   const engineStatus = resolveAgentStatus(agent, pending);
 
@@ -40,12 +43,17 @@ export default function AgentFlowItem({ agent, pending = false }) {
         onToggle={(e) => setOpen(e.currentTarget.open)}
       >
         <summary className="k2-agent-summary">
-          <img
-            className="k2-agent-icon"
-            src={`/assets/k2/agent-${agent.id}.png`}
-            alt=""
-            aria-hidden="true"
-          />
+          {iconMissing ? (
+            <span className="k2-agent-icon" aria-hidden="true" />
+          ) : (
+            <img
+              className="k2-agent-icon"
+              src={`/assets/k2/agent-${agent.id}.png`}
+              alt=""
+              aria-hidden="true"
+              onError={() => setIconMissing(true)}
+            />
+          )}
           <span className="k2-agent-text">
             <span className="k2-agent-name">{agent.name}</span>
             <span className="k2-agent-desc">{agent.summary}</span>
