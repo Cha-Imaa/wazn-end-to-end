@@ -411,7 +411,9 @@
 /* --- quality evaluation: 4 cards in one row --- */
 .k2-eval-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* minmax(0, …) lets the cards shrink below their head's min-content width
+     instead of overflowing the container. */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 7px;
 }
 
@@ -496,12 +498,16 @@
   align-items: center;
   gap: 4px;
   min-height: 18px;
+  min-width: 0;
 }
 
+/* Painted disc art (owner-supplied), so it renders as a round image rather
+   than a currentColor glyph. */
 .k2-gauge-icon {
-  width: 14px;
-  height: 14px;
-  color: var(--color-green-secondary);
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  object-fit: cover;
   flex-shrink: 0;
 }
 

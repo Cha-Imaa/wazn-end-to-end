@@ -1,15 +1,14 @@
 // A metric card with an icon + label on top, a semicircular arc gauge, and a
-// rating below — matching inspiration/details-tab.png. Pure inline SVG.
-
-import { ShieldIcon, ClipboardIcon, BulbIcon } from "./icons.jsx";
+// rating below — matching inspiration/details-tab.png.
 
 const RADIUS = 44; // must match the arc radius in the path below
 const ARC_LENGTH = Math.PI * RADIUS; // semicircle circumference ≈ 138.23
 
+// Painted disc art per metric (owner-supplied, 2026-08-07).
 const METRIC_ICON = {
-  groundedness: ShieldIcon,
-  quiz_validity: ClipboardIcon,
-  clarity: BulbIcon,
+  groundedness: "/assets/k2/metric-groundedness.png",
+  quiz_validity: "/assets/k2/metric-quiz-validity.png",
+  clarity: "/assets/k2/metric-clarity.png",
 };
 
 function ratingModifier(rating = "") {
@@ -19,12 +18,14 @@ function ratingModifier(rating = "") {
 export default function ScoreGauge({ metric }) {
   const percent = Math.max(0, Math.min(100, metric.percent ?? 0));
   const fillLength = (percent / 100) * ARC_LENGTH;
-  const Icon = METRIC_ICON[metric.id];
+  const iconSrc = METRIC_ICON[metric.id];
 
   return (
     <div className={`k2-gauge k2-gauge--${ratingModifier(metric.rating)}`}>
       <div className="k2-gauge-head">
-        {Icon && <Icon className="k2-gauge-icon" />}
+        {iconSrc && (
+          <img className="k2-gauge-icon" src={iconSrc} alt="" aria-hidden="true" />
+        )}
         <span className="k2-gauge-label">{metric.label}</span>
       </div>
       <div className="k2-gauge-arc">
