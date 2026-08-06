@@ -222,7 +222,8 @@
 
 .same-pattern-card {
   min-height: 70px;
-  padding: 11px 10px 11px;
+  /* Extra top padding keeps the Amiri ascenders clear of the card border. */
+  padding: 16px 10px 11px;
 }
 
 .app-shell-landing .example-card::after {
