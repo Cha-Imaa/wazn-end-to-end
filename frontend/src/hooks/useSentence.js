@@ -3,8 +3,11 @@ import { resolveSentenceResult } from "../services/learningDataService.js";
 
 // Per-word sentence cache for the session, keyed by the displayed Arabic.
 // The backend caches per word too, but this keeps a tab switch or a re-click
-// from even leaving the component. "absent" results are cached as well: a
-// disabled flag or a rejected agent would otherwise refire on every click.
+// from even leaving the component. "absent" results are cached too — but
+// softly (§2.9): the agent's validation failures are transient ~10-17% of the
+// time, so a first "absent" is retried once on the next panel open before it
+// becomes final. A hard absent cache made one transient miss permanently hide
+// that word's sentence until reload.
 const sentenceCache = new Map();
 
 export const SENTENCE_STATUS = {
@@ -30,7 +33,11 @@ export function useSentence(wordArabic) {
   const [resolvedFor, setResolvedFor] = useState(null);
 
   useEffect(() => {
-    if (!wordArabic || sentenceCache.has(wordArabic)) {
+    const cached = wordArabic ? sentenceCache.get(wordArabic) : null;
+    const retryAbsent =
+      cached?.status === SENTENCE_STATUS.ABSENT && !cached.final;
+
+    if (!wordArabic || (cached && !retryAbsent)) {
       return undefined;
     }
 
@@ -40,7 +47,9 @@ export function useSentence(wordArabic) {
       const resolved =
         payload?.status === "found" && payload.sentence
           ? { status: SENTENCE_STATUS.READY, sentence: payload.sentence }
-          : { status: SENTENCE_STATUS.ABSENT, sentence: null };
+          : // A second miss is final — a disabled flag or a genuinely
+            // rejected word must not refire on every click.
+            { status: SENTENCE_STATUS.ABSENT, sentence: null, final: retryAbsent };
 
       sentenceCache.set(wordArabic, resolved);
 
