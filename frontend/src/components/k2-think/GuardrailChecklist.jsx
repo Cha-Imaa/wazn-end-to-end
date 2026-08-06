@@ -2,31 +2,29 @@
 // checklist, and an overall status badge (matches inspiration/details-tab.png).
 
 import { CheckIcon, DotIcon, ShieldIcon } from "./icons.jsx";
-import { describeEngineStatus, engineStatusOf } from "./engineStatus.js";
+
+// The live K2 verdict carries 12 checks and the deterministic block 5; the
+// card shows at most this many. Failed checks sort first so capping the list
+// can never hide a failure behind passing rows.
+const MAX_VISIBLE_CHECKS = 4;
 
 export default function GuardrailChecklist({ guardrails }) {
   const checks = Array.isArray(guardrails?.checks) ? guardrails.checks : [];
   const passed = Boolean(guardrails?.passed);
 
-  // Says whether these are the live 12-check K2 verdict or the four
-  // deterministic predicates /api/analyze serves. "All checks passed" means
-  // very different things in each case.
-  const provenance = describeEngineStatus(engineStatusOf(guardrails));
+  const visibleChecks = [...checks]
+    .sort((a, b) => Number(Boolean(a.passed)) - Number(Boolean(b.passed)))
+    .slice(0, MAX_VISIBLE_CHECKS);
 
   return (
     <div className="k2-guardrails">
       <div className="k2-guardrails-head">
         <ShieldIcon className="k2-guardrails-head-icon" />
         <span>Safety &amp; Guardrails</span>
-        <span
-          className={`k2-engine-badge k2-engine-badge--${provenance.variant} k2-guardrails-provenance`}
-        >
-          {provenance.label}
-        </span>
       </div>
 
       <ul className="k2-check-list">
-        {checks.map((check) => (
+        {visibleChecks.map((check) => (
           <li
             key={check.id}
             className={`k2-check k2-check--${check.passed ? "pass" : "fail"}`}

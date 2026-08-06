@@ -313,22 +313,9 @@
   }
 }
 
-/* Panel-level chip, under the subtitle in the header. */
-.k2-think-provenance {
-  margin-top: 8px;
-}
-
 /* Section-level chip, at the top of a section's own container. */
 .k2-section-provenance {
   margin-bottom: 10px;
-}
-
-/* Pushed to the right of the guardrail card's header row. */
-.k2-guardrails-provenance {
-  margin-left: auto;
-  /* The head row is uppercase with wide tracking; the badge is not. */
-  text-transform: none;
-  letter-spacing: 0.02em;
 }
 
 /* --- pending agent row --- */
@@ -621,8 +608,9 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px 16px;
+  /* One column of at most four checks (owner direction, 2026-08-07). */
+  grid-template-columns: 1fr;
+  gap: 8px;
 }
 
 .k2-check {

@@ -8,11 +8,7 @@ import AgentFlowItem from "./AgentFlowItem.jsx";
 import ScoreGauge from "./ScoreGauge.jsx";
 import GuardrailChecklist from "./GuardrailChecklist.jsx";
 import { StarRating, LeafSprig } from "./icons.jsx";
-import {
-  describeEngineStatus,
-  describePanelProvenance,
-  engineStatusOf,
-} from "./engineStatus.js";
+import { describeEngineStatus, engineStatusOf } from "./engineStatus.js";
 
 const HEADER_BRANCH = "/assets/k2/header-branch.png";
 const K2_MARK = "/assets/k2/k2-mark.png";
@@ -57,7 +53,6 @@ export default function K2ThinkPanel({ k2Think, word = "", insightsPending = fal
   // Sample data has no live steps, so a missing k2_think must not read as live.
   const pending = insightsPending && Boolean(k2Think);
 
-  const panelProvenance = describePanelProvenance(agents, pending);
   const evaluationProvenance = evaluation
     ? describeEngineStatus(engineStatusOf(evaluation))
     : null;
@@ -69,10 +64,6 @@ export default function K2ThinkPanel({ k2Think, word = "", insightsPending = fal
         <div className="k2-think-heading">
           <h2 className="k2-think-title">Insights</h2>
           <p className="k2-think-subtitle">{data.subtitle}</p>
-          <ProvenanceChip
-            descriptor={panelProvenance}
-            className="k2-think-provenance"
-          />
         </div>
         <img
           className="k2-think-header-branch"
