@@ -446,6 +446,56 @@
     min-height: 48px;
   }
 
+  /* --- "word not found" empty state: let the sprout carry the screen,
+     quieten the text and button beneath it --- */
+
+  .word-tree-empty-illustration {
+    width: min(320px, 72vw);
+    /* the PNG's transparent margins grow with it — reclaim proportionally */
+    margin: -48px 0 -44px;
+  }
+
+  .word-tree-empty-title {
+    font-size: 22px;
+  }
+
+  .word-tree-empty-divider {
+    width: min(100%, 260px);
+    height: 18px;
+    margin: 6px 0 10px;
+    background-size: min(100%, 240px) auto;
+  }
+
+  .word-tree-empty-word {
+    margin-bottom: 8px;
+    font-size: 26px;
+  }
+
+  .word-tree-empty-copy {
+    max-width: 320px;
+    font-size: 12px;
+  }
+
+  .word-tree-empty-actions {
+    margin-top: 14px;
+  }
+
+  .word-tree-empty-button {
+    gap: 10px;
+    padding: 10px 26px;
+    font-size: 13.5px;
+  }
+
+  .word-tree-empty-button-icon {
+    width: 13px;
+    height: 13px;
+  }
+
+  .word-tree-empty-hint {
+    margin-top: 12px;
+    font-size: 11.5px;
+  }
+
   /* --- fixed bottom navigation --- */
 
   .mobile-learning-nav {
