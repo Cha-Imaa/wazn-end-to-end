@@ -128,6 +128,35 @@
   padding: 24px 14px 14px;
 }
 
+/* The flow card carries its own head instead of the overlapping pill, so it
+   doesn't need the pill's 24px overlap allowance. */
+.k2-flow-container {
+  padding-top: 14px;
+}
+
+/* Inspiration-style card head: leaf icon + left-aligned uppercase title,
+   mirroring .k2-guardrails-head. */
+.k2-flow-head {
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--border-soft);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-green-primary);
+}
+
+.k2-flow-head-icon {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  color: var(--color-green-secondary);
+}
+
 /* --- agentic reasoning flow --- */
 .k2-agent-flow {
   list-style: none;

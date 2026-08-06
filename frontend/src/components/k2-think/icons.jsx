@@ -68,6 +68,23 @@ export function LeafSprig({ className, flip = false }) {
   );
 }
 
+// Solid leaf for section heads (inspiration: the leaf before "Agentic
+// Reasoning Flow"). Full-opacity sibling of LeafSprig.
+export function LeafIcon({ className }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M20 4C10.5 4.5 4.5 10.5 4 20c9.5-.5 15.5-6.5 16-16z" fill="currentColor" />
+      <path
+        d="M6.5 17.5C9.5 13.5 13.5 9.5 17.5 6.5"
+        fill="none"
+        stroke="#faf8ef"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export function ClipboardIcon({ className }) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false">

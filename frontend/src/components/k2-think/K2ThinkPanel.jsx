@@ -7,7 +7,7 @@ import { getK2ThinkSample } from "../../data/k2ThinkSample.js";
 import AgentFlowItem from "./AgentFlowItem.jsx";
 import ScoreGauge from "./ScoreGauge.jsx";
 import GuardrailChecklist from "./GuardrailChecklist.jsx";
-import { StarRating, LeafSprig } from "./icons.jsx";
+import { StarRating, LeafSprig, LeafIcon } from "./icons.jsx";
 import { describeEngineStatus, engineStatusOf } from "./engineStatus.js";
 
 const HEADER_BRANCH = "/assets/k2/header-branch.png";
@@ -74,8 +74,13 @@ export default function K2ThinkPanel({ k2Think, word = "", insightsPending = fal
       </header>
 
       <section className="k2-think-section">
-        <SectionLabel>Agentic Reasoning Flow</SectionLabel>
+        {/* Inspiration-style card head: leaf icon + left-aligned title inside
+            the container, matching the Safety & Guardrails head. */}
         <div className="k2-flow-container">
+          <p className="k2-flow-head">
+            <LeafIcon className="k2-flow-head-icon" />
+            <span>Agentic Reasoning Flow</span>
+          </p>
           <ol className="k2-agent-flow">
             {agents.map((agent) => (
               <AgentFlowItem key={agent.id} agent={agent} pending={pending} />
