@@ -408,37 +408,33 @@
   color: var(--color-text-black);
 }
 
-/* --- quality evaluation: 4 cards in one row --- */
+/* --- quality evaluation: overall card left, metric bar rows right
+   (inspiration layout, owner direction 2026-08-07) --- */
 .k2-eval-row {
   display: grid;
-  /* minmax(0, …) lets the cards shrink below their head's min-content width
-     instead of overflowing the container. */
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 7px;
+  grid-template-columns: minmax(0, 150px) minmax(0, 1fr);
+  gap: 8px;
+  align-items: stretch;
 }
 
-.k2-eval-overall-card,
-.k2-gauge {
+.k2-eval-overall-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
-  padding: 10px 4px 8px;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 6px 10px;
   border-radius: 13px;
   border: 1px solid var(--border-soft);
   background: var(--color-panel-surface);
   box-shadow: 0 4px 11px var(--shadow-green-subtle);
 }
 
-.k2-eval-overall-card {
-  justify-content: center;
-  gap: 3px;
-}
-
 .k2-eval-overall-label {
   font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.03em;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--color-green-secondary);
   text-align: center;
 }
@@ -482,6 +478,12 @@
   color: rgba(37, 89, 74, 0.55);
 }
 
+.k2-eval-overall-rating {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-green-primary);
+}
+
 .k2-eval-stars {
   display: inline-flex;
   gap: 1px;
@@ -493,81 +495,90 @@
   height: 14px;
 }
 
-.k2-gauge-head {
+.k2-eval-metrics {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.k2-metric {
+  flex: 1;
   display: flex;
   align-items: center;
-  gap: 4px;
-  min-height: 18px;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 13px;
+  border: 1px solid var(--border-soft);
+  background: var(--color-panel-surface);
+  box-shadow: 0 4px 11px var(--shadow-green-subtle);
   min-width: 0;
 }
 
 /* Painted disc art (owner-supplied), so it renders as a round image rather
    than a currentColor glyph. */
-.k2-gauge-icon {
-  width: 18px;
-  height: 18px;
+.k2-metric-icon {
+  width: 34px;
+  height: 34px;
   border-radius: 999px;
   object-fit: cover;
   flex-shrink: 0;
 }
 
-.k2-gauge-label {
-  font-size: 10.5px;
-  font-weight: 700;
-  color: var(--color-green-primary);
-  text-align: center;
+.k2-metric-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
-.k2-gauge-arc {
-  position: relative;
-  width: 100%;
-  max-width: 82px;
+.k2-metric-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
 }
 
-.k2-gauge-svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  overflow: visible;
-}
-
-.k2-gauge-track {
-  fill: none;
-  stroke: rgba(37, 89, 74, 0.14);
-  stroke-width: 9;
-  stroke-linecap: round;
-}
-
-.k2-gauge-fill {
-  fill: none;
-  stroke: var(--color-green-secondary);
-  stroke-width: 9;
-  stroke-linecap: round;
-  transition: stroke-dasharray 500ms ease;
-}
-
-.k2-gauge--very-good .k2-gauge-fill {
-  stroke: var(--color-gold);
-}
-
-.k2-gauge--good .k2-gauge-fill,
-.k2-gauge--fair .k2-gauge-fill {
-  stroke: #a9b58c;
-}
-
-.k2-gauge-value {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  text-align: center;
-  font-size: 17px;
+.k2-metric-label {
+  font-size: 12.5px;
   font-weight: 800;
   color: var(--color-green-primary);
 }
 
-.k2-gauge-rating {
-  font-size: 10px;
+.k2-metric-value {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--color-green-primary);
+}
+
+.k2-metric-bar {
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(37, 89, 74, 0.12);
+  overflow: hidden;
+}
+
+.k2-metric-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--color-green-primary);
+  transition: width 500ms ease;
+}
+
+/* Bar colours follow the inspiration: green / purple / gold, each matching
+   its disc icon. Gold here is an ornamental accent, not a status colour. */
+.k2-metric--quiz_validity .k2-metric-fill {
+  background: var(--color-metric-purple);
+}
+
+.k2-metric--clarity .k2-metric-fill {
+  background: var(--color-gold);
+}
+
+.k2-metric-rating {
+  font-size: 10.5px;
   color: rgba(54, 61, 1, 0.6);
 }
 
@@ -721,6 +732,11 @@
 
   .k2-guardrails-flower {
     width: 84px;
+  }
+
+  /* Overall card stacks above the metric rows at phone width. */
+  .k2-eval-row {
+    grid-template-columns: 1fr;
   }
 
   .k2-check-list {

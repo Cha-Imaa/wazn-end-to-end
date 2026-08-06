@@ -12,6 +12,16 @@ import { StarRating, LeafIcon, ShieldIcon } from "./icons.jsx";
 const HEADER_BRANCH = "/assets/k2/header-branch.png";
 const K2_MARK = "/assets/k2/k2-mark.png";
 
+// Mirrors the backend's _rating thresholds (insights_service.py) so the
+// overall card carries the same word the metric rows do.
+function ratingWord(value) {
+  if (value >= 90) return "Excellent";
+  if (value >= 80) return "Very Good";
+  if (value >= 70) return "Good";
+  if (value >= 50) return "Fair";
+  return "Needs Review";
+}
+
 export default function K2ThinkPanel({ k2Think, word = "", insightsPending = false }) {
   const data = k2Think || getK2ThinkSample(word);
   const agents = Array.isArray(data.agents) ? data.agents : [];
@@ -67,7 +77,7 @@ export default function K2ThinkPanel({ k2Think, word = "", insightsPending = fal
             <div className="k2-eval-row">
               {overall && (
                 <div className="k2-eval-overall-card">
-                  <span className="k2-eval-overall-label">Overall Score</span>
+                  <span className="k2-eval-overall-label">Overall Quality</span>
                   <div className="k2-eval-overall-figure">
                     <span className="k2-eval-branch k2-eval-branch--left" aria-hidden="true" />
                     <span className="k2-eval-overall-score">
@@ -76,12 +86,17 @@ export default function K2ThinkPanel({ k2Think, word = "", insightsPending = fal
                     </span>
                     <span className="k2-eval-branch k2-eval-branch--right" aria-hidden="true" />
                   </div>
+                  <span className="k2-eval-overall-rating">
+                    {ratingWord(overall.value)}
+                  </span>
                   <StarRating value={overall.stars} className="k2-eval-stars" />
                 </div>
               )}
-              {metrics.map((metric) => (
-                <ScoreGauge key={metric.id} metric={metric} />
-              ))}
+              <div className="k2-eval-metrics">
+                {metrics.map((metric) => (
+                  <ScoreGauge key={metric.id} metric={metric} />
+                ))}
+              </div>
             </div>
           </div>
         </section>

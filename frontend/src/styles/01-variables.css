@@ -41,6 +41,9 @@
   --color-gold-ring: rgba(184, 154, 79, 0.24);
   --shadow-gold-soft: rgba(184, 154, 79, 0.16);
   --color-terracotta: #b0604a;
+  /* Quiz Validity bar in the Insights evaluation — matches the purple of the
+     owner-supplied clipboard disc (inspiration image). Used nowhere else. */
+  --color-metric-purple: #8477c1;
   --color-empty-cta-text: #1e3a2f;
   --color-hero-title: #1e2201;
   --color-footer-text: #31552f;
