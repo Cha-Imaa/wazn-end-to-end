@@ -438,7 +438,7 @@
 .k2-eval-overall-label {
   /* The auto margin pins the label near the card's top edge while the score
      group stays centred in the space below it (inspiration spacing). */
-  margin-top: 5px;
+  margin-top: 10px;
   margin-bottom: auto;
   font-size: 10.5px;
   font-weight: 800;
