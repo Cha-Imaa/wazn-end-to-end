@@ -28,12 +28,12 @@ app.add_middleware(
         # Dev machine's LAN address, so other devices on the same network
         # can open the Vite dev server and still reach this backend.
         "http://192.168.8.39:5173",
-        "https://wazn-theta.vercel.app",
+        "https://wazn-peach.vercel.app",
     ],
     # Vercel gives every preview deploy its own generated subdomain, so a branch
     # preview is blocked by the fixed list above and looks like a dead backend.
     # Scoped to this project's previews — not a wildcard.
-    allow_origin_regex=r"https://wazn-theta-[a-z0-9-]+\.vercel\.app",
+    allow_origin_regex=r"https://wazn-[a-z0-9-]+\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
