@@ -567,6 +567,7 @@
 
 /* --- safety & guardrails (bordered card with internal header) --- */
 .k2-guardrails {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -574,6 +575,18 @@
   border-radius: 18px;
   border: 1px solid var(--border-soft);
   background: rgba(255, 255, 250, 0.5);
+  overflow: hidden;
+}
+
+/* Owner-supplied sprig filling the card's bottom-right corner (inspiration);
+   purely decorative, so it must never intercept clicks. */
+.k2-guardrails-flower {
+  position: absolute;
+  right: 4px;
+  bottom: 2px;
+  width: 112px;
+  height: auto;
+  pointer-events: none;
 }
 
 .k2-guardrails-head {
@@ -598,7 +611,8 @@
 .k2-check-list {
   list-style: none;
   margin: 0;
-  padding: 0;
+  /* Right padding keeps the check labels clear of the corner flower. */
+  padding: 0 118px 0 0;
   display: grid;
   /* One column of at most four checks (owner direction, 2026-08-07). */
   grid-template-columns: 1fr;
@@ -697,5 +711,13 @@
 
   .k2-agent-trace {
     padding-left: 12px;
+  }
+
+  .k2-guardrails-flower {
+    width: 84px;
+  }
+
+  .k2-check-list {
+    padding-right: 88px;
   }
 }

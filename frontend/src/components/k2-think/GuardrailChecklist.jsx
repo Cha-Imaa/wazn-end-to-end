@@ -3,6 +3,8 @@
 
 import { CheckIcon, DotIcon, ShieldIcon } from "./icons.jsx";
 
+const CORNER_FLOWER = "/assets/k2/guardrails-flower.png";
+
 // The live K2 verdict carries 12 checks and the deterministic block 5; the
 // card shows at most this many. Failed checks sort first so capping the list
 // can never hide a failure behind passing rows.
@@ -43,6 +45,14 @@ export default function GuardrailChecklist({ guardrails }) {
         <ShieldIcon className="k2-check-badge-icon" />
         <span>{guardrails?.summary || (passed ? "All Checks Passed" : "Needs Review")}</span>
       </div>
+
+      {/* Decorative sprig filling the card's bottom-right (inspiration). */}
+      <img
+        className="k2-guardrails-flower"
+        src={CORNER_FLOWER}
+        alt=""
+        aria-hidden="true"
+      />
     </div>
   );
 }
