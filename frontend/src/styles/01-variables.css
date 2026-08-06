@@ -44,6 +44,10 @@
   /* Quiz Validity bar in the Insights evaluation — matches the purple of the
      owner-supplied clipboard disc (inspiration image). Used nowhere else. */
   --color-metric-purple: #8477c1;
+  /* Insights overall-quality card, sampled from the inspiration image:
+     amber for the stars + Clarity bar, deep green for the big score. */
+  --color-star-amber: #c8963d;
+  --color-eval-score-ink: #044133;
   --color-empty-cta-text: #1e3a2f;
   --color-hero-title: #1e2201;
   --color-footer-text: #31552f;

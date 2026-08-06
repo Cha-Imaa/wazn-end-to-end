@@ -436,6 +436,9 @@
 }
 
 .k2-eval-overall-label {
+  /* The auto margin pins the label to the card's top edge while the score
+     group stays centred in the space below it (inspiration spacing). */
+  margin-bottom: auto;
   font-size: 10.5px;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -474,7 +477,7 @@
   font-size: 30px;
   font-weight: 800;
   line-height: 1;
-  color: var(--color-green-primary);
+  color: var(--color-eval-score-ink);
 }
 
 .k2-eval-overall-max {
@@ -490,9 +493,12 @@
 }
 
 .k2-eval-stars {
+  /* Balances the label's auto margin so the score group centres between the
+     pinned label and the card's bottom edge. */
+  margin-bottom: auto;
   display: inline-flex;
   gap: 1px;
-  color: var(--color-gold);
+  color: var(--color-star-amber);
 }
 
 .k2-star {
@@ -579,7 +585,7 @@
 }
 
 .k2-metric--clarity .k2-metric-fill {
-  background: var(--color-gold);
+  background: var(--color-star-amber);
 }
 
 .k2-metric-rating {
