@@ -34,13 +34,11 @@
 
 /* --- header --- */
 .k2-think-header {
-  position: relative;
   display: flex;
   align-items: center;
   gap: 14px;
   margin-bottom: 14px;
   min-height: 64px;
-  padding-right: 150px; /* room for the branch flourish */
 }
 
 .k2-think-mark {
@@ -77,12 +75,14 @@
   max-width: 175px;
 }
 
+/* Flex item (not absolute) so it centres on the same axis as the K mark and
+   the title/subtitle block (owner direction, 2026-08-07). */
 .k2-think-header-branch {
-  position: absolute;
-  top: -10px;
-  right: -8px;
-  width: 190px;
+  margin-left: auto;
+  align-self: center;
+  width: 140px;
   height: auto;
+  flex-shrink: 0;
   pointer-events: none;
 }
 
@@ -693,7 +693,6 @@
 @media (max-width: 700px) {
   .k2-think-header {
     gap: 10px;
-    padding-right: 96px;
   }
 
   .k2-think-mark {
@@ -706,8 +705,7 @@
   }
 
   .k2-think-header-branch {
-    width: 130px;
-    top: -6px;
+    width: 100px;
   }
 
   /* One row is too tight for icon + text + status + chevron at phone width;
