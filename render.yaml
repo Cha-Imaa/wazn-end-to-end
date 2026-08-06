@@ -5,6 +5,9 @@ services:
     # Blueprints only read render.yaml from the repo root; the service itself
     # lives entirely under backend/.
     rootDir: backend
+    # Unspecified plan defaults to the paid starter tier and Render demands a
+    # card before deploying. Free tier sleeps after idle; first hit ~30-60s.
+    plan: free
     # main holds only the init commit until the pre-submission merge.
     branch: feat/kb-248-words
     buildCommand: pip install -r requirements.txt
