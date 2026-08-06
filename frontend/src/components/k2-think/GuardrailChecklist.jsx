@@ -1,5 +1,5 @@
-// Safety & guardrails: a bordered card with an internal header, a pass/fail
-// checklist, and an overall status badge (matches inspiration/details-tab.png).
+// Safety & guardrails: a bordered card with an internal header and a
+// pass/fail checklist (matches inspiration/details-tab.png).
 
 import { CheckIcon, DotIcon, ShieldIcon } from "./icons.jsx";
 
@@ -12,7 +12,6 @@ const MAX_VISIBLE_CHECKS = 4;
 
 export default function GuardrailChecklist({ guardrails }) {
   const checks = Array.isArray(guardrails?.checks) ? guardrails.checks : [];
-  const passed = Boolean(guardrails?.passed);
 
   const visibleChecks = [...checks]
     .sort((a, b) => Number(Boolean(a.passed)) - Number(Boolean(b.passed)))
@@ -40,11 +39,6 @@ export default function GuardrailChecklist({ guardrails }) {
           </li>
         ))}
       </ul>
-
-      <div className={`k2-check-badge k2-check-badge--${passed ? "pass" : "fail"}`}>
-        <ShieldIcon className="k2-check-badge-icon" />
-        <span>{guardrails?.summary || (passed ? "All Checks Passed" : "Needs Review")}</span>
-      </div>
 
       {/* Decorative sprig filling the card's bottom-right (inspiration). */}
       <img
