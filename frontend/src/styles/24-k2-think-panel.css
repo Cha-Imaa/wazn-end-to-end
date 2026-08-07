@@ -613,7 +613,7 @@
   position: absolute;
   right: 4px;
   bottom: 2px;
-  width: 112px;
+  width: 90px;
   height: auto;
   pointer-events: none;
 }
@@ -639,7 +639,7 @@
   list-style: none;
   margin: 0;
   /* Right padding keeps the check labels clear of the corner flower. */
-  padding: 0 118px 0 0;
+  padding: 0 96px 0 0;
   display: grid;
   /* One column of at most four checks (owner direction, 2026-08-07). */
   grid-template-columns: 1fr;
