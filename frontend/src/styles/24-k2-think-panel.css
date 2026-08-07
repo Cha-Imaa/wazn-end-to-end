@@ -417,7 +417,7 @@
    (inspiration layout, owner direction 2026-08-07) --- */
 .k2-eval-row {
   display: grid;
-  grid-template-columns: minmax(0, 150px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 144px) minmax(0, 1fr);
   gap: 8px;
   align-items: stretch;
 }
@@ -519,7 +519,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 5px 10px;
+  padding: 5px 8px;
   border-radius: 11px;
   border: 1px solid var(--border-soft);
   background: var(--color-panel-surface);
@@ -549,7 +549,7 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 8px;
+  gap: 6px;
 }
 
 .k2-metric-label {
