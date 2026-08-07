@@ -10,11 +10,30 @@ const CORNER_FLOWER = "/assets/k2/guardrails-flower.png";
 // can never hide a failure behind passing rows.
 const MAX_VISIBLE_CHECKS = 4;
 
+// When everything passes, prefer a spread that covers both halves of the
+// review (2 explanation + 2 quiz) over the backend's tutor-first order.
+// Ids not listed (including the deterministic block's) keep their order.
+const PREFERRED_CHECK_IDS = [
+  "tutor_selected_explanation_incorrect",
+  "tutor_pattern_explanation_incorrect",
+  "quiz_answer_incorrect",
+  "quiz_introduced_unsupported_content",
+];
+
+const displayRank = (check) => {
+  const rank = PREFERRED_CHECK_IDS.indexOf(check.id);
+  return rank === -1 ? PREFERRED_CHECK_IDS.length : rank;
+};
+
 export default function GuardrailChecklist({ guardrails }) {
   const checks = Array.isArray(guardrails?.checks) ? guardrails.checks : [];
 
   const visibleChecks = [...checks]
-    .sort((a, b) => Number(Boolean(a.passed)) - Number(Boolean(b.passed)))
+    .sort(
+      (a, b) =>
+        Number(Boolean(a.passed)) - Number(Boolean(b.passed)) ||
+        displayRank(a) - displayRank(b),
+    )
     .slice(0, MAX_VISIBLE_CHECKS);
 
   return (
