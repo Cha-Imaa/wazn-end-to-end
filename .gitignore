@@ -7,6 +7,9 @@ inspiration/
 .tmp/
 design-assets/
 screenshots/
+# Full-resolution sources for the README media. The compressed, committed
+# versions live under .github/media/ — the raw recording alone is ~36 MB.
+github-assets/
 
 # Documentation and agent scaffolding stay local.
 # The repo carries code only. Build docs (docs/, NEXT_STEPS.md, CLAUDE.md)
@@ -15,6 +18,13 @@ screenshots/
 # no code reads a .md file, so nothing breaks. If a README is ever wanted,
 # add `!README.md` here rather than dropping this line.
 *.md
+
+# The one exception, taken deliberately: the repo's public front page. Everything
+# else (docs/, NEXT_STEPS.md, CLAUDE.md) stays local, so README.md must be
+# self-contained — it cannot link to a sibling doc a cloner will never receive.
+# Anchored with a leading slash: a bare `!README.md` matches at every depth and
+# would also drag in frontend/README.md, which is still Vite's boilerplate.
+!/README.md
 
 # Agent scaffolding: skills, their reference images, local permissions.
 # The whole directory, not just *.md — skills bundle PNG references, and those
