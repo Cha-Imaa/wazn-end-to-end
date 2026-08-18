@@ -7,6 +7,10 @@ inspiration/
 .tmp/
 design-assets/
 screenshots/
+# Mobile-view mockups and the skill that reads them. The *.md rule below
+# already covers the skill file, but not the PNGs sitting beside it — and
+# these are design material, so the whole directory goes.
+phoneview/
 # Full-resolution sources for the README media. The compressed, committed
 # versions live under .github/media/ — the raw recording alone is ~36 MB.
 github-assets/
