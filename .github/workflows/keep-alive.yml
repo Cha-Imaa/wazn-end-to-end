@@ -1,0 +1,32 @@
+# Keeps the Render free-tier backend awake so demo visitors never hit the
+# 30-60s cold start. Render sleeps a free web service after ~15 min without
+# traffic; a hit every 10 min stays under that.
+#
+# Notes:
+#  - GitHub runs scheduled workflows only from the default branch (main).
+#  - Cron here is best-effort: GitHub can delay runs by several minutes at busy
+#    times. cron-job.org is set up as a second, independent pinger (see README).
+#  - GitHub disables schedules on public repos after 60 days with no commits.
+#    Any push to the repo re-enables it.
+name: keep-alive
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+
+permissions: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Ping backend /ping
+        run: |
+          set -euo pipefail
+          url="https://wazn-backend.onrender.com/ping"
+          # Cold start can take up to ~60s; allow a generous timeout and retry once.
+          code=$(curl -sS -o /tmp/body -w "%{http_code}" --max-time 90 --retry 1 --retry-delay 15 "$url" || echo "000")
+          echo "status=$code body=$(cat /tmp/body 2>/dev/null || true)"
+          test "$code" = "200"
