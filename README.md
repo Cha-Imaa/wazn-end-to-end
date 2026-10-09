@@ -74,7 +74,7 @@ Below that: why the word means what it means, an example sentence written for it
 
 ## Run it locally
 
-Backend first — the frontend calls it on every search. Needs Python ≥ 3.10.
+Start the backend first, then launch the frontend in a separate terminal. Requires Python ≥ 3.10.
 
 ```bash
 cd backend && pip install -r requirements.txt
